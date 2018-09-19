@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Grid, Cell } from 'styled-css-grid';
-import backgroundPhoto from './../images/landing.JPG';
 
+import backgroundPhoto from './../images/landing.JPG';
 import FindRoom from './../Components/FindRoom/FindRoom';
+import Button from './../Components/Button';
 
 const StyledLanding = styled.div`
   background: url(${backgroundPhoto});
@@ -43,6 +44,11 @@ export default class Landing extends Component {
           <Header>
             <StyledH1>Hotel Black 92</StyledH1>
             <StyledH3>Aut tempore dolorem labore quis quia officiis aut ex cumque.</StyledH3>
+            <Button primary >Test</Button> 
+            <Button secondary >Test</Button> 
+            <Button secondary outline >Test</Button> 
+            <Button secondary outline small>Test</Button> 
+            <Button secondary outline large>Test</Button> 
           </Header>
           <Cell/>
         </Grid>
