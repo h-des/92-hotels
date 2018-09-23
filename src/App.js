@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import styled from 'styled-components';
-import Landing from './Pages/Landing';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import Landing from './Pages/Landing';
+import RoomList from './Pages/RoomList';
 
 const StyledApp = styled.div `
   
@@ -15,6 +15,7 @@ class App extends Component {
       <Router>
         <StyledApp>
           <Route path="/" exact component={Landing} />
+          <Route path="/rooms"  component={RoomList} />
         </StyledApp>
       </Router>
     );

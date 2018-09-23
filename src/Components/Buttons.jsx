@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import * as theme from './../utils/theme';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const StyledButton = styled.button`

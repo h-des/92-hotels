@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Hearts</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path data-name="layer2"
+  d="M46.7 29.3A24.5 24.5 0 0 0 50 17.2 12.1 12.1 0 0 0 38 5a12.9 12.9 0 0 0-12 8.1A12.9 12.9 0 0 0 14 5 12.1 12.1 0 0 0 2 17.2c0 11.4 8.8 22 24 31.8l3.7-2.5"
+  fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="2" stroke-linejoin="round"
+  stroke-linecap="round"></path>
+  <path data-name="layer1" d="M53 27a9.7 9.7 0 0 0-9 5.9 9.7 9.7 0 0 0-9-5.9 8.9 8.9 0 0 0-9 8.9c0 8.3 6.6 16 18 23.1 11.4-7.1 18-14.8 18-23.1a8.9 8.9 0 0 0-9-8.9z"
+  fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="2" stroke-linejoin="round"
+  stroke-linecap="round"></path>
+</svg>

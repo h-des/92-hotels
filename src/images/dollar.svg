@@ -1,0 +1,11 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>US Dollar</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path d="M32 10.002V2m0 60v-7.998"
+  stroke-width="3" stroke-miterlimit="10" stroke="#5862EF" fill="none" data-name="layer2"
+  stroke-linejoin="round" stroke-linecap="round"></path>
+  <path stroke-width="3" stroke-miterlimit="10" stroke="#5862EF"
+  fill="none" d="M43.834 20A12 12 0 0 0 32 10c-6.627 0-12 4.372-12 11s6 9.629 12 11c6 1.353 12 4.375 12 11s-5.373 11-12 11a12 12 0 0 1-12-12"
+  stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>
