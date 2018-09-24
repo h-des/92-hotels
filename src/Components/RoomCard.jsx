@@ -8,29 +8,36 @@ import heartIcon from './../images/heart.svg';
 
 const Card = styled.div `
   display: flex;
-  flex-direction: column;
-  max-width: 450px;
+  flex-direction: row;
+  margin: 0 auto;
+  // max-width: 450px;
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0px 11px 26px 0px rgba(0,0,0,0.09);
   margin-bottom: 7.5rem;
+
+  @media (max-width: 700px) {
+    max-width: 100%;
+    width: 90%;
+  }
   `
 
 const CardImage = styled.img `
-  width: 100%;
-  height: 100%;
+  // min-width: 45rem;
+  width: 75%;
   max-height: 300px; 
-
+  height: 100%;
 `
 
 const CardBody = styled.div `
   display: flex;
   flex-direction: column;
   height: 25rem;
-  padding: 4rem;
+  padding: 8rem;
   padding-bottom: 3rem;
   position: relative;
+  width: 100%;
 `
 
 const CardTitle = styled.h3 `
@@ -81,9 +88,9 @@ const LoveButton = styled.button `
   border-radius: 50%;
   box-shadow: 0px 5px 12px 0px rgba(0,0,0,0.1);
   position: absolute;
-  top: -35px;
+  bottom: 0rem;
   background-color: white;
-  right: 4rem;
+  left: -4rem;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
