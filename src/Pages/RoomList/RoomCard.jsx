@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import styled from 'styled-components';
-import * as theme from './../utils/theme';
-import bedIcon from './../images/bed.svg';
-import dollarIcon from './../images/dollar.svg';
-import userIcon from './../images/user.svg';
-import heartIcon from './../images/heart.svg';
+import * as theme from './../../utils/theme';
+import bedIcon from './../../images/bed.svg';
+import dollarIcon from './../../images/dollar.svg';
+import userIcon from './../../images/user.svg';
+import heartIcon from './../../images/heart.svg';
 
 const Card = styled.div `
   display: flex;
@@ -16,11 +16,6 @@ const Card = styled.div `
   border-radius: 8px;
   box-shadow: 0px 11px 26px 0px rgba(0,0,0,0.09);
   margin-bottom: 7.5rem;
-
-  @media (max-width: 700px) {
-    max-width: 100%;
-    width: 90%;
-  }
   `
 
 const CardImage = styled.img `
@@ -104,6 +99,11 @@ const LoveButton = styled.button `
 ` 
 
 export default class RoomCard extends Component {
+
+  likeRoom = (id) => {
+    console.log(`You liked room ${id}`)
+  }
+  
   render() {
     const room = this.props.data;
     const beds = Math.floor(Math.random() * 4) + 1;
@@ -111,7 +111,7 @@ export default class RoomCard extends Component {
       <Card>
         <CardImage src={room.url}/>
         <CardBody>
-          <LoveButton onClick={() => console.log(`You liked room ${room.id}`)}><Icon src={heartIcon}/></LoveButton>
+          <LoveButton onClick={() => this.likeRoom(room.id)}><Icon src={heartIcon}/></LoveButton>
           <CardTitle>Royal Appartment</CardTitle>
           <CardDesc>{room
               .title
