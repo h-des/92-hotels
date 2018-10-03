@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import messageIcon from './../images/message.svg';
 import hamburgerIcon from './../images/hamburger.svg';
+import Modal from './Modal';
 
 const breakPoint = '425px';
 
 const StyledNav = styled.nav`
   display: grid;
   position: fixed;
-  z-index: 9999;
+  z-index: 1000;
   width: 100%;
   grid-template-columns: max-content 1fr min-content;
   grid-template-rows: 60px 0px;
@@ -106,12 +107,26 @@ const NavChatIcon = styled.img`
   height: 6rem;   
   align-self: center;
   padding: 15px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f6f6f6;
+  }
 `
 
 
 export default class Nav extends Component {
   state = {
-    showList: true
+    showList: true,
+    showModal: false
+  }
+
+  showModal = () => {
+    this.setState(prevState => {
+      return {
+        showModal: !prevState.showModal
+      }
+    })
   }
 
   toggleList = () => {
@@ -132,7 +147,8 @@ export default class Nav extends Component {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact">Contact</NavLink>
         </NavItems>
-        <NavChatIcon src={messageIcon} />
+        <NavChatIcon onClick={() => this.showModal()} src={messageIcon} />
+        {this.state.showModal && <Modal></Modal>}
       </StyledNav>
     )
   }

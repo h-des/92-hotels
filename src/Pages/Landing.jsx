@@ -50,8 +50,8 @@ export default class Landing extends Component {
             <StyledH1>Hotel Black 92</StyledH1>
             <StyledH3>Aut tempore dolorem labore quis quia officiis aut ex cumque.</StyledH3>
             <Row>
-              <LinkButton to="/rooms" color="primary" large >Tour</LinkButton>
-              <LinkButton to="/story" color="secondary" large margin="0 0 0 3rem" >Our story</LinkButton> 
+              <LinkButton to="/rooms" color="primary" large >Rooms</LinkButton>
+              <LinkButton to="/about" color="secondary" large margin="0 0 0 3rem" >Our story</LinkButton> 
             </Row>
           </Header>
           <Cell/>
