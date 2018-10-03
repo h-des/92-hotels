@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as theme from './../utils/theme';
 import { Link } from 'react-router-dom';
 
 
-const StyledButton = styled.button`
+const buttonStyles = css`
   background-color: ${props => props.outline ? 'transparent' : theme.colors[props.color] };
   color: ${props => props.outline ? theme.colors[props.color] : 'white' };
   border-radius: 4px;
@@ -29,7 +29,14 @@ const StyledButton = styled.button`
   }
 `
 
-const StyledLink = styled(StyledButton.withComponent(Link))`text-decoration: none`;
+const StyledButton = styled.button`
+  ${buttonStyles}
+`
+
+const StyledLink = styled(Link)`
+  ${buttonStyles}
+  text-decoration: none;
+`
 
 
 export const Button = (props) =>  {

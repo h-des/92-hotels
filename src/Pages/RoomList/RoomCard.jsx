@@ -16,6 +16,7 @@ const Card = styled.div `
   border-radius: 8px;
   box-shadow: 0px 11px 26px 0px rgba(0,0,0,0.09);
   margin-bottom: 7.5rem;
+  background-color: white;
   `
 
 const CardImage = styled.img `
