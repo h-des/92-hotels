@@ -68,7 +68,9 @@ const NavItems = styled.ul`
   @media only screen and (max-width: ${breakPoint}) {
     grid-row: 2/3;
     grid-column: 1/-1;
-    display: ${props => props.show ? 'flex' : 'none'};
+    display: ${props => props.show
+    ? 'flex'
+    : 'none'};
     flex-direction: column;
     justify-self: center;
     width: 100%;
@@ -94,7 +96,7 @@ const NavLink = styled(Link)`
 `
 const NavIcon = styled.img`
   display: inline;
-  height: 6rem;   
+  height: 5rem;   
   padding: 15px;
 
   &:hover {
@@ -104,7 +106,7 @@ const NavIcon = styled.img`
 
 const NavChatIcon = styled.img`
   display: inline;
-  height: 6rem;   
+  height: 5.5rem;   
   align-self: center;
   padding: 15px;
   cursor: pointer;
@@ -114,10 +116,9 @@ const NavChatIcon = styled.img`
   }
 `
 
-
 export default class Nav extends Component {
   state = {
-    showList: true,
+    showList: false,
     showModal: false
   }
 
@@ -140,15 +141,16 @@ export default class Nav extends Component {
   render() {
     return (
       <StyledNav>
-        <NavHamburger onClick={() => this.toggleList() }><NavIcon src={hamburgerIcon} /></NavHamburger>
-        <NavLogo to='/'><HideSpan>Hotel Black </HideSpan>92</NavLogo>
-        <NavItems onClick={() => this.toggleList() } show={this.state.showList}>
+        <NavHamburger onClick={() => this.toggleList()}><NavIcon src={hamburgerIcon} /></NavHamburger>
+        <NavLogo to='/'>
+          <HideSpan>Hotel Black
+          </HideSpan>92</NavLogo>
+        <NavItems onClick={() => this.toggleList()} show={this.state.showList}>
           <NavLink to="/rooms">Rooms</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact">Contact</NavLink>
         </NavItems>
-        <NavChatIcon onClick={() => this.showModal()} src={messageIcon} />
-        {this.state.showModal && <Modal></Modal>}
+        <NavChatIcon onClick={() => this.showModal()} src={messageIcon} /> {this.state.showModal && <Modal></Modal>}
       </StyledNav>
     )
   }
