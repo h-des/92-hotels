@@ -28,6 +28,7 @@ injectGlobal`
     font-weight: 400;
     background-color: #f9f9f9;
   }
+
 `
 
 ReactDOM.render(<App />, document.getElementById('root'));
