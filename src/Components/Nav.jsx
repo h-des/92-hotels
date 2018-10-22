@@ -95,7 +95,6 @@ const NavLink = styled(Link)`
   }
 `
 const NavIcon = styled.img`
-  display: inline;
   height: 5rem;   
   padding: 15px;
 
@@ -105,7 +104,6 @@ const NavIcon = styled.img`
 `
 
 const NavChatIcon = styled.img`
-  display: inline;
   height: 5.5rem;   
   align-self: center;
   padding: 15px;

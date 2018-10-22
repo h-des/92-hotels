@@ -82,10 +82,15 @@ class FindRoom extends Component {
 
   handleChange = (e) => {
     const {name, value} = e.target;
-
-    this.setState({
-      [name]: value
-    })
+    if((name === 'adults' || name === 'childs') && value < 0) {
+      this.setState({
+        [name]: 0
+      })
+    } else {
+      this.setState({
+        [name]: value
+      })
+    }
     
     console.log(name, value);
   }
@@ -94,17 +99,17 @@ class FindRoom extends Component {
     e.preventDefault();
     this.setState(prevState => {
       return {
-        [name]: prevState[name] + 1
+        [name]: parseInt(prevState[name]) + 1,
       }
     })
   }
-
+  
   stepDown = (e,name) => {
     e.preventDefault();
     if(this.state[name] > 0) {
       this.setState(prevState => {
         return {
-          [name]: prevState[name] - 1
+          [name]: parseInt(prevState[name]) - 1,
         }
       })
     }
@@ -125,25 +130,28 @@ class FindRoom extends Component {
         <Item>
           <ItemTitle htmlFor="adults">Adults</ItemTitle>
           <NumberInput 
-            defaultVal={0} 
-            currentVal={this.state.adults} 
-            onPlusClick={(e) => this.stepUp(e, "adults")}
-            onMinusClick={(e) => this.stepDown(e, "adults")}
+            fieldName={"adults"}
+            currentVal={this.state.adults}
+            onPlusClick={this.stepUp}
+            onChangeEvent={this.handleChange}
+            onMinusClick={this.stepDown}
             />
         </Item>
         <Item>
           <ItemTitle htmlFor="childs">Childs</ItemTitle>
           <NumberInput 
-            defaultVal={0} 
-            currentVal={this.state.childs} 
-            onPlusClick={(e) => this.stepUp(e, "childs")}
-            onMinusClick={(e) => this.stepDown(e, "childs")}
+            fieldName={'childs'}
+            onChangeEvent={this.handleChange}
+            currentVal={this.state.childs}
+            onPlusClick={this.stepUp}
+            onMinusClick={this.stepDown}
             />
         </Item>
         <Item>
           <ItemTitle htmlFor="childs">Childs</ItemTitle>
           <NumberInput 
-            defaultVal={0} 
+            fieldName={"childs"}
+            onChangeEvent={this.handleChange}
             currentVal={this.state.childs} 
             onPlusClick={(e) => this.stepUp(e, "childs")}
             onMinusClick={(e) => this.stepDown(e, "childs")}

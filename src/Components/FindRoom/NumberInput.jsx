@@ -34,21 +34,22 @@ const StyledButton = styled.button`
   }
 `
 
-const NumberInput = ({defaultVal, currentVal, onPlusClick, onMinusClick}) => {
+const NumberInput = ({defaultVal, currentVal, onPlusClick, onMinusClick, fieldName, onChangeEvent}) => {
   return (
     <StyledDiv>
-      <StyledButton onClick={onMinusClick}>-</StyledButton>
-      <StyledInput defaultValue={defaultVal} value={currentVal}></StyledInput>
-      <StyledButton onClick={onPlusClick}>+</StyledButton>
+      <StyledButton onClick={e => onMinusClick(e, fieldName)}>-</StyledButton>
+      <StyledInput name={fieldName} min={0} onChange={onChangeEvent} value={currentVal}></StyledInput>
+      <StyledButton onClick={e => onPlusClick(e, fieldName)}>+</StyledButton>
     </StyledDiv>
   )
 }
 
 NumberInput.propTypes = {
+  onChangeEvent: PropTypes.func,
   onPlusClick: PropTypes.func,
   onMinusClick: PropTypes.func,
-  defaultVal: PropTypes.number,
-  currentVal: PropTypes.number
+  currentVal: PropTypes.number,
+  fieldName: PropTypes.string
 }
 
 export default NumberInput
