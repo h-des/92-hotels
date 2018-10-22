@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Landing from './Pages/Landing';
 import RoomFetcher from './Pages/RoomList/RoomFetcher';
 import Nav from './Components/Nav';
+import About from './Pages/About/About';
 
 const StyledApp = styled.div `
 `
@@ -22,7 +23,8 @@ class App extends Component {
           {/* render Nav component everywhere except "/" */}
           <Route path="/" exact component={Landing} />
           <Route path="/" component={Nav} /> 
-          <Route path="/rooms"  render={props => <TopMargin> <RoomFetcher/> </TopMargin>} />
+          <Route path="/rooms" render={props => <TopMargin> <RoomFetcher/> </TopMargin>} />
+          <Route path="/about" component={About} />
         </StyledApp>
       </Router>
     );
