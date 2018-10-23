@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Grid, Cell } from 'styled-css-grid';
 import { Link } from 'react-router-dom';
 
-import backgroundPhoto from './../images/landing.JPG';
-import FindRoom from './../Components/FindRoom/FindRoom';
-import { Button, LinkButton } from './../Components/Buttons';
+import backgroundPhoto from '../../images/landing.JPG';
+import FindRoom from './FindRoom/FindRoom';
+import { Button, LinkButton } from '../../Components/Buttons';
 
 const StyledLanding = styled.div`
   background: url(${backgroundPhoto});

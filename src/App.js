@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import Landing from './Pages/Landing';
+import Landing from './Pages/Landing/Landing';
 import RoomFetcher from './Pages/RoomList/RoomFetcher';
 import Nav from './Components/Nav';
 import About from './Pages/About/About';

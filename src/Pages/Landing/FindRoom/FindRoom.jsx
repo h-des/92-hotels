@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import * as theme from './../../utils/theme';
+import * as theme from '../../../utils/theme';
 import moment from 'moment';
 import NumberInput from './NumberInput';
 
