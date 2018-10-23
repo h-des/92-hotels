@@ -6,7 +6,7 @@ import Landing from './Pages/Landing/Landing';
 import RoomFetcher from './Pages/RoomList/RoomFetcher';
 import Nav from './Components/Nav';
 import About from './Pages/About/About';
-import RoomView from './Pages/RoomView/RoomView';
+import RoomViewFetcher from './Pages/RoomView/RoomViewFetcher';
 
 const StyledApp = styled.div `
 `
@@ -27,7 +27,7 @@ class App extends Component {
             <Route path="/" component={Nav} /> 
           </Switch>
           <Switch>
-            <Route path="/rooms/:id" component={RoomView}/>
+            <Route path="/rooms/:id" component={RoomViewFetcher}/>
             <Route path="/rooms" render={props => <TopMargin> <RoomFetcher/> </TopMargin>} />
           </Switch>
           <Route path="/about" component={About} />

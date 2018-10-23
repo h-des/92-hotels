@@ -21,6 +21,8 @@ injectGlobal`
   html {
     box-sizing: border-box;
     font-size: 62.5%;
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
   }
 
   body {
