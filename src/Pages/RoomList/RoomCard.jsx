@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as theme from './../../utils/theme';
 import bedIcon from './../../images/bed.svg';
@@ -69,12 +70,17 @@ const CardBody = styled.div `
 
 `
 
-const CardTitle = styled.h3 `
+const CardTitle = styled(Link)`
   font-size: 2.4rem;
   font-weight: 700;
   color: ${theme.colors.black};
   margin-bottom: 1.5rem;
   line-height: 1;
+  text-decoration: none;
+
+  :hover {
+    color: ${theme.colors.primary}
+  }
 
   @media only screen and (max-width: 480px) {
     font-size: 1.8rem;
@@ -114,9 +120,7 @@ const Separator = styled.span`
 `
 
 const Icon = styled.img`
-  display: inline;
   height: 2rem;
-  margin-bottom: -5px;
   margin-left: 5px;
 `
 
@@ -168,7 +172,7 @@ export default class RoomCard extends Component {
         <CardBody>
           <LoveButton onClick={() => this.likeRoom(id)}><Icon src={heartIcon}/></LoveButton>
           <FlexColumn>
-            <CardTitle>Royal Appartment</CardTitle>
+            <CardTitle to={`/rooms/${id}`}>Royal Appartment</CardTitle>
             <CardDesc>{title.slice(0, 80)}</CardDesc>
           </FlexColumn>
           <CardDetails>
