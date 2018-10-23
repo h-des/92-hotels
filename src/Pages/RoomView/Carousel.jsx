@@ -60,10 +60,14 @@ const StyledButton = styled.button`
   background-color: transparent;
   color: white;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.1s;
 
   :hover {
     background-color: rgba(255,255,255, 0.3)
+  }
+
+  :active {
+    background-color: rgba(255,255,255, 0.5)
   }
 `
 const Separator = styled.span`
@@ -82,13 +86,13 @@ export const CarouselTitle = styled.h2`
   color: white;
 `
 
-export const CarouselSubTitle = styled.h3`
+export const CarouselSubTitle = styled.p`
   position: absolute; 
   bottom: 20px;
   left: 10px;
   font-size: 16px;
   font-weight: 600;
-  color: white;
+  color: rgba(255,255,255,0.9);
 `
 //prefetch next carousel images 
 const PrefetchImage = ({obj}) => (<InvisibleImage src={obj.props.img} />)
