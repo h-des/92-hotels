@@ -8,6 +8,7 @@ import Nav from './Components/Nav';
 import About from './Pages/About/About';
 import RoomViewFetcher from './Pages/RoomView/RoomViewFetcher';
 import Footer from './Components/Footer';
+import Contact from './Pages/Contact/Contact'
 
 const StyledApp = styled.div `
 `
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/rooms" render={props => <TopMargin> <RoomFetcher/> </TopMargin>} />
           </Switch>
           <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
           <Switch>
             <Route path="/" exact component={null} />
             <Route path="/" component={Footer} />

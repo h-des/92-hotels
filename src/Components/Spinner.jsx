@@ -23,6 +23,7 @@ const StyledSpinner = styled.div`
   width: 64px;
   height: 64px;
   padding-top: 30vh;
+  padding-bottom: 30vh;
 
   :after {
     content: " ";
