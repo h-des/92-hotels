@@ -20,10 +20,9 @@ export default class Contact extends Component {
         <MainContent>
           <Tabs>
             <TabsPanel>
-              <TabTitle>Test 1</TabTitle>
-              <TabTitle>Test 2</TabTitle>
-              <TabTitle>Test 3</TabTitle>
-              <TabTitle>Test 4</TabTitle>
+              <TabTitle>Info</TabTitle>
+              <TabTitle>Ask us!</TabTitle>
+              <TabTitle>Map</TabTitle>
             </TabsPanel>
             <TabsContainer>
               <Tab>
@@ -36,10 +35,6 @@ export default class Contact extends Component {
               </Tab>
               <Tab>
                 <h2>Test3</h2>
-                <p>Laboriosam numquam mollitia totam minima ut vel molestiae assumenda optio. Quisquam magni totam voluptatem porro ex velit aut. Ea aliquam quam tenetur dolorem vero molestiae officia. Commodi qui ea id id. Nihil rerum rerum ut quis maxime quam.</p>
-              </Tab>
-              <Tab>
-                <h2>Test4</h2>
                 <p>Laboriosam numquam mollitia totam minima ut vel molestiae assumenda optio. Quisquam magni totam voluptatem porro ex velit aut. Ea aliquam quam tenetur dolorem vero molestiae officia. Commodi qui ea id id. Nihil rerum rerum ut quis maxime quam.</p>
               </Tab>
             </TabsContainer>

@@ -23,9 +23,11 @@ injectGlobal`
     font-size: 62.5%;
     overflow: -moz-scrollbars-vertical; 
     overflow-y: scroll;
+    height: 100vh;
   }
 
   body {
+    height: 100vh;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     background-color: #f9f9f9;
