@@ -5,10 +5,12 @@ export const colors = {
   disabled: '#bababa',
   black: '#0C0C0C',
   grey: '#7D7D7D',
+  green: '#13c413'
 }
 
 export const colorsHover = {
   primary: '#626BEF',
   secondary: '#FC3679',
-  disabled: '#bababa'
+  disabled: '#bababa',
+  green: '#16e016'
 }

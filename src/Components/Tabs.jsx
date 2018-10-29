@@ -17,6 +17,7 @@ const StyledTabTitle = styled.li`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: all .2s;
 `
 
 const StyledTab = styled.div`

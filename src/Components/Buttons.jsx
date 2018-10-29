@@ -11,7 +11,7 @@ const buttonStyles = css`
   display: inline-block;
   border: solid 1px;
   border-color: ${props => theme.colors[props.color] };
-  cursor: pointer;
+  cursor: ${props => props.color === 'disabled' ? null : `pointer`};
   padding: ${props => 
     props.large ? '0.8rem 1.6rem' : props.small ? '0.4rem 0.8rem' : '.6rem 1.2rem'};
   transition: all 0.2s;
@@ -24,8 +24,8 @@ const buttonStyles = css`
 
   &:hover {
     background-color: ${props => props.outline ? 'transparent' : theme.colorsHover[props.color] };
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 2px 14px 37px 0px rgba(0,0,0,0.31);
+    transform: ${props => props.color === 'disabled' ? null : `translateY(-2px) scale(1.05)`};
+    box-shadow: ${props => props.color === 'disabled' ? null : ` 2px 14px 37px 0px rgba(0,0,0,0.31)`};
   }
 `
 
