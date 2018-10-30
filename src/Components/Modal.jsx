@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 
 const modalContainer = document.getElementById('modal-container');
-const root = document.getElementById('root');
 
 const StyledModal = styled.div`
   position: fixed;

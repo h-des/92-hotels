@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Grid, Cell } from 'styled-css-grid';
-import { Link } from 'react-router-dom';
 
 import backgroundPhoto from '../../images/landing.JPG';
 import FindRoom from './FindRoom/FindRoom';
-import { Button, LinkButton } from '../../Components/Buttons';
+import { LinkButton } from '../../Components/Buttons';
 
 const StyledLanding = styled.div`
   background: url(${backgroundPhoto});
@@ -37,8 +36,6 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
 `
-const StyledLink = StyledH1.withComponent(Link);
-
 
 export default class Landing extends Component {
   render() {

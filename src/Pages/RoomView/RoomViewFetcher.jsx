@@ -9,8 +9,8 @@ class RoomViewFetcher extends Component {
   }
 
   async componentDidMount() {
-    const id = this.props.match.params.id;
     //fake api call to download room data goes here
+    // const id = this.props.match.params.id;
     // try {
     //  const response = await fetch(`https://api.hotelblack92/roomData/${id}`);
     //  const json = await response.json();

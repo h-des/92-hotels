@@ -99,7 +99,7 @@ class FindRoom extends Component {
     e.preventDefault();
     this.setState(prevState => {
       return {
-        [name]: parseInt(prevState[name]) + 1,
+        [name]: parseInt(prevState[name], 10) + 1,
       }
     })
   }
@@ -109,7 +109,7 @@ class FindRoom extends Component {
     if(this.state[name] > 0) {
       this.setState(prevState => {
         return {
-          [name]: parseInt(prevState[name]) - 1,
+          [name]: parseInt(prevState[name], 10) - 1,
         }
       })
     }

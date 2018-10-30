@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Tabs, TabsPanel, TabTitle, TabsContainer, Tab } from '../../Components/Tabs'
-import styled, {withComponent} from 'styled-components'
+import styled from 'styled-components'
 import phoneIcon from '../../images/phone.svg'
 import pinIcon from '../../images/pin.svg'
 import socialIcon from '../../images/social.svg'
@@ -171,7 +171,6 @@ class ContactForm extends Component {
   }
   
   handleChange = (e) => {
-    const {name, email, message} = this.state;
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -190,7 +189,7 @@ class ContactForm extends Component {
 
   submit = (e) => {
     e.preventDefault();
-    const {name, error, email, message, buttonDisabled} = this.state;
+    const {name, error, email, message } = this.state;
     const isEnabled = name.length > 0 && email.length > 0 && message.length > 0 && !error;
     if(!isEnabled) {
       // form is not properly filled
@@ -203,7 +202,7 @@ class ContactForm extends Component {
   }
 
   render() {
-    const {name, error, email, message, buttonDisabled, sent, btnText} = this.state;
+    const {name, error, email, message, sent, btnText} = this.state;
     const isEnabled= name.length > 0 && email.length > 0 && message.length > 0 && !error;
     return (
       <Form onSubmit={this.submit}>
