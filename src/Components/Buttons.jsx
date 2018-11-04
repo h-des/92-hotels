@@ -1,16 +1,16 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
-import * as theme from './../utils/theme';
+// import * as theme from './../utils/theme';
 import { Link } from 'react-router-dom';
 
 
 const buttonStyles = css`
-  background-color: ${props => props.outline ? 'transparent' : theme.colors[props.color] };
-  color: ${props => props.outline ? theme.colors[props.color] : 'white' };
+  background-color: ${props => props.outline ? 'transparent' : props.theme.colors[props.color] };
+  color: ${props => props.outline ? props.theme.colors[props.color] : 'white' };
   border-radius: 4px;
   display: inline-block;
   border: solid 1px;
-  border-color: ${props => theme.colors[props.color] };
+  border-color: ${props => props.theme.colors[props.color] };
   cursor: ${props => props.color === 'disabled' ? null : `pointer`};
   padding: ${props => 
     props.large ? '0.8rem 1.6rem' : props.small ? '0.4rem 0.8rem' : '.6rem 1.2rem'};
@@ -23,7 +23,7 @@ const buttonStyles = css`
 
 
   &:hover {
-    background-color: ${props => props.outline ? 'transparent' : theme.colorsHover[props.color] };
+    background-color: ${props => props.outline ? 'transparent' : props.theme.colorsHover[props.color] };
     transform: ${props => props.color === 'disabled' ? null : `translateY(-2px) scale(1.05)`};
     box-shadow: ${props => props.color === 'disabled' ? null : ` 2px 14px 37px 0px rgba(0,0,0,0.31)`};
   }

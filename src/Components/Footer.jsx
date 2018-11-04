@@ -5,7 +5,6 @@ import fbIcon from '../images/facebook.svg'
 import youtubeIcon from '../images/youtube.svg'
 import instagramIcon from '../images/instagram.svg'
 import twitterIcon from '../images/twitter.svg'
-import * as theme from '../utils/theme';
 
 const StyledFooter = styled.footer`
   width: 100%;
@@ -142,13 +141,13 @@ const StyledButton = styled.button`
   width: 20%;
   height: 30px;
   color: white;
-  background-color: ${theme.colors.primary};
+  background-color: ${props => props.theme.colors.primary};
   border: none;
   font-weight: 900;
   cursor: pointer;
 
   :hover {
-    background-color: ${theme.colorsHover.primary};
+    background-color: ${props => props.theme.colorsHover.primary};
   }
 `
 

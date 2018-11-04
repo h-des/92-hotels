@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types';
-import * as theme from '../../../utils/theme'
 
 const StyledDiv = styled.div`
   display: flex;
@@ -23,14 +22,14 @@ const StyledButton = styled.button`
   height: 20px;
   margin: 0 3px;
   background-color: transparent;
-  color: ${theme.colors.primary};
+  color: ${props => props.theme.colors.primary};
   font-weight: 700;
   border: none;
   font-size: 18px;
   cursor: pointer
 
   :hover {
-    color: ${theme.colorsHover.primary}
+    color: ${props => props.theme.colorsHover.primary}
   }
 `
 

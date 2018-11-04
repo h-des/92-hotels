@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import * as theme from './../../utils/theme';
 import bedIcon from './../../images/bed.svg';
 import dollarIcon from './../../images/dollar.svg';
 import userIcon from './../../images/user.svg';
@@ -11,7 +10,6 @@ const Card = styled.div `
   display: flex;
   flex-direction: row;
   margin: 0 auto;
-  // max-width: 450px;
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
@@ -73,13 +71,13 @@ const CardBody = styled.div `
 const CardTitle = styled(Link)`
   font-size: 2.4rem;
   font-weight: 700;
-  color: ${theme.colors.black};
+  color: ${props => props.theme.colors.black};
   margin-bottom: 1.5rem;
   line-height: 1;
   text-decoration: none;
 
   :hover {
-    color: ${theme.colors.primary}
+    color: ${props => props.theme.colors.primary}
   }
 
   @media only screen and (max-width: 480px) {
@@ -91,7 +89,7 @@ const CardDesc = styled.p `
   font-size: 2rem;
   text-transform: capitalize;
   font-weight: 600;
-  color: ${theme.colors.grey};
+  color: ${props => props.theme.colors.grey};
   margin-bottom: 5rem;
 
   @media only screen and (max-width: 480px) {
@@ -107,7 +105,7 @@ const CardDetails = styled.div `
 `
 
 const Detail = styled.p `
-  color: ${theme.colors.primary};
+  color: ${props => props.theme.colors.primary};
   font-size: 2.8rem;
   font-weight: 400;
 `
@@ -116,7 +114,7 @@ const Separator = styled.span`
   display: inline-block;
   // height: 20px;
   width: 2px;
-  background-color: ${theme.colors.primary};
+  background-color: ${props => props.theme.colors.primary};
 `
 
 const Icon = styled.img`

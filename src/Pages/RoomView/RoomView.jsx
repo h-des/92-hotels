@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Spinner from '../../Components/Spinner';
 import { Carousel, CarouselImage, CarouselImagesContainer, CarouselPanel, CarouselTitle, CarouselSubTitle } from './Carousel';
 import styled from 'styled-components';
-import * as theme from '../../utils/theme';
 import FeatureIcon from './FeatureIcon';
 
 const Container = styled.div`
@@ -16,19 +15,19 @@ const MainContent = styled.div`
 `
 
 const HeadingBig = styled.h3`
-  color: ${theme.colors.black};
+  color: ${props => props.theme.colors.black};
   font-size: 42px;
   padding-top: 10vh;
   margin-bottom: 3vh;
 `
 const StyledHr = styled.hr`
-  color: ${theme.colors.black};
+  color: ${props => props.theme.colors.black};
   margin: 0 auto;
   margin-bottom: 6vh;
 `
 
 const Paragraph = styled.p`
-  color: ${theme.colors.black};
+  color: ${props => props.theme.colors.black};
   font-size: 20px;
   text-align: justify;
   margin: 0 auto;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import * as theme from '../../../utils/theme';
 import moment from 'moment';
 import NumberInput from './NumberInput';
 
@@ -30,7 +29,7 @@ const StyledContainer = styled.form`
 const ItemTitle = styled.label`
   font-size: 2.4rem;
   font-weight: 700;
-  color: ${theme.colors.primary};
+  color: ${props => props.theme.colors.primary};
   margin-bottom: 2rem;
 `
 
@@ -50,7 +49,7 @@ const Item = styled.div`
 `
 
 const SubmitButton = styled.button`
-  background-color: ${theme.colors.primary};
+  background-color: ${props => props.theme.colors.primary};
   cursor: pointer;
   font-weight: 600;
   color: white;
@@ -59,7 +58,7 @@ const SubmitButton = styled.button`
   border: none;
 
   :hover {
-    background-color: ${theme.colorsHover.primary}
+    background-color: ${props => props.theme.colorsHover.primary}
   }
 `
 
