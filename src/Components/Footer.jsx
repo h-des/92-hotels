@@ -15,7 +15,7 @@ const StyledFooter = styled.footer`
   grid-template-columns: minmax(20px, auto) minmax(auto, 960px) minmax(20px, auto);
 `
 
-const SocialIcon = styled.img`
+export const SocialIcon = styled.img`
   height: 30px;
 `
 
@@ -137,7 +137,7 @@ const StyledInput = styled.input`
   width: 80%;
 `
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   width: 20%;
   height: 30px;
   color: white;
