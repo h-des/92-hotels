@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import styled from 'styled-components';
 
 const StyledTabsPanel = styled.ul`
   display: flex;
   flex-direction: row;
   list-style: none;
-`
+`;
 
 const StyledTabTitle = styled.li`
-  background-color: ${props => props.active ? 'white' : '#DFDFDF'};
-  color: ${props => props.active ? 'black' : 'rgba(0,0,0, 0.6)' };
+  background-color: ${props => (props.active ? 'white' : '#DFDFDF')};
+  color: ${props => (props.active ? 'black' : 'rgba(0,0,0, 0.6)')};
   border-radius: 5px 5px 0 0;
   padding: 10px 20px;
   margin-right: 10px;
@@ -17,8 +17,8 @@ const StyledTabTitle = styled.li`
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: all .2s;
-`
+  transition: all 0.2s;
+`;
 
 const StyledTab = styled.div`
   background-color: white;
@@ -28,36 +28,32 @@ const StyledTab = styled.div`
   font-size: 16px;
   z-index: 30;
   box-shadow: 0 8px 13px rgba(0,0,0, 0.1);
-  padding: ${props => props.padding ? props.padding : '20px'}
-  margin-bottom: ${props => props.marginBottom ? props.marginBottom : '50px'};
-`
+  padding: ${props => (props.padding ? props.padding : '20px')}
+  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '50px')};
+`;
 
 export class Tabs extends Component {
   state = {
     activeTab: 0
-  }
+  };
 
-  changeTab = (id) => {
+  changeTab = id => {
     this.setState({
       activeTab: id
-    })
-  }
-  
+    });
+  };
+
   render() {
     const { children } = this.props;
     const { activeTab } = this.state;
-    const childrenToRender = React.Children.map(children, (child) => {
+    const childrenToRender = React.Children.map(children, child => {
       return React.cloneElement(child, {
         activeTab,
-        changeTab: this.changeTab,
-      })
-    })
+        changeTab: this.changeTab
+      });
+    });
 
-    return (
-      <div>
-        {childrenToRender}
-      </div>
-    )
+    return <div>{childrenToRender}</div>;
   }
 }
 
@@ -69,23 +65,24 @@ export class TabsPanel extends Component {
         click: changeTab,
         isActive: index === activeTab ? true : false,
         index
-      })
-    }) 
-    return (
-      <StyledTabsPanel role="tablist">
-        {childrenToRender}
-      </StyledTabsPanel>
-    )
+      });
+    });
+    return <StyledTabsPanel role="tablist">{childrenToRender}</StyledTabsPanel>;
   }
 }
 
-export const TabTitle = ({click, isActive, index, children}) => {
+export const TabTitle = ({ click, isActive, index, children }) => {
   return (
-    <StyledTabTitle active={isActive} role="tab" aria-selected={isActive ? "true" : "false"}  onClick={() => click(index)}>
+    <StyledTabTitle
+      active={isActive}
+      role="tab"
+      aria-selected={isActive ? 'true' : 'false'}
+      onClick={() => click(index)}
+    >
       {children}
     </StyledTabTitle>
-  )
-}
+  );
+};
 
 export class TabsContainer extends Component {
   render() {
@@ -95,14 +92,12 @@ export class TabsContainer extends Component {
         click: changeTab,
         isActive: index === activeTab ? true : false,
         index
-      })
-    }) 
+      });
+    });
     return childrenToRender;
-  } 
+  }
 }
 
-export const Tab = ({isActive, children}) => {
-  return !isActive 
-          ? null
-          : <StyledTab>{children}</StyledTab>
-}
+export const Tab = ({ isActive, children }) => {
+  return !isActive ? null : <StyledTab>{children}</StyledTab>;
+};
