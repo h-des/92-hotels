@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import RoomList from './RoomList';
-import withScrollPosition from './withScrollPostion';
+import withScrollPosition from '../../Components/Utils/withScrollPostion';
 
 class RoomFetcher extends Component {
   state = {
