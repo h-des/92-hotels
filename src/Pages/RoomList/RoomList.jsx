@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import RoomCard from './RoomCard';
+import FindRoom from '../../Components/FindRoom/FindRoom';
 
 const Grid = styled.div`
   display: grid;
@@ -26,6 +27,7 @@ class RoomList extends React.Component {
   render() {
     return (
       <Grid>
+        <FindRoom />
         <CenterCell>
           {this.props.rooms.length ? this.renderRooms() : 'Loading'}
         </CenterCell>
