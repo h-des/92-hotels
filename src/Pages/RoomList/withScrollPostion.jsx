@@ -14,7 +14,7 @@ const throttle = (func, limit) => {
 };
 
 function withScrollPosition(WrappedComponent) {
-  return class extends React.Component {
+  return class extends Component {
     constructor(props) {
       super(props);
       this.state = {

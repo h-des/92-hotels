@@ -37,7 +37,7 @@ class RoomFetcher extends Component {
       if (
         scrollPos < innerHeight &&
         scrollY > 0 &&
-        scrollHeight == prevProps.scrollInfo.scrollHeight &&
+        scrollHeight === prevProps.scrollInfo.scrollHeight &&
         scrollY !== prevProps.scrollInfo.scrollY
       ) {
         this.loadMore();
