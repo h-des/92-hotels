@@ -28,9 +28,7 @@ class RoomList extends React.Component {
     return (
       <Grid>
         <FindRoom />
-        <CenterCell>
-          {this.props.rooms.length ? this.renderRooms() : 'Loading'}
-        </CenterCell>
+        <CenterCell>{this.renderRooms()}</CenterCell>
       </Grid>
     );
   }
