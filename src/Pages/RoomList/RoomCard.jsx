@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import bedIcon from './../../images/bed.svg';
@@ -6,21 +6,21 @@ import dollarIcon from './../../images/dollar.svg';
 import userIcon from './../../images/user.svg';
 import heartIcon from './../../images/heart.svg';
 
-const Card = styled.div `
+const Card = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0 auto;
   width: 100%;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0px 11px 26px 0px rgba(0,0,0,0.09);
+  box-shadow: 0px 11px 26px 0px rgba(0, 0, 0, 0.09);
   margin-bottom: 7.5rem;
   background-color: white;
 
   @media only screen and (max-width: 600px) {
     flex-direction: column;
   }
-  `
+`;
 
 const CardImage = styled.div`
   width: 75%;
@@ -28,7 +28,7 @@ const CardImage = styled.div`
   background-image: url(${props => props.image});
   background-position: center;
   background-size: 400px 400px;
-  transition: all .3s;
+  transition: all 0.3s;
 
   :hover {
     background-size: 600px 600px;
@@ -38,14 +38,14 @@ const CardImage = styled.div`
     min-height: 30vh;
     width: 100%;
   }
-`
+`;
 
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
-const CardBody = styled.div `
+const CardBody = styled.div`
   display: flex;
   flex-direction: column;
   padding: 7rem;
@@ -61,12 +61,11 @@ const CardBody = styled.div `
   @media only screen and (max-width: 680px) {
     padding: 5rem;
   }
- 
+
   @media only screen and (max-width: 480px) {
     padding: 3rem;
   }
-
-`
+`;
 
 const CardTitle = styled(Link)`
   font-size: 2.4rem;
@@ -77,15 +76,14 @@ const CardTitle = styled(Link)`
   text-decoration: none;
 
   :hover {
-    color: ${props => props.theme.colors.primary}
+    color: ${props => props.theme.colors.primary};
   }
 
   @media only screen and (max-width: 480px) {
     font-size: 1.8rem;
   }
-  
-`
-const CardDesc = styled.p `
+`;
+const CardDesc = styled.p`
   font-size: 2rem;
   text-transform: capitalize;
   font-weight: 600;
@@ -96,38 +94,37 @@ const CardDesc = styled.p `
     font-size: 1.4rem;
     margin-bottom: 3rem;
   }
-`
+`;
 
-const CardDetails = styled.div `
+const CardDetails = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`
+`;
 
-const Detail = styled.p `
+const Detail = styled.p`
   color: ${props => props.theme.colors.primary};
   font-size: 2.8rem;
   font-weight: 400;
-`
+`;
 
 const Separator = styled.span`
   display: inline-block;
   // height: 20px;
   width: 2px;
   background-color: ${props => props.theme.colors.primary};
-`
+`;
 
 const Icon = styled.img`
   height: 2rem;
   margin-left: 5px;
-`
+`;
 
-
-const LoveButton = styled.button ` 
+const LoveButton = styled.button`
   height: 75px;
   width: 75px;
   border-radius: 50%;
-  box-shadow: 0px 5px 12px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.1);
   position: absolute;
   bottom: 5rem;
   background-color: white;
@@ -137,10 +134,9 @@ const LoveButton = styled.button `
   transition: all 0.2s ease-in-out;
   outline: none;
 
-
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.2);
   }
 
   @media only screen and (max-width: 600px) {
@@ -151,24 +147,23 @@ const LoveButton = styled.button `
     height: 55px;
     width: 55px;
   }
-` 
+`;
 
 export default class RoomCard extends Component {
+  likeRoom = id => {
+    console.log(`You liked room ${id}`);
+  };
 
-
-
-  likeRoom = (id) => {
-    console.log(`You liked room ${id}`)
-  }
-  
   render() {
     const { id, title, url } = this.props.data;
     const beds = Math.floor(Math.random() * 4) + 1;
     return (
       <Card>
-        <CardImage image={url}/>
+        <CardImage image={url} />
         <CardBody>
-          <LoveButton onClick={() => this.likeRoom(id)}><Icon src={heartIcon}/></LoveButton>
+          <LoveButton onClick={() => this.likeRoom(id)}>
+            <Icon src={heartIcon} />
+          </LoveButton>
           <FlexColumn>
             <CardTitle to={`/rooms/${id}`}>Royal Appartment</CardTitle>
             <CardDesc>{title.slice(0, 80)}</CardDesc>
@@ -179,20 +174,18 @@ export default class RoomCard extends Component {
               <Icon src={dollarIcon} alt="" />
             </Detail>
             <Separator />
-            <Detail >
-              {beds} 
+            <Detail>
+              {beds}
               <Icon src={bedIcon} alt="" />
             </Detail>
             <Separator />
             <Detail>
-              {beds * 2 - 1} 
+              {beds * 2 - 1}
               <Icon src={userIcon} alt="" />
             </Detail>
           </CardDetails>
         </CardBody>
       </Card>
-    )
+    );
   }
 }
-
-

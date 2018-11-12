@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import RoomCard from './RoomCard';
 import FindRoom from '../../Components/FindRoom/FindRoom';
+import Spinner from '../../Components/Spinner';
 
 const Grid = styled.div`
   display: grid;
@@ -19,7 +20,7 @@ const CenterCell = styled.div`
   grid-column-gap: 2rem;
 `;
 
-class RoomList extends React.Component {
+class RoomList extends React.PureComponent {
   renderRooms = () => {
     return this.props.rooms.map((e, id) => <RoomCard data={e} key={id} />);
   };
@@ -28,7 +29,10 @@ class RoomList extends React.Component {
     return (
       <Grid>
         <FindRoom />
-        <CenterCell>{this.renderRooms()}</CenterCell>
+        <CenterCell>
+          {this.renderRooms()}
+          {this.props.loading && <Spinner />}
+        </CenterCell>
       </Grid>
     );
   }
