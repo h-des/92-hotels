@@ -20,6 +20,10 @@ const CenterCell = styled.div`
   grid-column-gap: 2rem;
 `;
 
+const Center = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;
 class RoomList extends React.PureComponent {
   renderRooms = () => {
     return this.props.rooms.map((e, id) => <RoomCard data={e} key={id} />);
@@ -31,7 +35,11 @@ class RoomList extends React.PureComponent {
         <FindRoom />
         <CenterCell>
           {this.renderRooms()}
-          {this.props.loading && <Spinner />}
+          {this.props.loading && (
+            <Center>
+              <Spinner />
+            </Center>
+          )}
         </CenterCell>
       </Grid>
     );

@@ -5,10 +5,10 @@ import theme from './utils/theme';
 
 import ScrollToTop from './Components/Utils/ScrollToTop';
 import Landing from './Pages/Landing/Landing';
-import RoomFetcher from './Pages/RoomList/RoomFetcher';
+import RoomListContainer from './Pages/RoomList/RoomListContainer';
 import Nav from './Components/Nav';
 import About from './Pages/About/About';
-import RoomViewFetcher from './Pages/RoomView/RoomViewFetcher';
+import RoomViewContainer from './Pages/RoomView/RoomViewContainer';
 import Footer from './Components/Footer';
 import Contact from './Pages/Contact/Contact';
 
@@ -36,12 +36,12 @@ class App extends Component {
                 <Route path="/" component={Nav} />
               </Switch>
               <Switch>
-                <Route path="/rooms/:id" component={RoomViewFetcher} />
+                <Route path="/rooms/:id" component={RoomViewContainer} />
                 <Route
                   path="/rooms"
                   render={props => (
                     <TopMargin>
-                      <RoomFetcher />
+                      <RoomListContainer />
                     </TopMargin>
                   )}
                 />

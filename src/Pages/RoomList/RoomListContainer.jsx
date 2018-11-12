@@ -4,7 +4,7 @@ import withScrollPosition from '../../Components/Utils/withScrollPostion';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
 
-class RoomFetcher extends Component {
+class RoomListContainer extends Component {
   componentDidMount() {
     this.props.fetchRooms();
   }
@@ -24,7 +24,7 @@ class RoomFetcher extends Component {
         scrollHeight === prevProps.scrollInfo.scrollHeight &&
         scrollY !== prevProps.scrollInfo.scrollY
       ) {
-        this.loadMore();
+        this.fetchMore();
       }
     }
   }
@@ -61,5 +61,5 @@ export default withScrollPosition(
   connect(
     mapStateToProps,
     actions
-  )(RoomFetcher)
+  )(RoomListContainer)
 );

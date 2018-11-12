@@ -27,8 +27,8 @@ const StyledTab = styled.div`
   display: block;
   font-size: 16px;
   z-index: 30;
-  box-shadow: 0 8px 13px rgba(0,0,0, 0.1);
-  padding: ${props => (props.padding ? props.padding : '20px')}
+  box-shadow: 0 8px 13px rgba(0, 0, 0, 0.1);
+  padding: ${props => (props.padding ? props.padding : '20px')};
   margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '50px')};
 `;
 

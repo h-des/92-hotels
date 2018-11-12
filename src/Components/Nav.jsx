@@ -140,13 +140,13 @@ class Nav extends Component {
     return ['rooms', 'about', 'contact'].map(e => {
       if (e === pathname.slice(1)) {
         return (
-          <NavLink to={e} isActive key={e}>
+          <NavLink to={`/${e}`} isActive key={e}>
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );
       } else {
         return (
-          <NavLink to={e} key={e}>
+          <NavLink to={`/${e}`} key={e}>
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );

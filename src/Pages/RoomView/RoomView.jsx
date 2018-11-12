@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Spinner from '../../Components/Spinner';
+import Comments from './Comments';
 import {
   Carousel,
   CarouselImage,
@@ -55,12 +56,12 @@ const FeaturesContainer = styled.div`
   }
 `;
 
-const Content = styled.div`
+const ContentContainer = styled.div`
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(auto, 80%) minmax(0, auto);
   background-color: white;
 `;
-const Text = styled.div`
+const Content = styled.div`
   grid-column: 2 / span 1;
 `;
 
@@ -101,15 +102,19 @@ class RoomView extends Component {
                 <CarouselSubTitle>{roomData.desc}</CarouselSubTitle>
               </CarouselPanel>
             </Carousel>
-            <Content>
-              <Text>
+            <ContentContainer>
+              <Content>
                 <HeadingBig>{roomData.name}</HeadingBig>
                 <StyledHr />
                 <Paragraph>{roomData.longDesc}</Paragraph>
-                <HeadingBig>{roomData.name}</HeadingBig>
+                <HeadingBig>Features</HeadingBig>
+                <StyledHr />
                 <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer>
-              </Text>
-            </Content>
+                <HeadingBig>Comments</HeadingBig>
+                <StyledHr />
+                <Comments />
+              </Content>
+            </ContentContainer>
           </MainContent>
         )}
       </Container>

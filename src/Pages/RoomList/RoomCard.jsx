@@ -155,8 +155,7 @@ export default class RoomCard extends Component {
   };
 
   render() {
-    const { id, title, url } = this.props.data;
-    const beds = Math.floor(Math.random() * 4) + 1;
+    const { id, title, url, beds, price, guests } = this.props.data;
     return (
       <Card>
         <CardImage image={url} />
@@ -170,7 +169,7 @@ export default class RoomCard extends Component {
           </FlexColumn>
           <CardDetails>
             <Detail>
-              200
+              {price}
               <Icon src={dollarIcon} alt="" />
             </Detail>
             <Separator />
@@ -180,7 +179,7 @@ export default class RoomCard extends Component {
             </Detail>
             <Separator />
             <Detail>
-              {beds * 2 - 1}
+              {guests}
               <Icon src={userIcon} alt="" />
             </Detail>
           </CardDetails>
