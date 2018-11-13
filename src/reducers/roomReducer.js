@@ -24,6 +24,11 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, status: 'LOADING' };
     case 'FETCH_ROOM_INFO_FAILURE':
       return { ...state, status: 'FAILURE' };
+    case 'FETCH_ROOM_INFO_HALF':
+      return {
+        list: [...addElement(state.list, payload)],
+        ...state
+      };
     case 'FETCH_ROOM_INFO_SUCCESS':
       return {
         list: [...addInfo(state.list, payload)],
@@ -31,6 +36,17 @@ export default (state = initialState, { type, payload }) => {
       };
     default:
       return state;
+  }
+};
+
+const addElement = (arr, element) => {
+  const { id } = element;
+  const myElement = arr.filter(e => e.id == id)[0];
+  if (myElement) {
+    return addInfo(arr, element);
+  } else {
+    let res = arr.push(element);
+    return res;
   }
 };
 

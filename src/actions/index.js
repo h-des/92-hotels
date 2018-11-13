@@ -30,20 +30,42 @@ export const fetchMoreRooms = () => dispatch => {
     );
 };
 
-export const fetchRoomInfo = id => dispatch => {
+// export const fetchRoomInfo = id => dispatch => {
+//   dispatch({ type: 'FETCH_ROOM_INFO_REQUEST' });
+
+//   return axios
+//     .get(`https://jsonplaceholder.typicode.com/photos/${id}/comments?_limit=10`)
+//     .then(
+//       json =>
+//         dispatch({
+//           type: 'FETCH_ROOM_INFO_SUCCESS',
+//           payload: { ...fakeJSON, comments: json.data, id }
+//         }),
+//       err => {
+//         console.log(err);
+//         return dispatch({ type: 'FETCH_ROOM_INFO_FAILURE' });
+//       }
+//     );
+// };
+
+export const fetchFullRoomInfo = id => dispatch => {
   dispatch({ type: 'FETCH_ROOM_INFO_REQUEST' });
 
-  return axios
-    .get(`https://jsonplaceholder.typicode.com/photos/${id}/comments?_limit=10`)
-    .then(
-      json =>
-        dispatch({
-          type: 'FETCH_ROOM_INFO_SUCCESS',
-          payload: { ...fakeJSON, comments: json.data, id }
-        }),
-      err => {
-        console.log(err);
-        return dispatch({ type: 'FETCH_ROOM_INFO_FAILURE' });
-      }
-    );
+  axios
+    .get(`https://jsonplaceholder.typicode.com/photos/${id}`)
+    .then(json => {
+      dispatch({
+        type: 'FETCH_ROOM_INFO_HALF',
+        payload: json.data
+      });
+      return axios.get(
+        `https://jsonplaceholder.typicode.com/photos/${id}/comments?_limit=10`
+      ); // using response.data
+    })
+    .then(json => {
+      dispatch({
+        type: 'FETCH_ROOM_INFO_SUCCESS',
+        payload: { ...fakeJSON, comments: json.data, id }
+      });
+    });
 };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { randomDate, capitalizeFirstLetter } from '../../utils/utilsFunctions';
 
 const StyledComment = styled.div`
   display: flex;
@@ -54,34 +55,36 @@ const CommentsContainer = styled.div`
   flex-direction: column;
 `;
 
-export default class Comments extends Component {
-  render() {
-    return (
-      <CommentsContainer>
-        {Array(10)
-          .fill('')
-          .map(e => (
-            <Comment />
-          ))}
-      </CommentsContainer>
-    );
-  }
-}
+export default ({ list }) => {
+  return (
+    <CommentsContainer>
+      {list.map(e => {
+        const { body, email } = e;
+        const tempDate = randomDate(new Date(2015, 0, 1), new Date());
+        const date = `${tempDate.getUTCDate()}/${tempDate.getUTCMonth() +
+          1}/${tempDate.getUTCFullYear()}`;
+        const author = email.match(/^([^@]*)@/)[1];
+        return (
+          <Comment
+            body={capitalizeFirstLetter(body)}
+            date={date}
+            author={author}
+          />
+        );
+      })}
+    </CommentsContainer>
+  );
+};
 
 const Comment = ({ author, date, body, avatar }) => (
   <StyledComment>
     <CommentHead>
       <CommentAvatar src="https://via.placeholder.com/600/51aa97" />
       <CommentHeadContainer>
-        <CommentAuthor>John lennon</CommentAuthor>
-        <CommentDate>20.20.1203</CommentDate>
+        <CommentAuthor>{author}</CommentAuthor>
+        <CommentDate>{date}</CommentDate>
       </CommentHeadContainer>
     </CommentHead>
-    <CommentBody>
-      Many forms will become obsolete as data entry becomes standardized, OCR
-      capabilities increase, and software automates manual processes. However,
-      an user interface will always be needed. I hope these different form
-      presentations help you build better apps. Let me know what I missed.
-    </CommentBody>
+    <CommentBody>{body}</CommentBody>
   </StyledComment>
 );
