@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-
+import closeIcon from '../images/close.svg';
 
 const modalContainer = document.getElementById('modal-container');
 
@@ -11,15 +11,31 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 50vh;
-  width: 80rem;
-  max-width: 90%;
+  height: 100%;
+  width: 100%;
   background-color: white;
-  border-radius: 8px;
-  display: block;
-  box-shadow: 0 30px 70px 0 rgba(0,0,0,0.4);
-`
+  display: flex;
+  text-align: center;
+`;
 
+const StyledCloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  text-align: center;
+  &:hover {
+    background-color: #f6f6f6;
+    border-radius: 50%;
+  }
+`;
+
+const CloseIcon = styled.img`
+  height: 50px;
+  width: 50px;
+`;
 
 export default class Modal extends Component {
   element = document.createElement('div');
@@ -34,9 +50,12 @@ export default class Modal extends Component {
   render() {
     return ReactDOM.createPortal(
       <StyledModal>
+        <StyledCloseButton onClick={this.props.close}>
+          <CloseIcon src={closeIcon} />
+        </StyledCloseButton>
         {this.props.children}
       </StyledModal>,
-      this.element,    
-    )
+      this.element
+    );
   }
 }

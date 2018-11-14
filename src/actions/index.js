@@ -52,3 +52,19 @@ export const fetchFullRoomInfo = id => dispatch => {
       });
     });
 };
+
+export const fetchUser = () => dispatch => {
+  dispatch({ type: 'FETCH_USER_REQUEST' });
+
+  return axios.get('https://jsonplaceholder.typicode.com/users/1').then(
+    json => dispatch({ type: 'FETCH_USER_SUCCESS', payload: json.data }),
+    err => {
+      console.log(err);
+      return dispatch({ type: 'FETCH_USER_FAILURE' });
+    }
+  );
+};
+
+export const logOut = () => dispatch => {
+  dispatch({ type: 'LOG_OUT' });
+};

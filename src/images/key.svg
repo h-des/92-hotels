@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Key</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <path data-name="layer1"
+  d="M57.6 6.4a15 15 0 0 0-23.8 17.7L13.6 44.4l-5.9-6L2 44.1 8 50l-4.7 4.7a4.3 4.3 0 1 0 6 6l30.6-30.5A15 15 0 0 0 57.6 6.4zM51.9 22a7 7 0 1 1 0-9.9 7 7 0 0 1 0 9.9z"
+  fill="none" stroke="#13ce66" stroke-miterlimit="10" stroke-width="3" stroke-linejoin="round"
+  stroke-linecap="round"></path>
+</svg>

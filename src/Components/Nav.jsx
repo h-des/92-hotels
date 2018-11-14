@@ -5,6 +5,9 @@ import messageIcon from './../images/message.svg';
 import hamburgerIcon from './../images/hamburger.svg';
 import Modal from './Modal';
 import { withRouter } from 'react-router-dom';
+import Login from './Login';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 const breakPoint = '425px';
 
@@ -75,6 +78,27 @@ const NavItems = styled.ul`
     width: 100%;
   }
 `;
+
+const LoginButton = styled.button`
+  color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
+  font-size: 16px;
+  font-family: 'Source Sans Pro';
+  font-weight: 600;
+  margin: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  @media only screen and (max-width: ${breakPoint}) {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &:hover {
+    color: #777777;
+  }
+`;
 const NavLink = styled(Link)`
   text-decoration: none;
   color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
@@ -119,7 +143,7 @@ class Nav extends Component {
     showModal: false
   };
 
-  showModal = () => {
+  toggleModal = () => {
     this.setState(prevState => {
       return {
         showModal: !prevState.showModal
@@ -166,11 +190,30 @@ class Nav extends Component {
         <NavItems onClick={() => this.toggleList()} show={this.state.showList}>
           {this.renderList()}
         </NavItems>
-        <NavChatIcon onClick={() => this.showModal()} src={messageIcon} />{' '}
-        {this.state.showModal && <Modal />}
+        {this.props.user.data ? (
+          <LoginButton onClick={this.props.logOut}>Logout</LoginButton>
+        ) : (
+          <LoginButton onClick={() => this.toggleModal()}>Login</LoginButton>
+        )}
+        {this.state.showModal && (
+          <Modal close={() => this.toggleModal()}>
+            <Login close={() => this.toggleModal()} />
+          </Modal>
+        )}
       </StyledNav>
     );
   }
 }
 
-export default withRouter(Nav);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    actions
+  )(Nav)
+);
