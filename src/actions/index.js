@@ -30,27 +30,9 @@ export const fetchMoreRooms = () => dispatch => {
     );
 };
 
-// export const fetchRoomInfo = id => dispatch => {
-//   dispatch({ type: 'FETCH_ROOM_INFO_REQUEST' });
-
-//   return axios
-//     .get(`https://jsonplaceholder.typicode.com/photos/${id}/comments?_limit=10`)
-//     .then(
-//       json =>
-//         dispatch({
-//           type: 'FETCH_ROOM_INFO_SUCCESS',
-//           payload: { ...fakeJSON, comments: json.data, id }
-//         }),
-//       err => {
-//         console.log(err);
-//         return dispatch({ type: 'FETCH_ROOM_INFO_FAILURE' });
-//       }
-//     );
-// };
-
 export const fetchFullRoomInfo = id => dispatch => {
   dispatch({ type: 'FETCH_ROOM_INFO_REQUEST' });
-
+  //fetch basic info
   axios
     .get(`https://jsonplaceholder.typicode.com/photos/${id}`)
     .then(json => {
@@ -58,9 +40,10 @@ export const fetchFullRoomInfo = id => dispatch => {
         type: 'FETCH_ROOM_INFO_HALF',
         payload: json.data
       });
+      //fetch comments
       return axios.get(
         `https://jsonplaceholder.typicode.com/photos/${id}/comments?_limit=10`
-      ); // using response.data
+      );
     })
     .then(json => {
       dispatch({

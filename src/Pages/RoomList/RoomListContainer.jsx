@@ -10,7 +10,7 @@ class RoomListContainer extends Component {
   }
 
   loadMore = () => {
-    this.props.loadMoreRooms();
+    this.props.fetchMoreRooms();
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -24,7 +24,7 @@ class RoomListContainer extends Component {
         scrollHeight === prevProps.scrollInfo.scrollHeight &&
         scrollY !== prevProps.scrollInfo.scrollY
       ) {
-        this.fetchMore();
+        this.loadMore();
       }
     }
   }

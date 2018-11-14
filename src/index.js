@@ -33,7 +33,13 @@ injectGlobal`
     overflow: -moz-scrollbars-vertical; 
     overflow-y: scroll;
     height: 100vh;
+
+    @media only screen and (max-width: 425px) {
+      font-size: 50%;
+      
+    } 
   }
+
 
   body {
     height: 100vh;

@@ -11,11 +11,11 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, status: 'FAILURE' };
     case 'FETCH_ROOMS_SUCCESS':
       return { list: [...addProperties(payload)], status: 'SUCCESS' };
-    case 'LOAD_MORE_ROOMS_REQUEST':
+    case 'FETCH_MORE_ROOMS_REQUEST':
       return { ...state, status: 'LOADING' };
-    case 'LOAD_MORE_ROOMS_FAILURE':
+    case 'FETCH_MORE_ROOMS_FAILURE':
       return { ...state, status: 'FAILURE' };
-    case 'LOAD_MORE_ROOMS_SUCCESS':
+    case 'FETCH_MORE_ROOMS_SUCCESS':
       return {
         list: [...state.list, ...addProperties(payload)],
         status: 'SUCCESS'
@@ -42,10 +42,11 @@ export default (state = initialState, { type, payload }) => {
 const addElement = (arr, element) => {
   const { id } = element;
   const myElement = arr.filter(e => e.id == id)[0];
+  const newElement = addProperties([element])[0];
   if (myElement) {
-    return addInfo(arr, element);
+    return addInfo(arr, newElement);
   } else {
-    let res = arr.push(element);
+    let res = arr.push(newElement);
     return res;
   }
 };

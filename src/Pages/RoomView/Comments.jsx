@@ -24,25 +24,25 @@ const CommentHeadContainer = styled.div`
 `;
 
 const CommentAvatar = styled.img`
-  height: 45px;
-  width: 45px;
+  height: 4.5rem;
+  width: 4.5rem;
   border-radius: 50%;
 `;
 
 const CommentAuthor = styled.h4`
-  font-size: 24px;
+  font-size: 2.4rem;
   color: ${props => props.theme.colors.black};
   font-weight: 700;
 `;
 
 const CommentDate = styled.p`
-  font-size: 24px;
+  font-size: 2.4rem;
   color: ${props => props.theme.colors.grey};
   font-weight: 600;
 `;
 
 const CommentBody = styled.p`
-  font-size: 18px;
+  font-size: 1.8rem;
   width: 90%;
   text-align: justify;
   font-style: italic;

@@ -78,7 +78,7 @@ const NavItems = styled.ul`
 const NavLink = styled(Link)`
   text-decoration: none;
   color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: 600;
   margin: 2rem;
 
@@ -94,7 +94,7 @@ const NavLink = styled(Link)`
   }
 `;
 const NavIcon = styled.img`
-  height: 5rem;
+  height: 50px;
   padding: 15px;
 
   &:hover {
@@ -103,7 +103,7 @@ const NavIcon = styled.img`
 `;
 
 const NavChatIcon = styled.img`
-  height: 5.5rem;
+  height: 55px;
   align-self: center;
   padding: 15px;
   cursor: pointer;
