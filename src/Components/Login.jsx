@@ -34,6 +34,7 @@ const StyledInput = styled.input`
   font-size: 2rem;
   color: #5a5a5a;
   font-weight: 700;
+  font-family: 'Nunito';
 
   &:invalid {
     border: 2px solid #ff3636;
@@ -122,12 +123,18 @@ class Login extends Component {
         <LoginIcon src={loginIcon} />
         <LoginTitle>Log in to your account</LoginTitle>
         <StyledForm>
-          <StyledLabel htmlFor="">Email</StyledLabel>
-          <StyledInput type="email" name="email" onChange={this.handleInput} />
+          <StyledLabel htmlFor="email">Email</StyledLabel>
+          <StyledInput
+            type="email"
+            name="email"
+            id="email"
+            onChange={this.handleInput}
+          />
           {error && <ErrorMessage>{error}</ErrorMessage>}
-          <StyledLabel htmlFor="">Password</StyledLabel>
+          <StyledLabel htmlFor="password">Password</StyledLabel>
           <StyledInput
             type="password"
+            id="password"
             name="password"
             onChange={this.handleInput}
           />

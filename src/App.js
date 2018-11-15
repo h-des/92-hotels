@@ -11,6 +11,7 @@ import About from './Pages/About/About';
 import RoomViewContainer from './Pages/RoomView/RoomViewContainer';
 import Footer from './Components/Footer';
 import Contact from './Pages/Contact/Contact';
+import Checkout from './Pages/Checkout/Checkout';
 
 const StyledApp = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ class App extends Component {
               </Switch>
               <Route path="/about" component={About} />
               <Route path="/contact" component={Contact} />
+              <Route path="/checkout" component={Checkout} />
               <Switch>
                 <Route path="/" exact component={null} />
                 <Route path="/" component={Footer} />

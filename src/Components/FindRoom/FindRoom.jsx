@@ -33,7 +33,7 @@ const ItemTitle = styled.label`
 `;
 
 const StyledInput = styled.input`
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 1.6rem;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
@@ -55,8 +55,9 @@ const SubmitButton = styled.button`
   font-size: 20px;
   min-height: 100px;
   border: none;
+  font-family: 'Nunito';
 
-  :hover {
+  &:hover {
     background-color: ${props => props.theme.colorsHover.primary};
   }
 `;
@@ -71,11 +72,12 @@ const ShowButton = styled.button`
   color: white;
   padding: 10px 10px;
   font-weight: 600;
+  font-family: 'Nunito';
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   transition: all 0.2s;
 
-  :hover {
+  &:hover {
     background-color: ${props => props.theme.colorsHover.primary};
   }
 
