@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
-import NumberInput from './NumberInput';
+import { NumberInput } from '../Input';
+import { DatePicker } from '@atlaskit/datetime-picker';
 
 const StyledContainer = styled.form`
   background-color: white;
@@ -130,15 +131,23 @@ class FindRoom extends Component {
 
   handleChange = e => {
     const { name, value } = e.target;
-    if ((name === 'adults' || name === 'childs') && value < 0) {
+    if (
+      (name === 'adults' || name === 'childs') &&
+      value < 0 &&
+      !isNaN(value)
+    ) {
       this.setState({
         [name]: 0
       });
-    } else {
+    } else if (!isNaN(value)) {
       this.setState({
         [name]: value
       });
     }
+  };
+
+  handleDateChange = (e, name) => {
+    this.setState({ [name]: e });
   };
 
   stepUp = (e, name) => {
@@ -178,22 +187,20 @@ class FindRoom extends Component {
           <React.Fragment>
             <Item>
               <ItemTitle htmlFor="checkIn">Check in</ItemTitle>
-              <StyledInput
-                type="date"
+              <DatePicker
                 id="checkIn"
                 value={this.state.checkIn}
                 name="checkIn"
-                onChange={e => this.handleChange(e)}
+                onChange={e => this.handleDateChange(e, 'checkIn')}
               />
             </Item>
             <Item>
               <ItemTitle htmlFor="checkOut">Check out</ItemTitle>
-              <StyledInput
-                type="date"
+              <DatePicker
                 id="checkOut"
                 value={this.state.checkOut}
                 name="checkOut"
-                onChange={e => this.handleChange(e)}
+                onChange={e => this.handleDateChange(e, 'checkOut')}
               />
             </Item>
             <Item>

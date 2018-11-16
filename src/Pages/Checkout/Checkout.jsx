@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import { DatePicker } from '@atlaskit/datetime-picker';
+import { Input } from '../../Components/Input';
 
 const Container = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
+const CheckoutBody = styled.div`
   background-color: white;
   margin: 0 auto;
   width: 100%;
@@ -13,17 +21,40 @@ const Container = styled.div`
   margin-bottom: 5rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 
-  @media only screen and (max-width: 452px) {
+  @media only screen and (max-width: 625px) {
+    flex-direction: column;
   }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  text-align: left;
+  /* align-items: stretch; */
   padding: 4rem 5rem;
   width: 67%;
   color: ${props => props.theme.colors.black};
+
+  @media only screen and (max-width: 625px) {
+    width: 100%;
+  }
+`;
+
+const Total = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 33%;
+  background-color: #f6f6f6;
+  padding-top: 13rem;
+  padding-bottom: 5rem;
+  color: ${props => props.theme.colors.black};
+
+  @media only screen and (max-width: 625px) {
+    width: 100%;
+    padding-top: 2rem;
+  }
 `;
 
 const FormTitle = styled.h3`
@@ -38,36 +69,11 @@ const FormSubTitle = styled.h4`
   margin-bottom: 3rem;
 `;
 
-const Total = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 33%;
-  background-color: #f6f6f6;
-  padding-top: 13rem;
-  padding-bottom: 5rem;
-  color: ${props => props.theme.colors.black};
-`;
-
 const Label = styled.label`
   font-size: 1.6rem;
-  color: ${props => props.theme.colors.black};
+  color: #666;
   font-weight: 600;
   margin-bottom: 1.5rem;
-`;
-
-const Input = styled.input`
-  font-size: 1.6rem;
-  font-weight: 600;
-  font-family: 'Nunito', sans-serif;
-  color: ${props => props.theme.colors.black};
-  padding: 1.2rem 2rem;
-  border: none;
-  width: 100%;
-  border-radius: 2px;
-  background-color: #f1f1f1;
-  margin-bottom: 2.5rem;
 `;
 
 const TotalTitle = styled.h3`
@@ -105,9 +111,12 @@ const BackButton = styled.button`
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
+  max-width: 100px;
+  transition: all 0.2s;
+  padding: 0.5rem 0;
 
   &:hover {
-    color: ${props => props.theme.colors.primary};
+    background-color: #ddd;
   }
 `;
 
@@ -122,45 +131,107 @@ const NextButton = styled.button`
   font-size: 1.6rem;
   letter-spacing: 1px;
   cursor: pointer;
+  transition: all 0.2s;
 
   &:hover {
     background-color: #1fb6ff;
   }
 `;
 
-export default class Checkout extends Component {
+const ResetCustomInput = styled.span`
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+`;
+
+const RadioButton = styled.input``;
+
+class Checkout extends Component {
+  state = {
+    firsName: null,
+    lastName: null,
+    address: null,
+    city: null,
+    phone: null
+  };
+
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
   render() {
     return (
       <Container>
-        <Form>
-          <FormTitle>Checkout</FormTitle>
-          <FormSubTitle>Personal</FormSubTitle>
-          <Label>First name</Label>
-          <Input />
-          <Label>Last name</Label>
-          <Input />
-          <FormSubTitle>Contact</FormSubTitle>
-          <Label>Address</Label>
-          <Input />
-          <Label>City</Label>
-          <Input />
-          <Label>Phone</Label>
-          <Input />
-          <BackButton>Back</BackButton>
-        </Form>
-        <Total>
-          <FlexColumn>
-            <TotalTitle>Total</TotalTitle>
-            <Price>500$</Price>
-            <Features>
-              <Feature>2 adults</Feature>
-              <Feature>2 childs</Feature>
-              <Feature>All inclusive</Feature>
-            </Features>
-          </FlexColumn>
-          <NextButton>Pay</NextButton>
-        </Total>
+        <CheckoutBody>
+          <Form>
+            <FormTitle>Checkout</FormTitle>
+            <FormSubTitle>Details</FormSubTitle>
+            <Label>From</Label>
+            <ResetCustomInput>
+              <DatePicker isDisabled={true} value={'2018/12/12'} />
+            </ResetCustomInput>
+            <Label>To</Label>
+            <ResetCustomInput>
+              <DatePicker value={'2018/12/12'} />
+            </ResetCustomInput>
+            <FormSubTitle>Personal</FormSubTitle>
+            <Label htmlFor="firstName">First name</Label>
+            <Input
+              onChange={this.handleChange}
+              name="firstName"
+              id="firstName"
+              value={this.state.firstName}
+            />
+            <Label htmlFor="lastName">Last name</Label>
+            <Input
+              onChange={this.handleChange}
+              name="lastName"
+              id="lastName"
+              value={this.state.lastName}
+            />
+            <FormSubTitle>Contact</FormSubTitle>
+            <Label htmlFor="address">Address</Label>
+            <Input
+              onChange={this.handleChange}
+              name="address"
+              id="address"
+              value={this.state.address}
+            />
+            <Label htmlFor="city">City</Label>
+            <Input
+              onChange={this.handleChange}
+              name="city"
+              id="city"
+              value={this.state.city}
+            />
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              onChange={this.handleChange}
+              name="phone"
+              id="phone"
+              value={this.state.phone}
+            />
+            <BackButton onClick={() => this.props.history.goBack()}>
+              Back
+            </BackButton>
+          </Form>
+          <Total>
+            <FlexColumn>
+              <TotalTitle>Total</TotalTitle>
+              <Price>500$</Price>
+              <Features>
+                <Feature>2 adults</Feature>
+                <Feature>2 childs</Feature>
+                <Feature>All inclusive</Feature>
+              </Features>
+            </FlexColumn>
+            <NextButton>Pay</NextButton>
+          </Total>
+        </CheckoutBody>
       </Container>
     );
   }
 }
+
+export default withRouter(Checkout);

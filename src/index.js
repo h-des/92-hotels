@@ -30,10 +30,8 @@ injectGlobal`
   html {
     box-sizing: border-box;
     font-size: 62.5%;
-    overflow: -moz-scrollbars-vertical; 
-    overflow-y: scroll;
     height: 100vh;
-
+    
     @media only screen and (max-width: 425px) {
       font-size: 50%;
       

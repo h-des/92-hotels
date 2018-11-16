@@ -161,7 +161,7 @@ class Nav extends Component {
 
   renderList = () => {
     const { pathname } = this.props.history.location;
-    return ['rooms', 'about', 'contact'].map(e => {
+    return ['rooms', 'about', 'contact', 'checkout'].map(e => {
       if (e === pathname.slice(1)) {
         return (
           <NavLink to={`/${e}`} isActive key={e}>

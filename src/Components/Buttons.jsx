@@ -36,19 +36,13 @@ const buttonStyles = css`
   }
 `;
 
-const StyledButton = styled.button`
+const Button = styled.button`
   ${buttonStyles}
 `;
 
-const StyledLink = styled(Link)`
+const LinkButton = styled(Link)`
   ${buttonStyles}
   text-decoration: none;
 `;
 
-export const Button = props => {
-  return <StyledButton {...props}>{props.children}</StyledButton>;
-};
-
-export const LinkButton = props => {
-  return <StyledLink {...props}>{props.children}</StyledLink>;
-};
+export { Button, LinkButton };

@@ -12,6 +12,8 @@ import {
 import styled from 'styled-components';
 import FeatureIcon from './FeatureIcon';
 
+import Availability from './Availability';
+
 const Container = styled.div`
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(auto, 960px) minmax(0, auto);
@@ -49,7 +51,6 @@ const FeaturesContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 6vh;
 
   @media only screen and (max-width: 600px) {
     justify-content: space-between;
@@ -110,6 +111,9 @@ class RoomView extends Component {
                 <HeadingBig>Features</HeadingBig>
                 <StyledHr />
                 <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer>
+                <HeadingBig>Book</HeadingBig>
+                <StyledHr />
+                <Availability />
                 <HeadingBig>Comments</HeadingBig>
                 <StyledHr />
                 <Comments list={roomData.comments} />

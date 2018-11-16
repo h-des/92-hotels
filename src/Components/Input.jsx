@@ -2,19 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const Input = styled.input`
+  font-size: 1.4rem;
+  font-weight: 600;
+  font-family: 'Nunito', sans-serif;
+  color: ${props => props.theme.colors.black};
+  padding: 0.9rem 2rem;
+  border: 2px solid transparent;
+  width: 100%;
+  outline: none;
+  border-radius: 3px;
+  background-color: #f4f5f7;
+  margin-bottom: ${props =>
+    props.marginBottom ? props.marginBottom : `2.5rem`};
+
+  &:focus {
+    background-color: transparent;
+    border: 2px solid #4c9aff;
+  }
+`;
+
 const StyledDiv = styled.div`
   display: flex;
   flex: 1 1 0;
-`;
-
-const StyledInput = styled.input`
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 1.6rem;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  padding-left: 1rem;
-  width: 100%;
-  height: 22px;
 `;
 
 const StyledButton = styled.button`
@@ -26,9 +36,9 @@ const StyledButton = styled.button`
   font-weight: 700;
   border: none;
   font-size: 18px;
-  cursor: pointer
+  cursor: pointer;
 
-  :hover {
+  &:hover {
     color: ${props => props.theme.colorsHover.primary};
   }
 `;
@@ -43,11 +53,13 @@ const NumberInput = ({
   return (
     <StyledDiv>
       <StyledButton onClick={e => onMinusClick(e, fieldName)}>-</StyledButton>
-      <StyledInput
+      <Input
         name={fieldName}
+        id={fieldName}
         min={0}
         onChange={onChangeEvent}
         value={currentVal}
+        marginBottom="0.5rem"
       />
       <StyledButton onClick={e => onPlusClick(e, fieldName)}>+</StyledButton>
     </StyledDiv>
@@ -62,4 +74,4 @@ NumberInput.propTypes = {
   fieldName: PropTypes.string
 };
 
-export default NumberInput;
+export { Input, NumberInput };
