@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { DatePicker } from '@atlaskit/datetime-picker';
-import { Input } from '../../Components/Input';
+import { Input } from '../../Components/Inputs';
 
 const Container = styled.div`
   width: 100%;

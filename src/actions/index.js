@@ -68,3 +68,14 @@ export const fetchUser = () => dispatch => {
 export const logOut = () => dispatch => {
   dispatch({ type: 'LOG_OUT' });
 };
+
+export const checkAvailability = data => dispatch => {
+  //fake api call
+  //then
+
+  dispatch({ type: 'AVAILABLE', payload: data });
+};
+
+export const resetAvailability = () => dispatch => {
+  dispatch({ type: 'RESET' });
+};

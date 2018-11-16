@@ -10,11 +10,11 @@ const Input = styled.input`
   padding: 0.9rem 2rem;
   border: 2px solid transparent;
   width: 100%;
+  min-height: 40px;
   outline: none;
   border-radius: 3px;
   background-color: #f4f5f7;
-  margin-bottom: ${props =>
-    props.marginBottom ? props.marginBottom : `2.5rem`};
+  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : `0`)};
 
   &:focus {
     background-color: transparent;
@@ -25,11 +25,13 @@ const Input = styled.input`
 const StyledDiv = styled.div`
   display: flex;
   flex: 1 1 0;
+  min-height: 40px;
+  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : `0`)};
 `;
 
 const StyledButton = styled.button`
   width: 20px;
-  height: 20px;
+  height: 40px;
   margin: 0 3px;
   background-color: transparent;
   color: ${props => props.theme.colors.primary};
@@ -44,22 +46,22 @@ const StyledButton = styled.button`
 `;
 
 const NumberInput = ({
-  currentVal,
+  currentValue,
   onPlusClick,
   onMinusClick,
   fieldName,
-  onChangeEvent
+  onChangeEvent,
+  marginBottom
 }) => {
   return (
-    <StyledDiv>
+    <StyledDiv marginBottom={marginBottom}>
       <StyledButton onClick={e => onMinusClick(e, fieldName)}>-</StyledButton>
       <Input
         name={fieldName}
         id={fieldName}
         min={0}
         onChange={onChangeEvent}
-        value={currentVal}
-        marginBottom="0.5rem"
+        value={currentValue}
       />
       <StyledButton onClick={e => onPlusClick(e, fieldName)}>+</StyledButton>
     </StyledDiv>
@@ -70,7 +72,7 @@ NumberInput.propTypes = {
   onChangeEvent: PropTypes.func,
   onPlusClick: PropTypes.func,
   onMinusClick: PropTypes.func,
-  currentVal: PropTypes.number,
+  currentValue: PropTypes.number,
   fieldName: PropTypes.string
 };
 

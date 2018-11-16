@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
-import { NumberInput } from '../Input';
+import { NumberInput } from '../Inputs';
 import { DatePicker } from '@atlaskit/datetime-picker';
 
 const StyledContainer = styled.form`
@@ -74,6 +74,7 @@ const ShowButton = styled.button`
   padding: 10px 10px;
   font-weight: 600;
   font-family: 'Nunito';
+  letter-spacing: 1px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   transition: all 0.2s;
@@ -100,7 +101,7 @@ class FindRoom extends Component {
       .add(1, 'days')
       .format('YYYY-MM-DD'),
     adults: 0,
-    childs: 0,
+    children: 0,
     allIncusive: false
   };
 
@@ -207,18 +208,18 @@ class FindRoom extends Component {
               <ItemTitle htmlFor="adults">Adults</ItemTitle>
               <NumberInput
                 fieldName={'adults'}
-                currentVal={this.state.adults}
+                currentValue={this.state.adults}
                 onPlusClick={this.stepUp}
                 onChangeEvent={this.handleChange}
                 onMinusClick={this.stepDown}
               />
             </Item>
             <Item>
-              <ItemTitle htmlFor="childs">Childs</ItemTitle>
+              <ItemTitle htmlFor="children">Children</ItemTitle>
               <NumberInput
-                fieldName={'childs'}
+                fieldName={'children'}
                 onChangeEvent={this.handleChange}
-                currentVal={this.state.childs}
+                currentValue={this.state.children}
                 onPlusClick={this.stepUp}
                 onMinusClick={this.stepDown}
               />
