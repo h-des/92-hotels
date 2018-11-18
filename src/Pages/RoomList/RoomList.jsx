@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import RoomCard from './RoomCard';
-import FindRoom from '../../Components/FindRoom/FindRoom';
+import FindRoom from '../../Components/FindRoom';
 import Spinner from '../../Components/Spinner';
 
 const Grid = styled.div`

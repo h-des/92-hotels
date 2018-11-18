@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
-import { NumberInput } from '../Inputs';
+import { NumberInput } from './Inputs';
 import { DatePicker } from '@atlaskit/datetime-picker';
 
 const StyledContainer = styled.form`
@@ -133,7 +133,7 @@ class FindRoom extends Component {
   handleChange = e => {
     const { name, value } = e.target;
     if (
-      (name === 'adults' || name === 'childs') &&
+      (name === 'adults' || name === 'children') &&
       value < 0 &&
       !isNaN(value)
     ) {

@@ -113,7 +113,7 @@ class RoomView extends Component {
                 <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer>
                 <HeadingBig>Book</HeadingBig>
                 <StyledHr />
-                <Availability />
+                <Availability price={roomData.price} id={roomData.id} />
                 <HeadingBig>Comments</HeadingBig>
                 <StyledHr />
                 <Comments list={roomData.comments} />

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import { DatePicker } from '@atlaskit/datetime-picker';
+import { withRouter, Redirect } from 'react-router-dom';
+import moment from 'moment';
 import { Input } from '../../Components/Inputs';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import Checkbox from '../../Components/Checkbox';
 
 const Container = styled.div`
   width: 100%;
@@ -69,6 +72,9 @@ const FormSubTitle = styled.h4`
   margin-bottom: 3rem;
 `;
 
+const Group = styled.div`
+  margin-bottom: 2rem;
+`;
 const Label = styled.label`
   font-size: 1.6rem;
   color: #666;
@@ -136,6 +142,12 @@ const NextButton = styled.button`
   &:hover {
     background-color: #1fb6ff;
   }
+
+  &:disabled {
+    background-color: #ccc;
+    color: ${props => props.theme.colors.black};
+    cursor: initial;
+  }
 `;
 
 const ResetCustomInput = styled.span`
@@ -147,71 +159,128 @@ const RadioButton = styled.input``;
 
 class Checkout extends Component {
   state = {
-    firsName: null,
-    lastName: null,
-    address: null,
-    city: null,
-    phone: null
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    phone: '',
+    price: '',
+    breakfast: false
   };
 
-  handleChange = e => {
+  componentDidMount() {
+    if (this.props.checkout) {
+      if (this.props.checkout.status === 'AVAILABLE') {
+        const { checkIn, checkOut, price } = this.props.checkout.data;
+        let a = moment(checkIn);
+        let b = moment(checkOut);
+        const len = Math.abs(a.diff(b, 'days'));
+        this.setState({
+          price: len * price
+        });
+      }
+    }
+  }
+
+  handleCheckbox = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.checked
     });
   };
 
+  handleChange = e => {
+    if (e.target.name === 'phone') {
+      const val = e.target.value.replace(/\D/g, '');
+      this.setState({
+        [e.target.name]: val
+      });
+    } else {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+  };
+
+  pay = () => {
+    const data = { ...this.state };
+    this.props.proceedToPayment(data);
+  };
+
   render() {
+    if (this.props.checkout.status !== 'AVAILABLE') {
+      return <Redirect to="/rooms" />;
+    }
+    const renderPayButton = () => {
+      let shouldRender =
+        Object.values(this.state).filter(e => e === '').length > 0
+          ? false
+          : true;
+      if (shouldRender) return <NextButton onClick={this.pay}>Pay</NextButton>;
+      return <NextButton disabled>Pay</NextButton>;
+    };
+    const {
+      checkIn,
+      checkOut,
+      adults,
+      children,
+      price
+    } = this.props.checkout.data;
     return (
       <Container>
         <CheckoutBody>
           <Form>
             <FormTitle>Checkout</FormTitle>
-            <FormSubTitle>Details</FormSubTitle>
-            <Label>From</Label>
-            <ResetCustomInput>
-              <DatePicker isDisabled={true} value={'2018/12/12'} />
-            </ResetCustomInput>
-            <Label>To</Label>
-            <ResetCustomInput>
-              <DatePicker value={'2018/12/12'} />
-            </ResetCustomInput>
-            <FormSubTitle>Personal</FormSubTitle>
-            <Label htmlFor="firstName">First name</Label>
-            <Input
-              onChange={this.handleChange}
-              name="firstName"
-              id="firstName"
-              value={this.state.firstName}
-            />
-            <Label htmlFor="lastName">Last name</Label>
-            <Input
-              onChange={this.handleChange}
-              name="lastName"
-              id="lastName"
-              value={this.state.lastName}
-            />
-            <FormSubTitle>Contact</FormSubTitle>
-            <Label htmlFor="address">Address</Label>
-            <Input
-              onChange={this.handleChange}
-              name="address"
-              id="address"
-              value={this.state.address}
-            />
-            <Label htmlFor="city">City</Label>
-            <Input
-              onChange={this.handleChange}
-              name="city"
-              id="city"
-              value={this.state.city}
-            />
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              onChange={this.handleChange}
-              name="phone"
-              id="phone"
-              value={this.state.phone}
-            />
+            <Group>
+              <FormSubTitle>Details</FormSubTitle>
+              <Checkbox
+                onChangeE={this.handleCheckbox}
+                name="breakfast"
+                checked={this.state.breakfast}
+              >
+                Breakfast included
+              </Checkbox>
+            </Group>
+            <Group>
+              <FormSubTitle>Personal</FormSubTitle>
+              <Label htmlFor="firstName">First name</Label>
+              <Input
+                onChange={this.handleChange}
+                name="firstName"
+                id="firstName"
+                value={this.state.firstName}
+              />
+              <Label htmlFor="lastName">Last name</Label>
+              <Input
+                onChange={this.handleChange}
+                name="lastName"
+                id="lastName"
+                value={this.state.lastName}
+              />
+            </Group>
+            <Group>
+              <FormSubTitle>Contact</FormSubTitle>
+              <Label htmlFor="address">Address</Label>
+              <Input
+                onChange={this.handleChange}
+                name="address"
+                id="address"
+                value={this.state.address}
+              />
+              <Label htmlFor="city">City</Label>
+              <Input
+                onChange={this.handleChange}
+                name="city"
+                id="city"
+                value={this.state.city}
+              />
+              <Label htmlFor="phone">Phone</Label>
+              <Input
+                onChange={this.handleChange}
+                name="phone"
+                id="phone"
+                value={this.state.phone}
+              />
+            </Group>
             <BackButton onClick={() => this.props.history.goBack()}>
               Back
             </BackButton>
@@ -219,14 +288,21 @@ class Checkout extends Component {
           <Total>
             <FlexColumn>
               <TotalTitle>Total</TotalTitle>
-              <Price>500$</Price>
+              <Price>{this.state.price}$</Price>
               <Features>
-                <Feature>2 adults</Feature>
-                <Feature>2 childs</Feature>
+                <Feature>{price}$ per night</Feature>
+                <Feature>From: {checkIn}</Feature>
+                <Feature>To: {checkOut}</Feature>
+                <Feature>
+                  {adults} {adults !== 1 ? 'adults' : 'adult'}
+                </Feature>
+                <Feature>
+                  {children} {children !== 1 ? 'children' : 'child'}
+                </Feature>
                 <Feature>All inclusive</Feature>
               </Features>
             </FlexColumn>
-            <NextButton>Pay</NextButton>
+            {renderPayButton()}
           </Total>
         </CheckoutBody>
       </Container>
@@ -234,4 +310,15 @@ class Checkout extends Component {
   }
 }
 
-export default withRouter(Checkout);
+const mapStateToProps = state => {
+  return {
+    checkout: state.checkout
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    actions
+  )(Checkout)
+);

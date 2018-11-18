@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '../../Components/Buttons';
+import { Button, LinkButton } from '../../Components/Buttons';
 import moment from 'moment';
 import styled from 'styled-components';
 import { DatePicker } from '@atlaskit/datetime-picker';
@@ -91,7 +91,7 @@ class Availability extends Component {
       this.props.resetAvailability();
     }
     if (
-      (name === 'adults' || name === 'childs') &&
+      (name === 'adults' || name === 'children') &&
       value < 0 &&
       !isNaN(value)
     ) {
@@ -141,7 +141,8 @@ class Availability extends Component {
   checkAvailability = e => {
     e.preventDefault();
     const { checkIn, checkOut, adults, children } = this.state;
-    const data = { checkIn, checkOut, adults, children };
+    const { price, id } = this.props;
+    const data = { checkIn, checkOut, adults, children, price, id };
 
     this.props.checkAvailability(data);
   };
@@ -219,7 +220,9 @@ class Availability extends Component {
         <Actions>
           {this.renderCTA()}
           {this.props.availability.status == 'AVAILABLE' ? (
-            <Button color="green">Book now!</Button>
+            <LinkButton to="/checkout" color="green">
+              Book now!
+            </LinkButton>
           ) : (
             <Button color="disabled" disabled>
               Book now!

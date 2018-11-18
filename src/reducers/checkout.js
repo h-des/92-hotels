@@ -9,6 +9,8 @@ export default (state = initialState, { type, payload }) => {
       return { data: payload, status: 'AVAILABLE' };
     case 'RESET':
       return { data: null, status: 'WAITING' };
+    case 'PROCEED_TO_PAYMENT':
+      return { ...state, data: { ...state.data, ...payload } };
     default:
       return state;
   }

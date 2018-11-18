@@ -79,3 +79,7 @@ export const checkAvailability = data => dispatch => {
 export const resetAvailability = () => dispatch => {
   dispatch({ type: 'RESET' });
 };
+
+export const proceedToPayment = data => dispatch => {
+  dispatch({ type: 'PROCEED_TO_PAYMENT', payload: data });
+};
