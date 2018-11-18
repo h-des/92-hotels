@@ -10,7 +10,7 @@ export default (state = initialState, { type, payload }) => {
     case 'RESET':
       return { data: null, status: 'WAITING' };
     case 'PROCEED_TO_PAYMENT':
-      return { ...state, data: { ...state.data, ...payload } };
+      return { data: { ...state.data, ...payload }, status: 'CARD_DETAILS' };
     default:
       return state;
   }

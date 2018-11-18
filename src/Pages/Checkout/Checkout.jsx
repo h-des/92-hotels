@@ -6,6 +6,8 @@ import { Input } from '../../Components/Inputs';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Checkbox from '../../Components/Checkbox';
+import CardDetails from './CardDetails';
+import Modal from '../../Components/Modal';
 
 const Container = styled.div`
   width: 100%;
@@ -207,6 +209,13 @@ class Checkout extends Component {
   };
 
   render() {
+    if (this.props.checkout.status === 'CARD_DETAILS') {
+      return (
+        <Modal close={this.props.resetAvailability}>
+          <CardDetails data={this.props.checkout.data} />
+        </Modal>
+      );
+    }
     if (this.props.checkout.status !== 'AVAILABLE') {
       return <Redirect to="/rooms" />;
     }
