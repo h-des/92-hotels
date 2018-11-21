@@ -69,6 +69,7 @@ export default ({ list }) => {
             body={capitalizeFirstLetter(body)}
             date={date}
             author={author}
+            key={author}
           />
         );
       })}

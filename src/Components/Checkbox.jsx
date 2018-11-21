@@ -30,7 +30,7 @@ const Span = styled.span`
   }
 `;
 
-export default ({ name, onChangeE, checked, children, margin }) => (
+export default ({ name, onChange, checked, children, margin }) => (
   <Label htmlFor={name} margin={margin}>
     <Span checked={checked} />
     <Input
@@ -38,7 +38,7 @@ export default ({ name, onChangeE, checked, children, margin }) => (
       id={name}
       type="checkbox"
       checked={checked}
-      onChange={onChangeE}
+      onChange={onChange}
     />
     {children}
   </Label>

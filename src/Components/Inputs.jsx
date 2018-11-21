@@ -8,13 +8,14 @@ const Input = styled.input`
   font-family: 'Nunito', sans-serif;
   color: ${props => props.theme.colors.black};
   padding: 0.9rem 2rem;
-  border: 2px solid transparent;
+  border: ${props => (props.error ? '2px solid red' : '2px solid transparent')};
   width: 100%;
   min-height: 40px;
   outline: none;
-  border-radius: 3px;
+  border-radius: '3px';
   background-color: #f4f5f7;
   margin-bottom: ${props => (props.marginBottom ? props.marginBottom : `0`)};
+  transition: border-color 0.2s;
 
   &:focus {
     background-color: transparent;

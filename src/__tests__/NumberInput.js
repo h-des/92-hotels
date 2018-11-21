@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import NumberInput from '../Pages/Landing/FindRoom/NumberInput';
+import { NumberInput } from '../Components/Inputs';
 
 describe('Test NumberInput', () => {
   const mockOnClickPlus = jest.fn();

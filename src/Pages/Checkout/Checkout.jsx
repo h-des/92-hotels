@@ -8,13 +8,15 @@ import * as actions from '../../actions';
 import Checkbox from '../../Components/Checkbox';
 import CardDetails from './CardDetails';
 import Modal from '../../Components/Modal';
+import { Form, Field } from 'react-final-form';
+import Total from './Total';
 
-const Container = styled.div`
+const StyledForm = styled.form`
   width: 100%;
   text-align: center;
 `;
 
-const CheckoutBody = styled.div`
+const CheckoutContainer = styled.div`
   background-color: white;
   margin: 0 auto;
   width: 100%;
@@ -31,11 +33,10 @@ const CheckoutBody = styled.div`
   }
 `;
 
-const Form = styled.form`
+const CheckoutBody = styled.div`
   display: flex;
   flex-direction: column;
   text-align: left;
-  /* align-items: stretch; */
   padding: 4rem 5rem;
   width: 67%;
   color: ${props => props.theme.colors.black};
@@ -45,28 +46,12 @@ const Form = styled.form`
   }
 `;
 
-const Total = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 33%;
-  background-color: #f6f6f6;
-  padding-top: 13rem;
-  padding-bottom: 5rem;
-  color: ${props => props.theme.colors.black};
-
-  @media only screen and (max-width: 625px) {
-    width: 100%;
-    padding-top: 2rem;
-  }
-`;
-
 const FormTitle = styled.h3`
   font-size: 3rem;
   font-weight: 600;
   margin-bottom: 4rem;
 `;
+
 const FormSubTitle = styled.h4`
   font-size: 2.4rem;
   font-weight: 600;
@@ -74,41 +59,11 @@ const FormSubTitle = styled.h4`
   margin-bottom: 3rem;
 `;
 
-const Group = styled.div`
-  margin-bottom: 2rem;
-`;
 const Label = styled.label`
   font-size: 1.6rem;
   color: #666;
   font-weight: 600;
   margin-bottom: 1.5rem;
-`;
-
-const TotalTitle = styled.h3`
-  font-size: 3rem;
-  font-weight: 500;
-  margin-bottom: 3rem;
-`;
-
-const Price = styled.p`
-  font-size: 4rem;
-  font-weight: 600;
-  margin-bottom: 4rem;
-  color: #1fb6ff;
-`;
-
-const Features = styled.ul``;
-
-const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Feature = styled.li`
-  font-size: 1.4rem;
-  color: #4c4c4c;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
 `;
 
 const BackButton = styled.button`
@@ -126,6 +81,12 @@ const BackButton = styled.button`
   &:hover {
     background-color: #ddd;
   }
+`;
+
+const Message = styled.p`
+  font-size: 1.2rem;
+  color: red;
+  margin-bottom: 0.9rem;
 `;
 
 const NextButton = styled.button`
@@ -152,60 +113,11 @@ const NextButton = styled.button`
   }
 `;
 
-const ResetCustomInput = styled.span`
-  font-size: 1.4rem;
-  margin-bottom: 2.5rem;
-`;
-
-const RadioButton = styled.input``;
+const required = value => (value ? undefined : 'Required');
 
 class Checkout extends Component {
-  state = {
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    phone: '',
-    price: '',
-    breakfast: false
-  };
-
-  componentDidMount() {
-    if (this.props.checkout) {
-      if (this.props.checkout.status === 'AVAILABLE') {
-        const { checkIn, checkOut, price } = this.props.checkout.data;
-        let a = moment(checkIn);
-        let b = moment(checkOut);
-        const len = Math.abs(a.diff(b, 'days'));
-        this.setState({
-          price: len * price
-        });
-      }
-    }
-  }
-
-  handleCheckbox = e => {
-    this.setState({
-      [e.target.name]: e.target.checked
-    });
-  };
-
-  handleChange = e => {
-    if (e.target.name === 'phone') {
-      const val = e.target.value.replace(/\D/g, '');
-      this.setState({
-        [e.target.name]: val
-      });
-    } else {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
-    }
-  };
-
-  pay = () => {
-    const data = { ...this.state };
-    this.props.proceedToPayment(data);
+  pay = e => {
+    this.props.proceedToPayment(e);
   };
 
   render() {
@@ -219,102 +131,139 @@ class Checkout extends Component {
     if (this.props.checkout.status !== 'AVAILABLE') {
       return <Redirect to="/rooms" />;
     }
-    const renderPayButton = () => {
-      let shouldRender =
-        Object.values(this.state).filter(e => e === '').length > 0
-          ? false
-          : true;
-      if (shouldRender) return <NextButton onClick={this.pay}>Pay</NextButton>;
-      return <NextButton disabled>Pay</NextButton>;
-    };
-    const {
-      checkIn,
-      checkOut,
-      adults,
-      children,
-      price
-    } = this.props.checkout.data;
     return (
-      <Container>
-        <CheckoutBody>
-          <Form>
-            <FormTitle>Checkout</FormTitle>
-            <Group>
-              <FormSubTitle>Details</FormSubTitle>
-              <Checkbox
-                onChangeE={this.handleCheckbox}
-                name="breakfast"
-                checked={this.state.breakfast}
-              >
-                Breakfast included
-              </Checkbox>
-            </Group>
-            <Group>
-              <FormSubTitle>Personal</FormSubTitle>
-              <Label htmlFor="firstName">First name</Label>
-              <Input
-                onChange={this.handleChange}
-                name="firstName"
-                id="firstName"
-                value={this.state.firstName}
-              />
-              <Label htmlFor="lastName">Last name</Label>
-              <Input
-                onChange={this.handleChange}
-                name="lastName"
-                id="lastName"
-                value={this.state.lastName}
-              />
-            </Group>
-            <Group>
-              <FormSubTitle>Contact</FormSubTitle>
-              <Label htmlFor="address">Address</Label>
-              <Input
-                onChange={this.handleChange}
-                name="address"
-                id="address"
-                value={this.state.address}
-              />
-              <Label htmlFor="city">City</Label>
-              <Input
-                onChange={this.handleChange}
-                name="city"
-                id="city"
-                value={this.state.city}
-              />
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                onChange={this.handleChange}
-                name="phone"
-                id="phone"
-                value={this.state.phone}
-              />
-            </Group>
-            <BackButton onClick={() => this.props.history.goBack()}>
-              Back
-            </BackButton>
-          </Form>
-          <Total>
-            <FlexColumn>
-              <TotalTitle>Total</TotalTitle>
-              <Price>{this.state.price}$</Price>
-              <Features>
-                <Feature>{price}$ per night</Feature>
-                <Feature>From: {checkIn}</Feature>
-                <Feature>To: {checkOut}</Feature>
-                <Feature>
-                  {adults} {adults !== 1 ? 'adults' : 'adult'}
-                </Feature>
-                <Feature>
-                  {children} {children !== 1 ? 'children' : 'child'}
-                </Feature>
-                <Feature>All inclusive</Feature>
-              </Features>
-            </FlexColumn>
-            {renderPayButton()}
-          </Total>
-        </CheckoutBody>
-      </Container>
+      <Form
+        onSubmit={this.pay}
+        initialValues={{ breakfast: false }}
+        render={({ handleSubmit, pristine, invalid, values }) => {
+          return (
+            <StyledForm onSubmit={handleSubmit}>
+              <CheckoutContainer>
+                <CheckoutBody>
+                  <FormTitle>Checkout</FormTitle>
+                  <FormSubTitle>Details</FormSubTitle>
+                  <Field
+                    name="breakfast"
+                    type="checkbox"
+                    render={({ input }) => (
+                      <React.Fragment>
+                        <Checkbox {...input} margin="0 0 2.5rem 0">
+                          Breakfast included
+                        </Checkbox>
+                      </React.Fragment>
+                    )}
+                  />
+                  <FormSubTitle>Personal</FormSubTitle>
+                  <Field
+                    name="firstName"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="firstName">First name</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <Field
+                    name="lastName"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="lastName">Last name</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <FormSubTitle>Contact</FormSubTitle>
+                  <Field
+                    name="address"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <Field
+                    name="city"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="city">City</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <Field
+                    name="phone"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <BackButton onClick={() => this.props.history.goBack()}>
+                    Back
+                  </BackButton>
+                </CheckoutBody>
+                <Total data={this.props.checkout.data}>
+                  <NextButton disabled={pristine || invalid} type="submit">
+                    Pay
+                  </NextButton>
+                </Total>
+              </CheckoutContainer>
+            </StyledForm>
+          );
+        }}
+      />
     );
   }
 }
