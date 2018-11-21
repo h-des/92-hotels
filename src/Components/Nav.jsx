@@ -92,7 +92,7 @@ const LoginButton = styled.button`
     width: 100%;
     text-align: center;
     margin-left: 0;
-    margin-right: 0;
+    margin-right: 0.5rem;
   }
 
   &:hover {
@@ -126,17 +126,6 @@ const NavIcon = styled.img`
   }
 `;
 
-const NavChatIcon = styled.img`
-  height: 55px;
-  align-self: center;
-  padding: 15px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f6f6f6;
-  }
-`;
-
 class Nav extends Component {
   state = {
     showList: false,
@@ -161,7 +150,7 @@ class Nav extends Component {
 
   renderList = () => {
     const { pathname } = this.props.history.location;
-    return ['rooms', 'about', 'contact', 'checkout'].map(e => {
+    return ['rooms', 'about', 'contact'].map(e => {
       if (e === pathname.slice(1)) {
         return (
           <NavLink to={`/${e}`} isActive key={e}>

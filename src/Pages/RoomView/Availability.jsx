@@ -87,7 +87,7 @@ class Availability extends Component {
 
   handleChange = e => {
     const { name, value } = e.target;
-    if (this.props.availability.status !== 'WAITING') {
+    if (this.props.availability.checkoutStatus !== 'WAITING') {
       this.props.resetAvailability();
     }
     if (
@@ -106,7 +106,7 @@ class Availability extends Component {
   };
 
   handleDateChange = (e, name) => {
-    if (this.props.availability.status !== 'WAITING') {
+    if (this.props.availability.scheckoutStatus !== 'WAITING') {
       this.props.resetAvailability();
     }
     this.setState({ [name]: e });
@@ -114,7 +114,7 @@ class Availability extends Component {
 
   stepUp = (e, name) => {
     e.preventDefault();
-    if (this.props.availability.status !== 'WAITING') {
+    if (this.props.availability.checkoutStatus !== 'WAITING') {
       this.props.resetAvailability();
     }
     this.setState(prevState => {
@@ -126,7 +126,7 @@ class Availability extends Component {
 
   stepDown = (e, name) => {
     e.preventDefault();
-    if (this.props.availability.status !== 'WAITING') {
+    if (this.props.availability.checkoutStatus !== 'WAITING') {
       this.props.resetAvailability();
     }
     if (this.state[name] > 0) {
@@ -148,7 +148,7 @@ class Availability extends Component {
   };
 
   renderCTA = () => {
-    switch (this.props.availability.status) {
+    switch (this.props.availability.checkoutStatus) {
       case 'AVAILABLE':
         return <Message available>Available!</Message>;
       case 'NOT_AVAILABLE':
@@ -219,7 +219,7 @@ class Availability extends Component {
         </Fields>
         <Actions>
           {this.renderCTA()}
-          {this.props.availability.status == 'AVAILABLE' ? (
+          {this.props.availability.checkoutStatus == 'AVAILABLE' ? (
             <LinkButton to="/checkout" color="green">
               Book now!
             </LinkButton>

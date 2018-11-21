@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import arrow from '../../images/arrow-left.svg';
+import formatString from 'format-string-by-pattern';
+import { Form, Field } from 'react-final-form';
+import { capitalizeFirstLetter } from '../../utils/utilsFunctions';
+import { SpinnerRectangles } from '../../Components/Spinner';
+import moment from 'moment';
 
 const Contaier = styled.div`
   display: flex;
@@ -56,13 +60,14 @@ const Input = styled.input`
   width: 100%;
   border: none;
   background-color: transparent;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.36);
+  border-bottom: ${props =>
+    props.error ? '1px solid red' : '1px solid rgba(255, 255, 255, 0.36)'};
   font-size: 2rem;
   font-weight: 700;
   font-family: 'Nunito', sans-serif;
   color: white;
-  margin-bottom: 3rem;
-  transition: all 0.2s;
+  margin-bottom: ${props => (props.error ? '0' : `3rem`)};
+  transition: border 0.2s;
   text-align: ${props => (props.short ? `center` : `left`)};
 
   &::placeholder {
@@ -72,6 +77,17 @@ const Input = styled.input`
   &:focus {
     border-bottom: 1px solid white;
   }
+`;
+
+const Message = styled.p`
+  color: red;
+  font-size: 1.2rem;
+  margin-bottom: 1.4rem;
+`;
+
+const Status = styled.p`
+  color: ${props => props.color || props.theme.colors.green};
+  font-size: 2.4rem;
 `;
 
 const Fieldset = styled.fieldset`
@@ -112,157 +128,144 @@ const PayButton = styled.button`
   }
 `;
 
-const BackIcon = styled.img`
-  height: 4rem;
-  width: 4rem;
-`;
-
-const BackButton = styled.button`
-  margin-bottom: 10rem;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  align-self: flex-start;
-`;
+//validation
+const required = value => (value ? undefined : 'Required');
+const length = len => value => {
+  if (!value) return 'Required';
+  if (value.length < len) return 'Invalid length';
+  return undefined;
+};
+const length2 = length(2); //month
+const length3 = length(3); //cvv
+const length4 = length(4); //year
+const length16 = length(16 + 3); //card number 16 characters + 3 spaces
+const formatOnlyNumbers = mask => str => {
+  const onlyNumbers = str.replace(/[^\d]/g, '');
+  if (!onlyNumbers) return null;
+  return formatString(mask, onlyNumbers);
+};
+const mask = { name: 'card', parse: '0000 0000 0000 0000' };
+const details = [
+  { name: 'month', parse: 'mm', validate: length2 },
+  { name: 'year', parse: 'yyyy', validate: length4 },
+  { name: 'cvv', parse: 'xxx', validate: length3 }
+];
 
 export default class CardDetails extends Component {
-  state = {
-    owner: '',
-    number: '',
-    month: '',
-    year: '',
-    cvv: ''
-  };
+  constructor(props) {
+    super(props);
+    const { checkIn, checkOut, price } = props.data;
+    let a = moment(checkIn);
+    let b = moment(checkOut);
+    const len = Math.abs(a.diff(b, 'days'));
+    const totalPrice = len * price || 0;
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+    this.state = {
+      totalPrice
+    };
+  }
 
-  handleCardInfo = e => {
-    const val = e.target.value.replace(/\D/g, '');
-    let allowChange = false;
-    switch (e.target.name) {
-      case 'number':
-        if (
-          this.state.number.length < 16 ||
-          (this.state.number.length === 16 && val.length < 16)
-        ) {
-          allowChange = true;
-        }
-        break;
-      case 'month':
-        if (
-          this.state.month.length < 2 ||
-          (this.state.month.length === 2 && val.length < 2)
-        ) {
-          allowChange = true;
-        }
-        break;
-      case 'year':
-        if (
-          this.state.year.length < 4 ||
-          (this.state.year.length === 4 && val.length < 4)
-        ) {
-          allowChange = true;
-        }
-        break;
-      case 'cvv':
-        if (
-          this.state.cvv.length < 3 ||
-          (this.state.cvv.length === 3 && val.length < 3)
-        ) {
-          allowChange = true;
-        }
-        break;
-      default:
-        allowChange = false;
-    }
-    if (allowChange) {
-      this.setState({
-        [e.target.name]: val
-      });
-    }
-  };
-
-  renderButton = () => {
-    const { month, year, owner, number, cvv } = this.state;
-    if (
-      month.length === 2 &&
-      year.length === 4 &&
-      owner.length > 0 &&
-      number.length === 16 &&
-      cvv.length === 3
-    ) {
-      return <PayButton>Pay {this.props.price}$</PayButton>;
-    }
-    return <PayButton disabled>Pay {this.props.price}$</PayButton>;
+  pay = e => {
+    this.props.pay(e);
   };
 
   render() {
+    if (this.props.status === 'PAYMENT_SUCCESS')
+      return (
+        <Contaier>
+          <Status>Success!</Status>
+        </Contaier>
+      );
+    if (this.props.status === 'PAYMENT_ERROR')
+      return (
+        <Contaier>
+          <Status color={'red'}>Something went wrong. Try again</Status>
+        </Contaier>
+      );
     return (
       <Contaier>
-        <StyledForm>
-          {/* <BackButton>
-            <BackIcon src={arrow} />
-          </BackButton> */}
-          <FormTitle>Card details</FormTitle>
-          <Label htmlFor="owner">Card owner</Label>
-          <Input
-            name="owner"
-            id="owner"
-            onChange={this.handleChange}
-            value={this.state.owner}
-          />
-          <Label htmlFor="number">Number</Label>
-          <Input
-            value={this.state.number}
-            name="number"
-            id="number"
-            onChange={this.handleCardInfo}
-          />
-          <Fieldset>
-            <Legend>Expiration Date</Legend>
-            <HorizontalContainer>
-              <VerticalContainer>
-                <Label htmlFor="month">Month</Label>
-                <Input
-                  value={this.state.month}
-                  onChange={this.handleCardInfo}
-                  short
-                  placeholder="mm"
-                  name="month"
-                  id="month"
-                />
-              </VerticalContainer>
-              <VerticalContainer>
-                <Label htmlFor="year">Year</Label>
-                <Input
-                  value={this.state.year}
-                  onChange={this.handleCardInfo}
-                  short
-                  placeholder="yyyy"
-                  name="year"
-                  id="year"
-                />
-              </VerticalContainer>
-              <VerticalContainer>
-                <Label htmlFor="cvv">CVV</Label>
-                <Input
-                  value={this.state.cvv}
-                  onChange={this.handleCardInfo}
-                  short
-                  placeholder="xxx"
-                  name="cvv"
-                  id="cvv"
-                />
-              </VerticalContainer>
-            </HorizontalContainer>
-          </Fieldset>
-          {this.renderButton()}
-        </StyledForm>
+        <Form
+          onSubmit={this.pay}
+          render={({ handleSubmit, invalid, pristine }) => (
+            <StyledForm>
+              <FormTitle>Card details</FormTitle>
+              <Field
+                name="owner"
+                validate={required}
+                render={({ input, meta }) => (
+                  <React.Fragment>
+                    <Label htmlFor="owner">Card owner</Label>
+                    <Input
+                      {...input}
+                      error={meta.touched && meta.error && meta.invalid}
+                    />
+                    {meta.touched && meta.error && (
+                      <Message>{meta.error}</Message>
+                    )}
+                  </React.Fragment>
+                )}
+              />
+              <Field
+                name="number"
+                validate={length16}
+                parse={formatOnlyNumbers(mask.parse)}
+                render={({ input, meta }) => (
+                  <React.Fragment>
+                    <Label htmlFor="number">Number</Label>
+                    <Input
+                      {...input}
+                      error={meta.touched && meta.error && meta.invalid}
+                    />
+                    {meta.touched && meta.error && (
+                      <Message>{meta.error}</Message>
+                    )}
+                  </React.Fragment>
+                )}
+              />
+              <Fieldset>
+                <Legend>Expiration Date</Legend>
+                <HorizontalContainer>
+                  {details.map(e => (
+                    <VerticalContainer key={e.name}>
+                      <Field
+                        name={e.name}
+                        validate={e.validate}
+                        parse={formatOnlyNumbers(e.parse)}
+                        render={({ input, meta }) => (
+                          <React.Fragment>
+                            <Label htmlFor={e.name}>
+                              {capitalizeFirstLetter(e.name)}
+                            </Label>
+                            <Input
+                              short
+                              placeholder={e.parse}
+                              {...input}
+                              error={meta.touched && meta.error && meta.invalid}
+                            />
+                            {meta.touched && meta.error && (
+                              <Message>{meta.error}</Message>
+                            )}
+                          </React.Fragment>
+                        )}
+                      />
+                    </VerticalContainer>
+                  ))}
+                </HorizontalContainer>
+              </Fieldset>
+              <PayButton
+                onClick={handleSubmit}
+                type="submit"
+                disabled={pristine || invalid}
+              >
+                {this.props.status === 'PAYMENT_IN_PROGRESS' ? (
+                  <SpinnerRectangles color={'#333'} />
+                ) : (
+                  `Pay ${this.state.totalPrice}$`
+                )}
+              </PayButton>
+            </StyledForm>
+          )}
+        />
       </Contaier>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Spinner from '../../Components/Spinner';
+import { Spinner } from '../../Components/Spinner';
 import Comments from './Comments';
 import {
   Carousel,

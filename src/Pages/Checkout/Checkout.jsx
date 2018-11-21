@@ -121,14 +121,18 @@ class Checkout extends Component {
   };
 
   render() {
-    if (this.props.checkout.status === 'CARD_DETAILS') {
+    if (this.props.checkout.checkoutStatus === 'CARD_DETAILS') {
       return (
         <Modal close={this.props.resetAvailability}>
-          <CardDetails data={this.props.checkout.data} />
+          <CardDetails
+            data={this.props.checkout.data}
+            pay={this.props.pay}
+            status={this.props.checkout.paymentStatus}
+          />
         </Modal>
       );
     }
-    if (this.props.checkout.status !== 'AVAILABLE') {
+    if (this.props.checkout.checkoutStatus !== 'AVAILABLE') {
       return <Redirect to="/rooms" />;
     }
     return (

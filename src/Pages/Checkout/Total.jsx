@@ -57,7 +57,7 @@ export default class Total extends Component {
       <TotalContainer>
         <FlexColumn>
           <TotalTitle>Total</TotalTitle>
-          <Price>{price}$</Price>
+          <Price>{totalPrice}$</Price>
           <Features>
             <Feature>{price}$ per night</Feature>
             <Feature>From: {checkIn}</Feature>

@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-
-//css by https://loading.io/css/
+import React from 'react';
 
 const spinnerKeyframes = keyframes`
   0% {
@@ -14,9 +13,9 @@ const spinnerKeyframes = keyframes`
   100% {
     transform: rotate(1800deg);
   }
-`
+`;
 
-const StyledSpinner = styled.div`
+const Spinner = styled.div`
   display: inline-block;
   position: relative;
   width: 64px;
@@ -25,7 +24,7 @@ const StyledSpinner = styled.div`
   padding-bottom: 30vh;
 
   :after {
-    content: " ";
+    content: ' ';
     display: block;
     border-radius: 50%;
     width: 0;
@@ -36,7 +35,47 @@ const StyledSpinner = styled.div`
     border-color: #000 transparent #000 transparent;
     animation: ${spinnerKeyframes} 1.2s infinite;
   }
-`
+`;
 
+const skStretchdelay = keyframes`
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+`;
 
-export default StyledSpinner;
+const SpinnerContainer = styled.div`
+  margin: 0 auto;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 8px;
+`;
+
+const Rect = styled.div`
+  background-color: ${props => props.bgColor || 'white'};
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  margin: 0 2px;
+
+  -webkit-animation: ${skStretchdelay} 1.2s infinite ease-in-out;
+  animation: ${skStretchdelay} 1.2s infinite ease-in-out;
+  -webkit-animation-delay: ${props => props.delay};
+  animation-delay: ${props => props.delay};
+`;
+
+const SpinnerRectangles = ({ color }) => (
+  <SpinnerContainer>
+    <Rect delay="-1.2s" bgColor={color} />
+    <Rect delay="-1.1s" bgColor={color} />
+    <Rect delay="-1.0s" bgColor={color} />
+    <Rect delay="-0.9s" bgColor={color} />
+    <Rect delay="-0.8s" bgColor={color} />
+  </SpinnerContainer>
+);
+
+export { Spinner, SpinnerRectangles };

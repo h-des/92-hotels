@@ -8,6 +8,7 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "final-form": "^4.11.0",
+    "format-string-by-pattern": "^1.0.0",
     "google-map-react": "^1.0.9",
     "jest-styled-components": "^6.2.2",
     "moment": "^2.22.2",

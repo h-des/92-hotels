@@ -83,3 +83,11 @@ export const resetAvailability = () => dispatch => {
 export const proceedToPayment = data => dispatch => {
   dispatch({ type: 'PROCEED_TO_PAYMENT', payload: data });
 };
+
+export const pay = data => dispatch => {
+  dispatch({ type: 'PAY' });
+
+  setTimeout(() => {
+    dispatch({ type: 'SUCCESS' });
+  }, 2000);
+};
