@@ -15,6 +15,18 @@ export const fetchRooms = () => dispatch => {
     );
 };
 
+export const fetchRoomTiles = () => dispatch => {
+  //fake api call
+  let res = [];
+  for (let i = 0; i < 10; i++) {
+    res.push({
+      url: `https://source.unsplash.com/600x300/?city,${i}`,
+      city: 'PARIS'
+    });
+  }
+  dispatch({ type: 'FETCH_ROOM_TILES_LOADED', payload: res });
+};
+
 export const fetchMoreRooms = () => dispatch => {
   dispatch({ type: 'FETCH_MORE_ROOMS_REQUEST' });
 

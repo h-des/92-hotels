@@ -29,7 +29,6 @@ const buttonStyles = css`
   &:hover {
     background-color: ${props =>
       props.outline ? 'transparent' : props.theme.colorsHover[props.color]};
-    transform: ${props => (props.disabled ? undefined : `translateY(-1px)`)};
     box-shadow: ${props =>
       props.disabled ? undefined : ` 0 8px 15px 0px rgba(0,0,0,0.31)`};
   }

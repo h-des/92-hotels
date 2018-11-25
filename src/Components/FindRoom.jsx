@@ -12,6 +12,7 @@ const StyledContainer = styled.form`
   display: flex;
   flex-direction: column;
   left: 0;
+  top: 10vh;
   width: 30rem;
   max-width: 100%;
   box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
