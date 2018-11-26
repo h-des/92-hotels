@@ -82,8 +82,8 @@ const NavItems = styled.ul`
 const LoginButton = styled.button`
   color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
   font-size: 16px;
-  font-family: 'Source Sans Pro';
   font-weight: 600;
+  font-family: 'Nunito', sans-serif;
   margin: 2rem;
   background-color: transparent;
   border: none;
@@ -150,7 +150,10 @@ class Nav extends Component {
 
   renderList = () => {
     const { pathname } = this.props.history.location;
-    return ['rooms', 'about', 'contact'].map(e => {
+    const list = this.props.user.data
+      ? ['rooms', 'about', 'settings']
+      : ['rooms', 'about'];
+    return list.map(e => {
       if (e === pathname.slice(1)) {
         return (
           <NavLink to={`/${e}`} isActive key={e}>

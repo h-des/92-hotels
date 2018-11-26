@@ -63,7 +63,7 @@ export default ({ list }) => {
         const tempDate = randomDate(new Date(2015, 0, 1), new Date());
         const date = `${tempDate.getUTCDate()}/${tempDate.getUTCMonth() +
           1}/${tempDate.getUTCFullYear()}`;
-        const author = email.match(/^([^@]*)@/)[1];
+        const author = email.split('@')[0];
         return (
           <Comment
             body={capitalizeFirstLetter(body)}

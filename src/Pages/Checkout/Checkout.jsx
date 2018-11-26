@@ -236,6 +236,25 @@ class Checkout extends Component {
                     )}
                   />
                   <Field
+                    name="zipcode"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="zipcode">Zip code</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <Field
                     name="phone"
                     validate={required}
                     render={({ input, meta }) => (

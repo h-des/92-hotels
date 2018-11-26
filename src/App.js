@@ -10,7 +10,7 @@ import Nav from './Components/Nav';
 import About from './Pages/About/About';
 import RoomViewContainer from './Pages/RoomView/RoomViewContainer';
 import Footer from './Components/Footer';
-import Contact from './Pages/Contact/Contact';
+import Settings from './Pages/Settings/Settings';
 import Checkout from './Pages/Checkout/Checkout';
 
 const StyledApp = styled.div`
@@ -48,7 +48,7 @@ class App extends Component {
                 />
               </Switch>
               <Route path="/about" component={About} />
-              <Route path="/contact" component={Contact} />
+              <Route path="/settings" component={Settings} />
               <Route path="/checkout" component={Checkout} />
               <Switch>
                 <Route path="/" exact component={null} />
