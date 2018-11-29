@@ -36,10 +36,6 @@ const AnimatedImage = styled.div`
   background-size: cover;
 `;
 
-const InvisibleImage = styled.img`
-  visibility: hidden;
-  display: none;
-`;
 const ButtonGroup = styled.div`
   position: absolute;
   bottom: 20px;
@@ -95,8 +91,6 @@ export const CarouselSubTitle = styled.p`
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
 `;
-//prefetch next carousel images
-const PrefetchImage = ({ obj }) => <InvisibleImage src={obj.props.img} />;
 
 //Main Component
 export class Carousel extends Component {
@@ -168,22 +162,27 @@ export class CarouselImagesContainer extends Component {
     this.props.setSize(len);
   }
 
+  preloadImages = () => {
+    const { children, activeIndex } = this.props;
+    const preLeft = (activeIndex - 1 + children.length) % children.length || 0;
+    const preRight = (activeIndex + 1) % children.length || 0;
+
+    [preLeft, preRight].map(id => {
+      let image = new Image();
+      image.src = children[id].props.img;
+      return image;
+    });
+  };
+
   render() {
     const { children, activeIndex } = this.props;
-    const prefetchIndex =
-      activeIndex < children.length - 1 ? activeIndex + 1 : 0;
     const renderChildren = React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
         isActive: activeIndex === index
       });
     });
-
-    return (
-      <React.Fragment>
-        <PrefetchImage obj={children[prefetchIndex]} />
-        {renderChildren[activeIndex]}
-      </React.Fragment>
-    );
+    this.preloadImages();
+    return <React.Fragment>{renderChildren[activeIndex]}</React.Fragment>;
   }
 }
 

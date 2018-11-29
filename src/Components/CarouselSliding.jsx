@@ -171,7 +171,21 @@ export default class CarouselSliding extends React.Component {
     return this.getList(toShow, status);
   };
 
+  preloadImages = () => {
+    const { items } = this.props;
+    const { active } = this.state;
+    const preLeft = (active - 1 + items.length) % items.length || 0;
+    const preRight = (active + 2) % items.length || 0;
+
+    [preLeft, preRight].map(id => {
+      let image = new Image();
+      image.src = items[id].url;
+      return image;
+    });
+  };
+
   render() {
+    if (this.props.items.length) this.preloadImages();
     return (
       <StyledCarousel>
         <List>
