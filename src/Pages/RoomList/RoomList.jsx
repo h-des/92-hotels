@@ -5,7 +5,7 @@ import FindRoom from '../../Components/FindRoom';
 import { Spinner } from '../../Components/Spinner';
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: minmax(20px, auto) minmax(auto, 1140px) minmax(
+  grid-template-columns: minmax(20px, auto) minmax(auto, 114rem) minmax(
       20px,
       auto
     );

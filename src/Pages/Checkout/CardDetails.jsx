@@ -130,15 +130,15 @@ const PayButton = styled.button`
 
 //validation
 const required = value => (value ? undefined : 'Required');
-const length = len => value => {
+const lengthEqualTo = len => value => {
   if (!value) return 'Required';
   if (value.length < len) return 'Invalid length';
   return undefined;
 };
-const length2 = length(2); //month
-const length3 = length(3); //cvv
-const length4 = length(4); //year
-const length16 = length(16 + 3); //card number 16 characters + 3 spaces
+const lengthEqualTo2 = lengthEqualTo(2); //month
+const lengthEqualTo3 = lengthEqualTo(3); //cvv
+const lengthEqualTo4 = lengthEqualTo(4); //year
+const lengthEqualTo16 = lengthEqualTo(16 + 3); //card number 16 characters + 3 spaces
 const formatOnlyNumbers = mask => str => {
   const onlyNumbers = str.replace(/[^\d]/g, '');
   if (!onlyNumbers) return null;
@@ -146,9 +146,9 @@ const formatOnlyNumbers = mask => str => {
 };
 const mask = { name: 'card', parse: '0000 0000 0000 0000' };
 const details = [
-  { name: 'month', parse: 'mm', validate: length2 },
-  { name: 'year', parse: 'yyyy', validate: length4 },
-  { name: 'cvv', parse: 'xxx', validate: length3 }
+  { name: 'month', parse: 'mm', validate: lengthEqualTo2 },
+  { name: 'year', parse: 'yyyy', validate: lengthEqualTo4 },
+  { name: 'cvv', parse: 'xxx', validate: lengthEqualTo3 }
 ];
 
 export default class CardDetails extends Component {
@@ -207,7 +207,7 @@ export default class CardDetails extends Component {
               />
               <Field
                 name="number"
-                validate={length16}
+                validate={lengthEqualTo16}
                 parse={formatOnlyNumbers(mask.parse)}
                 render={({ input, meta }) => (
                   <React.Fragment>

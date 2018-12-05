@@ -7,19 +7,18 @@ import {
   Tab
 } from '../../Components/Tabs';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Profile from './Profile';
 import Address from './Address';
 import History from './History';
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(auto, 960px) minmax(0, auto);
+  grid-template-columns: minmax(0, auto) minmax(auto, 96rem) minmax(0, auto);
 `;
 
 const MainContent = styled.div`
   grid-column: 2 / span 1;
-  padding-top: 80px;
+  padding-top: 8rem;
   position: relative;
   width: 80%;
   margin: 0 auto;

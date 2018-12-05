@@ -1,23 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import fbIcon from '../images/facebook.svg'
-import youtubeIcon from '../images/youtube.svg'
-import instagramIcon from '../images/instagram.svg'
-import twitterIcon from '../images/twitter.svg'
+import fbIcon from '../images/facebook.svg';
+import youtubeIcon from '../images/youtube.svg';
+import instagramIcon from '../images/instagram.svg';
+import twitterIcon from '../images/twitter.svg';
 
 const StyledFooter = styled.footer`
   width: 100%;
   background-color: black;
   display: grid;
   color: white;
-  font-size: 16px;
-  grid-template-columns: minmax(20px, auto) minmax(auto, 960px) minmax(20px, auto);
-`
+  font-size: 1.6rem;
+  grid-template-columns: minmax(2rem, auto) minmax(auto, 96rem) minmax(
+      20px,
+      auto
+    );
+`;
 
 export const SocialIcon = styled.img`
   height: 30px;
-`
+`;
 
 const Container = styled.div`
   grid-column: 2 / span 1;
@@ -25,7 +28,7 @@ const Container = styled.div`
   width: 100%;
   padding-bottom: 10vh;
   text-align: center;
-`
+`;
 
 const SocialContainer = styled.ul`
   display: flex;
@@ -33,20 +36,19 @@ const SocialContainer = styled.ul`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  max-width: 300px;
-`
+  max-width: 30rem;
+`;
 const UpperContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
-  
+  margin-bottom: 2rem;
 
   @media only screen and (max-width: 650px) {
     flex-direction: column-reverse;
     align-items: center;
   }
-`
+`;
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -61,7 +63,7 @@ const InfoContainer = styled.div`
   @media only screen and (max-width: 425px) {
     flex-direction: column-reverse;
   }
-`
+`;
 const LinksContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,19 +73,19 @@ const LinksContainer = styled.div`
     text-align: center;
     margin-bottom: 30px;
   }
-`
+`;
 const ContactContainer = styled.div`
   display: flex;
   text-align: left;
   flex-direction: column;
-  max-width: 200px;
+  max-width: 20rem;
 
   @media only screen and (max-width: 425px) {
     text-align: center;
     margin: 0 auto;
     margin-bottom: 30px;
   }
-`
+`;
 const ActionContainer = styled.form`
   display: flex;
   flex-direction: column;
@@ -93,8 +95,8 @@ const ActionContainer = styled.form`
   @media only screen and (max-width: 650px) {
     width: 80%;
     margin-bottom: 20px;
-  } 
-`
+  }
+`;
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -103,23 +105,23 @@ const BottomContainer = styled.div`
   @media only screen and (max-width: 650px) {
     width: 80%;
     margin: 0 auto;
-  } 
+  }
 
-   @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 425px) {
     flex-direction: column;
     align-items: center;
   }
-`
+`;
 const Logo = styled(Link)`
   text-decoration: none;
   color: white;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 700;
   cursor: pointer;
   :hover {
     color: #ddd;
   }
-`
+`;
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: white;
@@ -127,19 +129,19 @@ const StyledLink = styled(Link)`
   :hover {
     color: #ddd;
   }
-`
+`;
 const StyledInput = styled.input`
-  height: 30px;
+  height: 3rem;
   font-weight: 700;
   font-family: 'Source Sans Pro', sans-serif;
   color: #333;
-  padding: 10px 20px;
+  padding: 1rem 2rem;
   width: 80%;
-`
+`;
 
 export const StyledButton = styled.button`
   width: 20%;
-  height: 30px;
+  height: 3rem;
   color: white;
   background-color: ${props => props.theme.colors.primary};
   border: none;
@@ -149,79 +151,81 @@ export const StyledButton = styled.button`
   :hover {
     background-color: ${props => props.theme.colorsHover.primary};
   }
-`
+`;
 
 const StyledUl = styled.ul`
   list-style: none;
-`
+`;
 
 export default class Footer extends Component {
   render() {
-    return <StyledFooter>
-      <Container>
-        <UpperContainer>
-          <InfoContainer>
-            <LinksContainer>
-              <h4>Map</h4>
-              <StyledUl>
-                <li>
-                  <StyledLink to="/Rooms">Rooms</StyledLink>
-                </li>
-                <li>
-                  <StyledLink to="/About">About</StyledLink>
-                </li>
-                <li>
-                  <StyledLink to="/Contact">Contact</StyledLink>
-                </li>
-              </StyledUl>
-            </LinksContainer>
-            <ContactContainer>
-              <h4>Contact</h4>
-              <p>Hotel Black 92</p>
-              <p>
-                574 Cronin Cliffs, Edenton Cambridgeshire, 68575-0942
-                United Kingdom
+    return (
+      <StyledFooter>
+        <Container>
+          <UpperContainer>
+            <InfoContainer>
+              <LinksContainer>
+                <h4>Map</h4>
+                <StyledUl>
+                  <li>
+                    <StyledLink to="/Rooms">Rooms</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink to="/About">About</StyledLink>
+                  </li>
+                  <li>
+                    <StyledLink to="/Contact">Contact</StyledLink>
+                  </li>
+                </StyledUl>
+              </LinksContainer>
+              <ContactContainer>
+                <h4>Contact</h4>
+                <p>Hotel Black 92</p>
+                <p>
+                  574 Cronin Cliffs, Edenton Cambridgeshire, 68575-0942 United
+                  Kingdom
                 </p>
-            </ContactContainer>
-          </InfoContainer>
-          <ActionContainer>
-            <label htmlFor="subscribe">Subscribe!</label>
-            <div>
-              <StyledInput type="email" id="subscribe" />
-              <StyledButton type="submit">GO</StyledButton>
-              <p>
-                Sign up for a newsletter to Dolor nostrum saepe ea sequi
-                quisquam.
+              </ContactContainer>
+            </InfoContainer>
+            <ActionContainer>
+              <label htmlFor="subscribe">Subscribe!</label>
+              <div>
+                <StyledInput type="email" id="subscribe" />
+                <StyledButton type="submit">GO</StyledButton>
+                <p>
+                  Sign up for a newsletter to Dolor nostrum saepe ea sequi
+                  quisquam.
                 </p>
-            </div>
-          </ActionContainer>
-        </UpperContainer>
-        <BottomContainer>
-          <SocialContainer>
-            <li>
-              <StyledLink to="/">
-                <SocialIcon src={ fbIcon } />
-              </StyledLink>
-            </li>
-            <li>
-              <StyledLink to="/">
-                <SocialIcon src={ youtubeIcon } />
-              </StyledLink>
-            </li>
-            <li>
-              <StyledLink to="/">
-                <SocialIcon src={ instagramIcon } />
-              </StyledLink>
-            </li>
-            <li>
-              <StyledLink to="/">
-                <SocialIcon src={ twitterIcon } />
-              </StyledLink>
-            </li>
-          </SocialContainer>
-          <Logo to="/">Hotel Black 92</Logo>
-        </BottomContainer>
-      </Container>
-    </StyledFooter>
+              </div>
+            </ActionContainer>
+          </UpperContainer>
+          <BottomContainer>
+            <SocialContainer>
+              <li>
+                <StyledLink to="/">
+                  <SocialIcon src={fbIcon} />
+                </StyledLink>
+              </li>
+              <li>
+                <StyledLink to="/">
+                  <SocialIcon src={youtubeIcon} />
+                </StyledLink>
+              </li>
+              <li>
+                <StyledLink to="/">
+                  <SocialIcon src={instagramIcon} />
+                </StyledLink>
+              </li>
+              <li>
+                <StyledLink to="/">
+                  <SocialIcon src={twitterIcon} />
+                </StyledLink>
+              </li>
+            </SocialContainer>
+            <Logo to="/">Hotel Black 92</Logo>
+          </BottomContainer>
+        </Container>
+      </StyledFooter>
+    );
   }
 }

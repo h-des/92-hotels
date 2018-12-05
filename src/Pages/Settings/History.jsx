@@ -20,7 +20,10 @@ const Rating = styled.div`
   align-items: center;
   padding: 0 2rem;
 `;
-const StarIcon = styled.img``;
+const StarIcon = styled.img`
+  height: 2.5rem;
+  margin-bottom: 1rem;
+`;
 const Rate = styled.p``;
 const Review = styled.div`
   font-size: 1.4rem;

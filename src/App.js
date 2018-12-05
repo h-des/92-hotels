@@ -21,7 +21,7 @@ const StyledApp = styled.div`
 `;
 
 const TopMargin = styled.div`
-  padding-top: 80px;
+  padding-top: 8rem;
 `;
 
 class App extends Component {
@@ -50,10 +50,8 @@ class App extends Component {
               <Route path="/about" component={About} />
               <Route path="/settings" component={Settings} />
               <Route path="/checkout" component={Checkout} />
-              <Switch>
-                <Route path="/" exact component={null} />
-                <Route path="/" component={Footer} />
-              </Switch>
+
+              <Route path="/" component={Footer} />
             </ScrollToTop>
           </StyledApp>
         </ThemeProvider>

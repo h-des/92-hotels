@@ -16,7 +16,7 @@ import Availability from './Availability';
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, auto) minmax(auto, 960px) minmax(0, auto);
+  grid-template-columns: minmax(0, auto) minmax(auto, 96rem) minmax(0, auto);
 `;
 
 const MainContent = styled.div`
@@ -26,7 +26,7 @@ const MainContent = styled.div`
 
 const HeadingBig = styled.h3`
   color: ${props => props.theme.colors.black};
-  font-size: 42px;
+  font-size: 4.2rem;
   padding-top: 10vh;
   margin-bottom: 3vh;
 `;
@@ -38,7 +38,7 @@ const StyledHr = styled.hr`
 
 const Paragraph = styled.p`
   color: ${props => props.theme.colors.black};
-  font-size: 20px;
+  font-size: 2rem;
   text-align: justify;
   margin: 0 auto;
 

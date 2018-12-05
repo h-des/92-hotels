@@ -11,7 +11,7 @@ import * as actions from '../actions';
 
 const breakPoint = '425px';
 
-const StyledNav = styled.nav`
+const StyledNav = styled.header`
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -24,7 +24,7 @@ const StyledNav = styled.nav`
   }
 `;
 
-const NavContainer = styled.div`
+const NavContainer = styled.nav`
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -56,15 +56,18 @@ const NavHamburger = styled.button`
 
 const NavLogo = styled(Link)`
   align-self: center;
-  font-weight: 900;
-  font-size: 1.8rem;
-  margin: 2rem;
   text-decoration: none;
-  color: #0c0c0c;
 
   @media only screen and (max-width: ${breakPoint}) {
     text-align: center;
   }
+`;
+
+const StyledH1 = styled.h1`
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin: 2rem;
+  color: #0c0c0c;
 `;
 
 const HideSpan = styled.span`
@@ -91,7 +94,7 @@ const NavItems = styled.ul`
 
 const LoginButton = styled.button`
   color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
   margin: 2rem;
@@ -114,7 +117,7 @@ const LoginButton = styled.button`
 const NavLink = styled(Link)`
   text-decoration: none;
   color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 600;
   margin: 2rem;
 
@@ -190,7 +193,9 @@ class Nav extends Component {
         </NavHamburger>
         <NavContainer>
           <NavLogo to="/">
-            <HideSpan>Hotel Black</HideSpan>92
+            <StyledH1>
+              <HideSpan>Hotel Black</HideSpan>92
+            </StyledH1>
           </NavLogo>
           <NavItems
             onClick={() => this.toggleList()}

@@ -72,12 +72,12 @@ const ShowButton = styled.button`
   cursor: pointer;
   border: none;
   color: white;
-  padding: 10px 10px;
+  padding: 1rem 1rem;
   font-weight: 600;
   font-family: 'Nunito';
   letter-spacing: 1px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
   transition: all 0.2s;
 
   &:hover {

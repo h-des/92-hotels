@@ -10,11 +10,11 @@ const StyledTabsPanel = styled.ul`
 const StyledTabTitle = styled.li`
   background-color: ${props => (props.active ? 'white' : '#DFDFDF')};
   color: ${props => (props.active ? 'black' : 'rgba(0,0,0, 0.6)')};
-  border-radius: 5px 5px 0 0;
-  padding: 10px 20px;
-  margin-right: 10px;
-  min-width: 70px;
-  font-size: 16px;
+  border-radius: 0.5rem 0.5rem 0 0;
+  padding: 1rem 2rem;
+  margin-right: 1rem;
+  min-width: 7rem;
+  font-size: 1.6rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
@@ -23,13 +23,13 @@ const StyledTabTitle = styled.li`
 const StyledTab = styled.div`
   background-color: white;
   width: 100%;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 0.5rem 0.5rem;
   display: block;
-  font-size: 16px;
+  font-size: 1.6rem;
   z-index: 30;
-  box-shadow: 0 8px 13px rgba(0, 0, 0, 0.1);
-  padding: ${props => (props.padding ? props.padding : '20px')};
-  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '50px')};
+  box-shadow: 0 0.8rem 1.3rem rgba(0, 0, 0, 0.1);
+  padding: ${props => (props.padding ? props.padding : '2rem')};
+  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '5rem')};
 `;
 
 export class Tabs extends Component {

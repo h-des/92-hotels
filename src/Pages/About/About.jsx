@@ -4,7 +4,7 @@ import image1 from './../../images/landing.JPG';
 
 const Article = styled.article`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(min-content, 960px) minmax(
+  grid-template-columns: minmax(0, 1fr) minmax(min-content, 96rem) minmax(
       0,
       1fr
     );
@@ -15,38 +15,38 @@ const Text = styled.div`
   background-color: white;
   height: 100%;
   display: block;
-  padding-top: 20px;
-  padding-bottom: 100px;
+  padding-top: 2rem;
+  padding-bottom: 10rem;
   margin: 0 auto;
-  padding-left: 7em;
-  padding-right: 7em;
+  padding-left: 7rem;
+  padding-right: 7rem;
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 
   @media only screen and (max-width: 600px) {
-    padding-left: 5em;
-    padding-right: 5em;
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 
   @media only screen and (max-width: 425px) {
-    padding-left: 2em;
-    padding-right: 2em;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 `;
 
 const Title = styled.h2`
-  font-size: 40px;
+  font-size: 4rem;
   color: rgba(30, 30, 30);
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 `;
 
 const Subtitle = styled.h3`
-  font-size: 26px;
+  font-size: 2.6rem;
   color: rgb(50, 50, 50);
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const Paragraph = styled.p`
-  font-size: 20px;
+  font-size: 2rem;
   text-align: justify;
 `;
 

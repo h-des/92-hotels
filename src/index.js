@@ -31,6 +31,14 @@ injectGlobal`
     box-sizing: border-box;
     font-size: 62.5%;
     height: 100vh;
+
+    @media only screen and (min-width:  1930px) {
+      font-size: 112.5%;
+    }
+
+    @media only screen and (min-width:  2570px) {
+      font-size: 125%;
+    }
     
     @media only screen and (max-width: 425px) {
       font-size: 50%;

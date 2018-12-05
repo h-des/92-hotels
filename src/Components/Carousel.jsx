@@ -38,10 +38,10 @@ const AnimatedImage = styled.div`
 
 const ButtonGroup = styled.div`
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 2rem;
+  right: 2rem;
   display: flex;
-  border-radius: 6px;
+  border-radius: 0.6rem;
   border: 2px solid white;
 
   @media only screen and (max-width: 425px) {
@@ -51,8 +51,8 @@ const ButtonGroup = styled.div`
   }
 `;
 const StyledButton = styled.button`
-  height: 40px;
-  width: 40px;
+  height: 4rem;
+  width: 4rem;
   border: none;
   background-color: transparent;
   color: white;
@@ -68,26 +68,25 @@ const StyledButton = styled.button`
   }
 `;
 const Separator = styled.span`
-  height: 40px;
+  height: 4rem;
   width: 2px;
   background-color: white;
 `;
 
 export const CarouselTitle = styled.h2`
   position: absolute;
-  bottom: 40px;
-  left: 10px;
-  left: 10px;
-  font-size: 32px;
+  bottom: 4rem;
+  left: 1rem;
+  font-size: 3.2rem;
   font-weight: 600;
   color: white;
 `;
 
 export const CarouselSubTitle = styled.p`
   position: absolute;
-  bottom: 20px;
-  left: 10px;
-  font-size: 16px;
+  bottom: 2rem;
+  left: 1rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
 `;

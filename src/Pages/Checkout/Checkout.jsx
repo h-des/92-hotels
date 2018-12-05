@@ -20,7 +20,7 @@ const CheckoutContainer = styled.div`
   background-color: white;
   margin: 0 auto;
   width: 100%;
-  max-width: 960px;
+  max-width: 96rem;
   margin-top: 10rem;
   display: flex;
   flex-direction: row;
@@ -74,7 +74,7 @@ const BackButton = styled.button`
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
-  max-width: 100px;
+  max-width: 10rem;
   transition: all 0.2s;
   padding: 0.5rem 0;
 
@@ -94,7 +94,7 @@ const NextButton = styled.button`
   justify-self: flex-end;
   border: none;
   height: 4rem;
-  width: 80px;
+  width: 8rem;
   color: white;
   background-color: ${props => props.theme.colors.primary};
   font-size: 1.6rem;
