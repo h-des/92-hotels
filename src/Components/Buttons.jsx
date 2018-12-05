@@ -1,6 +1,4 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
-// import * as theme from './../utils/theme';
 import { Link } from 'react-router-dom';
 
 const buttonStyles = css`

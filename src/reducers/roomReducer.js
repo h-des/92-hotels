@@ -41,7 +41,7 @@ export default (state = initialState, { type, payload }) => {
 
 const addElement = (arr, element) => {
   const { id } = element;
-  const myElement = arr.filter(e => e.id == id)[0];
+  const myElement = arr.filter(e => e.id === id)[0];
   const newElement = addProperties([element])[0];
   if (myElement) {
     return addInfo(arr, newElement);

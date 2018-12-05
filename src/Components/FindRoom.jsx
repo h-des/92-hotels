@@ -34,15 +34,6 @@ const ItemTitle = styled.label`
   margin-bottom: 2rem;
 `;
 
-const StyledInput = styled.input`
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.6rem;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  padding-left: 1rem;
-  width: 100%;
-`;
-
 const Item = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,7 +79,6 @@ const ShowButton = styled.button`
     transform: ${props => props.show && `translateX(-80px)`};
     border-top-right-radius: ${props => props.show && `0px`};
     border-bottom-right-radius: ${props => props.show && `0px`};
-    /* border-top-left-radius: ${props => props.show && `15px`}; */
     border-bottom-left-radius: ${props => props.show && `15px`};
   }
 `;

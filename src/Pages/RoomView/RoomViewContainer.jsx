@@ -12,8 +12,8 @@ class RoomViewContainer extends Component {
 
   renderRoomView = () => {
     const { id } = this.props.match.params;
-    const { list, status } = this.props.rooms;
-    const myRoom = list.filter(e => e.id == id)[0];
+    const { list } = this.props.rooms;
+    const myRoom = list.filter(e => e.id === id)[0];
     if (myRoom && myRoom.comments) {
       return <RoomView roomData={myRoom} />;
     } else {

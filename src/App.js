@@ -34,7 +34,6 @@ class App extends Component {
               {/* render Nav component everywhere except "/" */}
               <Switch>
                 <Route path="/" exact component={Landing} />
-                <Route path="/" component={Nav} />
               </Switch>
               <Switch>
                 <Route path="/rooms/:id" component={RoomViewContainer} />
@@ -51,6 +50,7 @@ class App extends Component {
               <Route path="/settings" component={Settings} />
               <Route path="/checkout" component={Checkout} />
 
+              <Route path="/" component={Nav} />
               <Route path="/" component={Footer} />
             </ScrollToTop>
           </StyledApp>

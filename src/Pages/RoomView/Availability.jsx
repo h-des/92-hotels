@@ -219,7 +219,7 @@ class Availability extends Component {
         </Fields>
         <Actions>
           {this.renderCTA()}
-          {this.props.availability.checkoutStatus == 'AVAILABLE' ? (
+          {this.props.availability.checkoutStatus === 'AVAILABLE' ? (
             <LinkButton to="/checkout" color="green">
               Book now!
             </LinkButton>

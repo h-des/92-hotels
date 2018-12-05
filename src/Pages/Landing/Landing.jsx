@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { Grid, Cell } from 'styled-css-grid';
-import backgroundPhoto from '../../images/landing.JPG';
-import CardDetails from '../Checkout/CardDetails';
-import { LinkButton } from '../../Components/Buttons';
+import Main from './Main';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-const StyledLanding = styled.div`
-  background: url(${backgroundPhoto});
-  height: 100vh;
-`;
+class Landing extends Component {
+  componentDidMount() {
+    this.props.fetchRoomTiles();
+  }
 
-export default class Landing extends Component {
   render() {
-    return <StyledLanding />;
+    return (
+      <div>
+        <Main tiles={this.props.filters.tiles} />
+      </div>
+    );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    rooms: state.rooms,
+    filters: state.filters
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  actions
+)(Landing);

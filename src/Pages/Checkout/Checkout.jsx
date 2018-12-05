@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter, Redirect } from 'react-router-dom';
-import moment from 'moment';
 import { Input } from '../../Components/Inputs';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';

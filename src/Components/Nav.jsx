@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import messageIcon from './../images/message.svg';
 import hamburgerIcon from './../images/hamburger.svg';
 import Modal from './Modal';
 import { withRouter } from 'react-router-dom';
@@ -14,13 +13,16 @@ const breakPoint = '425px';
 const StyledNav = styled.header`
   display: flex;
   justify-content: space-between;
-  position: fixed;
+  position: ${props => (props.landing ? 'absolute' : 'fixed')};
   z-index: 1000;
   width: 100%;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  background-color: ${props => (props.landing ? 'transparent' : 'white')};
+  box-shadow: ${props =>
+    props.landing ? 'none' : '0 2px 4px 0 rgba(0, 0, 0, 0.1)'};
 
   @media only screen and (max-width: 425px) {
+    background-color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -67,7 +69,11 @@ const StyledH1 = styled.h1`
   font-weight: 900;
   font-size: 1.8rem;
   margin: 2rem;
-  color: #0c0c0c;
+  color: ${props => (props.landing ? 'white' : '#0c0c0c')};
+
+  @media only screen and (max-width: ${breakPoint}) {
+    color: #0c0c0c;
+  }
 `;
 
 const HideSpan = styled.span`
@@ -82,7 +88,8 @@ const NavItems = styled.ul`
 
   @media only screen and (max-width: ${breakPoint}) {
     position: absolute;
-    top: 54px;
+    top: 53px;
+    left: 0;
     background-color: white;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     display: ${props => (props.show ? 'flex' : 'none')};
@@ -93,7 +100,7 @@ const NavItems = styled.ul`
 `;
 
 const LoginButton = styled.button`
-  color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
+  color: ${props => (props.landing ? 'white' : `#0c0c0c`)};
   font-size: 1.6rem;
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
@@ -104,7 +111,7 @@ const LoginButton = styled.button`
 
   @media only screen and (max-width: ${breakPoint}) {
     /* width: 100%; */
-
+    color: #0c0c0c;
     text-align: center;
     margin-left: 0;
     margin-right: 0.5rem;
@@ -116,7 +123,8 @@ const LoginButton = styled.button`
 `;
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
+  color: ${props =>
+    props.isActive ? `#5862ef` : props.landing ? 'white' : `#0c0c0c`};
   font-size: 1.6rem;
   font-weight: 600;
   margin: 2rem;
@@ -124,6 +132,7 @@ const NavLink = styled(Link)`
   @media only screen and (max-width: ${breakPoint}) {
     width: 100%;
     text-align: center;
+    color: ${props => (props.isActive ? `#5862ef` : `#0c0c0c`)};
     margin-left: 0;
     margin-right: 0;
   }
@@ -171,13 +180,13 @@ class Nav extends Component {
     return list.map(e => {
       if (e === pathname.slice(1)) {
         return (
-          <NavLink to={`/${e}`} isActive key={e}>
+          <NavLink to={`/${e}`} landing={pathname === '/'} isActive key={e}>
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );
       } else {
         return (
-          <NavLink to={`/${e}`} key={e}>
+          <NavLink to={`/${e}`} landing={pathname === '/'} key={e}>
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );
@@ -186,15 +195,16 @@ class Nav extends Component {
   };
 
   render() {
+    const { pathname } = this.props.history.location;
     return (
-      <StyledNav>
+      <StyledNav landing={pathname === '/'}>
         <NavHamburger onClick={() => this.toggleList()}>
           <NavIcon src={hamburgerIcon} />
         </NavHamburger>
         <NavContainer>
           <NavLogo to="/">
-            <StyledH1>
-              <HideSpan>Hotel Black</HideSpan>92
+            <StyledH1 landing={pathname === '/'}>
+              92 <HideSpan>Hotels</HideSpan>
             </StyledH1>
           </NavLogo>
           <NavItems
@@ -205,9 +215,16 @@ class Nav extends Component {
           </NavItems>
         </NavContainer>
         {this.props.user.data ? (
-          <LoginButton onClick={this.props.logOut}>Logout</LoginButton>
+          <LoginButton landing={pathname === '/'} onClick={this.props.logOut}>
+            Logout
+          </LoginButton>
         ) : (
-          <LoginButton onClick={() => this.toggleModal()}>Login</LoginButton>
+          <LoginButton
+            landing={pathname === '/'}
+            onClick={() => this.toggleModal()}
+          >
+            Login
+          </LoginButton>
         )}
         {this.state.showModal && (
           <Modal close={() => this.toggleModal()}>
