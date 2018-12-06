@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Main from './Main';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+
+import Main from './Main';
+import Featured from './Featured';
 
 class Landing extends Component {
   componentDidMount() {
@@ -11,7 +13,8 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <Main tiles={this.props.filters.tiles} />
+        {/* <Main tiles={this.props.filters.tiles} /> */}
+        <Featured cities={this.props.filters.tiles} />
       </div>
     );
   }

@@ -9,7 +9,6 @@ import { Button } from '../../Components/Buttons';
 const StyledContainer = styled.section`
   background-image: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1)),
     url(${backgroundPhoto});
-  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -17,7 +16,6 @@ const StyledContainer = styled.section`
   align-items: center;
 
   @media only screen and (max-width: 600px) {
-    height: 200vh;
     background-image: linear-gradient(
         rgba(0, 0, 0, 0) 20%,
         rgba(0, 0, 0, 1) 50%
@@ -27,14 +25,11 @@ const StyledContainer = styled.section`
 `;
 
 const InnerContainer = styled.div`
-  position: absolute;
-  top: 20rem;
-  left: 50%;
   width: 70%;
-  transform: translateX(-50%);
-
+  margin-top: 35vh;
   @media only screen and (max-width: 600px) {
     width: 95%;
+    margin-top: 15rem;
   }
 `;
 
@@ -108,12 +103,13 @@ const StyledForm = styled.form`
   justify-content: space-between;
   padding: 1rem 2rem;
   background-color: white;
-  margin-bottom: 20rem;
+  margin-bottom: 10vh;
   border-radius: 1rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
 
   @media only screen and (max-width: 600px) {
     flex-direction: column;
+    margin-bottom: 5rem;
   }
 `;
 
