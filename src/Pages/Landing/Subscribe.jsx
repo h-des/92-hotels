@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Button } from '../../Components/Buttons';
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -12,6 +12,7 @@ import RoomViewContainer from './Pages/RoomView/RoomViewContainer';
 import Footer from './Components/Footer';
 import Settings from './Pages/Settings/Settings';
 import Checkout from './Pages/Checkout/Checkout';
+import NotFound from './Pages/404/404';
 
 const StyledApp = styled.div`
   display: flex;
@@ -32,10 +33,9 @@ class App extends Component {
           <StyledApp>
             <ScrollToTop>
               {/* render Nav component everywhere except "/" */}
+              <Route path="/" component={Nav} />
               <Switch>
                 <Route path="/" exact component={Landing} />
-              </Switch>
-              <Switch>
                 <Route path="/rooms/:id" component={RoomViewContainer} />
                 <Route
                   path="/rooms"
@@ -45,12 +45,12 @@ class App extends Component {
                     </TopMargin>
                   )}
                 />
+                <Route path="/about" component={About} />
+                <Route path="/settings" component={Settings} />
+                <Route path="/checkout" component={Checkout} />
+                <Route component={NotFound} />
               </Switch>
-              <Route path="/about" component={About} />
-              <Route path="/settings" component={Settings} />
-              <Route path="/checkout" component={Checkout} />
 
-              <Route path="/" component={Nav} />
               <Route path="/" component={Footer} />
             </ScrollToTop>
           </StyledApp>
