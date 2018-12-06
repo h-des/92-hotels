@@ -27,7 +27,7 @@ const InnerContainer = styled.div`
   width: 114rem;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2rem;
-  margin-bottom: 6rem;
+  margin-bottom: 12rem;
 
   @media only screen and (max-width: 1140px) {
     width: 90vw;

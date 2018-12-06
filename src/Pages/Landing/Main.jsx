@@ -59,6 +59,7 @@ const slideUp = keyframes`
 
 const BottomContainer = styled.div`
   animation: ${slideUp} 1s ease-in-out forwards;
+  margin-bottom: 6rem;
 `;
 
 const Heading = styled.h2`
