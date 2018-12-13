@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import RoomCard from './RoomCard';
-import FindRoom from '../../Components/FindRoom';
+import Filters from '../../Components/Filters';
 import { Spinner } from '../../Components/Spinner';
 const Grid = styled.div`
   display: grid;
@@ -31,7 +31,7 @@ class RoomList extends React.PureComponent {
   render() {
     return (
       <Grid>
-        <FindRoom />
+        <Filters />
         <CenterCell>
           {this.renderRooms()}
           {this.props.loading && (

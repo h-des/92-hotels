@@ -89,7 +89,6 @@ class RoomView extends Component {
       <Container>
         {!roomData ? (
           <MainContent>
-            {' '}
             <Spinner />
           </MainContent> // loading spinner
         ) : (

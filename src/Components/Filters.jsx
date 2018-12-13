@@ -83,7 +83,7 @@ const ShowButton = styled.button`
   }
 `;
 
-class FindRoom extends Component {
+class Filters extends Component {
   state = {
     show: false,
     showBody: false,
@@ -225,4 +225,4 @@ class FindRoom extends Component {
   }
 }
 
-export default withRouter(FindRoom);
+export default withRouter(Filters);

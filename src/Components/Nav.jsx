@@ -180,13 +180,22 @@ class Nav extends Component {
     return list.map(e => {
       if (e === pathname.slice(1)) {
         return (
-          <NavLink to={`/${e}`} landing={pathname === '/'} isActive key={e}>
+          <NavLink
+            to={`/${e}`}
+            landing={pathname === '/' ? true : undefined}
+            isActive
+            key={e}
+          >
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );
       } else {
         return (
-          <NavLink to={`/${e}`} landing={pathname === '/'} key={e}>
+          <NavLink
+            to={`/${e}`}
+            landing={pathname === '/' ? true : undefined}
+            key={e}
+          >
             {e.charAt(0).toUpperCase() + e.slice(1)}
           </NavLink>
         );
@@ -197,13 +206,13 @@ class Nav extends Component {
   render() {
     const { pathname } = this.props.history.location;
     return (
-      <StyledNav landing={pathname === '/'}>
+      <StyledNav landing={pathname === '/' ? true : undefined}>
         <NavHamburger onClick={() => this.toggleList()}>
           <NavIcon src={hamburgerIcon} />
         </NavHamburger>
         <NavContainer>
           <NavLogo to="/">
-            <StyledH1 landing={pathname === '/'}>
+            <StyledH1 landing={pathname === '/' ? true : undefined}>
               92 <HideSpan>Hotels</HideSpan>
             </StyledH1>
           </NavLogo>
@@ -215,12 +224,15 @@ class Nav extends Component {
           </NavItems>
         </NavContainer>
         {this.props.user.data ? (
-          <LoginButton landing={pathname === '/'} onClick={this.props.logOut}>
+          <LoginButton
+            landing={pathname === '/' ? true : undefined}
+            onClick={this.props.logOut}
+          >
             Logout
           </LoginButton>
         ) : (
           <LoginButton
-            landing={pathname === '/'}
+            landing={pathname === '/' ? true : undefined}
             onClick={() => this.toggleModal()}
           >
             Login

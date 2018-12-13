@@ -10,19 +10,15 @@ class RoomViewContainer extends Component {
     this.props.fetchFullRoomInfo(id);
   }
 
-  renderRoomView = () => {
+  render() {
     const { id } = this.props.match.params;
     const { list } = this.props.rooms;
-    const myRoom = list.filter(e => e.id === id)[0];
+    const myRoom = list.find(e => e.id === parseInt(id, 10));
     if (myRoom && myRoom.comments) {
       return <RoomView roomData={myRoom} />;
     } else {
       return <RoomView />;
     }
-  };
-
-  render() {
-    return <React.Fragment>{this.renderRoomView()}</React.Fragment>;
   }
 }
 

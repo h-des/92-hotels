@@ -20,7 +20,6 @@ const Text = styled.div`
   margin: 0 auto;
   padding-left: 7rem;
   padding-right: 7rem;
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 
   @media only screen and (max-width: 600px) {
     padding-left: 5rem;

@@ -12,8 +12,8 @@ const Card = styled.div`
   margin: 0 auto;
   width: 100%;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0px 11px 26px 0px rgba(0, 0, 0, 0.09);
+  border-radius: 0.8rem;
+  box-shadow: 0px 1.1rem 2.6rem 0px rgba(0, 0, 0, 0.09);
   margin-bottom: 7.5rem;
   background-color: white;
 
@@ -24,14 +24,13 @@ const Card = styled.div`
 
 const CardImage = styled.div`
   width: 75%;
-  height: 100%;
   background-image: url(${props => props.image});
   background-position: center;
-  background-size: 400px 400px;
+  background-size: 40rem 40rem;
   transition: all 0.3s;
 
   :hover {
-    background-size: 600px 600px;
+    background-size: 60rem 60rem;
   }
 
   @media only screen and (max-width: 600px) {
@@ -121,10 +120,10 @@ const Icon = styled.img`
 `;
 
 const LoveButton = styled.button`
-  height: 75px;
-  width: 75px;
+  height: 7.5rem;
+  width: 7.5rem;
   border-radius: 50%;
-  box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0.5rem 1.2rem 0px rgba(0, 0, 0, 0.1);
   position: absolute;
   bottom: 5rem;
   background-color: white;
@@ -136,7 +135,7 @@ const LoveButton = styled.button`
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0.5rem 2rem 0px rgba(0, 0, 0, 0.2);
   }
 
   @media only screen and (max-width: 600px) {
@@ -144,8 +143,8 @@ const LoveButton = styled.button`
     right: 3rem;
     bottom: auto;
     left: auto;
-    height: 55px;
-    width: 55px;
+    height: 5.5rem;
+    width: 5.5rem;
   }
 `;
 

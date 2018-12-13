@@ -26,8 +26,10 @@ const StyledForm = styled.form`
   box-shadow: 0 9px 25px rgba(0, 0, 0, 0.4);
 
   @media only screen and (max-width: 425px) {
+    max-width: unset;
     width: 100vw;
     height: 100vh;
+    justify-content: center;
     border-radius: 0;
     box-shadow: none;
     padding-top: 4rem;
