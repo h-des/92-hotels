@@ -68,11 +68,11 @@ const Star = ({ fillColor }) => (
       data-name="layer1"
       fill={fillColor}
       stroke={fillColor}
-      stroke-miterlimit="10"
-      stroke-width="2"
+      strokeMiterlimit="10"
+      strokeWidth="2"
       d="M32 47.2L13.5 61l7.1-22.2L2 25h23l7-22 7 22h23L43.4 38.8 50.5 61 32 47.2z"
-      stroke-linejoin="round"
-      stroke-linecap="round"
+      strokeLinejoin="round"
+      strokeLinecap="round"
     />
   </SVG>
 );
@@ -112,13 +112,13 @@ const Stars = ({ count }) => {
   for (let i = 0; i < 5; i++) {
     if (i < count) {
       res.push(
-        <li>
+        <li key={i}>
           <Star fillColor="#F7B32B" />
         </li>
       );
     } else {
       res.push(
-        <li>
+        <li key={i}>
           <Star fillColor="#ccc" />
         </li>
       );
@@ -132,13 +132,13 @@ const Badges = ({ count }) => {
   for (let i = 0; i < 5; i++) {
     if (i < count) {
       res.push(
-        <li>
+        <li key={i}>
           <Badge fillColor="blue" />
         </li>
       );
     } else {
       res.push(
-        <li>
+        <li key={i}>
           <Badge fillColor="#ccc" />
         </li>
       );

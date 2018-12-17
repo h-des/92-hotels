@@ -48,7 +48,13 @@ export default class Featured extends Component {
     return this.props.cities
       .filter((e, id) => id < 4)
       .map((e, index) => (
-        <Card image={e.url} city="Paris" id={index} hotel="Grand Hotel" />
+        <Card
+          image={e.url}
+          key={e.url}
+          city="Paris"
+          id={index}
+          hotel="Grand Hotel"
+        />
       ));
   };
 

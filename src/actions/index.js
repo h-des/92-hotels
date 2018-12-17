@@ -97,8 +97,10 @@ export const proceedToPayment = data => dispatch => {
 };
 
 export const pay = data => dispatch => {
+  //fake api call
   dispatch({ type: 'PAY' });
 
+  //simulate successfull transation
   setTimeout(() => {
     dispatch({ type: 'SUCCESS' });
   }, 2000);

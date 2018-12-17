@@ -7,3 +7,7 @@ export const randomDate = (start, end) => {
 export const capitalizeFirstLetter = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const calcDateDiff = (date1, date2) => {
+  return Math.abs(Math.floor((date1 - date2) / (60 * 60 * 24 * 1000)));
+};

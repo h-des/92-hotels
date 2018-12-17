@@ -118,10 +118,11 @@ const LoginButton = styled.button`
   }
 
   &:hover {
-    color: #777777;
+    color: ${props => (props.landing ? `#ccc` : `#777`)};
   }
 `;
-const NavLink = styled(Link)`
+
+const NavLink = styled(({ landing, ...props }) => <Link {...props} />)`
   text-decoration: none;
   color: ${props =>
     props.isActive ? `#5862ef` : props.landing ? 'white' : `#0c0c0c`};
@@ -138,7 +139,7 @@ const NavLink = styled(Link)`
   }
 
   &:hover {
-    color: #777777;
+    color: ${props => (props.landing ? `#ccc` : `#777`)};
   }
 `;
 const NavIcon = styled.img`

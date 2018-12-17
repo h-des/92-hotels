@@ -37,12 +37,24 @@ class App extends Component {
               <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                   <Route path="/" exact component={Landing} />
-                  <Route path="/rooms/:id" component={RoomViewContainer} />
-                  <Route path="/rooms" component={RoomListContainer} />
-                  <Route path="/about" component={About} />
-                  <Route path="/settings" component={Settings} />
-                  <Route path="/checkout" component={Checkout} />
-                  <Route component={NotFound} />
+                  <Route
+                    path="/rooms/:id"
+                    render={props => <RoomViewContainer {...props} />}
+                  />
+                  <Route
+                    path="/rooms"
+                    render={props => <RoomListContainer {...props} />}
+                  />
+                  <Route path="/about" render={props => <About {...props} />} />
+                  <Route
+                    path="/settings"
+                    render={props => <Settings {...props} />}
+                  />
+                  <Route
+                    path="/checkout"
+                    render={props => <Checkout {...props} />}
+                  />
+                  <Route render={props => <NotFound {...props} />} />
                 </Switch>
               </Suspense>
               <Route path="/" component={Footer} />

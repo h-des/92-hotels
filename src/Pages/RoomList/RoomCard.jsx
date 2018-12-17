@@ -150,6 +150,7 @@ const LoveButton = styled.button`
 
 export default class RoomCard extends Component {
   likeRoom = id => {
+    //
     console.log(`You liked room ${id}`);
   };
 

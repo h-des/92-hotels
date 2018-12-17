@@ -4,7 +4,7 @@ import formatString from 'format-string-by-pattern';
 import { Form, Field } from 'react-final-form';
 import { capitalizeFirstLetter } from '../../utils/utilsFunctions';
 import { SpinnerRectangles } from '../../Components/Spinner';
-import moment from 'moment';
+import { calcDateDiff } from '../../utils/utilsFunctions';
 
 const Contaier = styled.div`
   display: flex;
@@ -157,9 +157,9 @@ export default class CardDetails extends Component {
   constructor(props) {
     super(props);
     const { checkIn, checkOut, price } = props.data;
-    let a = moment(checkIn);
-    let b = moment(checkOut);
-    const len = Math.abs(a.diff(b, 'days'));
+    let a = new Date(checkIn);
+    let b = new Date(checkOut);
+    const len = calcDateDiff(a, b);
     const totalPrice = len * price || 0;
 
     this.state = {
