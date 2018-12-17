@@ -4,6 +4,11 @@ import withScrollPosition from '../../Components/Utils/withScrollPostion';
 import CarouselSLiding from '../../Components/CarouselSliding';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+const TopMargin = styled.div`
+  padding-top: 8rem;
+`;
 
 class RoomListContainer extends Component {
   componentDidMount() {
@@ -42,7 +47,7 @@ class RoomListContainer extends Component {
       return 'Error: Cannot load rooms';
     }
     return (
-      <React.Fragment>
+      <TopMargin>
         <CarouselSLiding
           items={this.props.filters.tiles}
           onClick={this.selectCityFilter}
@@ -52,7 +57,7 @@ class RoomListContainer extends Component {
           rooms={this.props.rooms.list}
           loading={status === 'LOADING'}
         />
-      </React.Fragment>
+      </TopMargin>
     );
   }
 }

@@ -13,7 +13,10 @@ const CardContainer = styled.div`
 `;
 
 const CardImage = styled.div`
-  background-image: ${props => `url(${props.url})`};
+  background-image: ${props =>
+    `linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3)), url(${
+      props.url
+    })`};
   background-size: cover;
   background-position: center;
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2rem), 0 100%);

@@ -26,8 +26,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, status: 'FAILURE' };
     case 'FETCH_ROOM_INFO_HALF':
       return {
-        list: [...addElement(state.list, payload)],
-        ...state
+        ...state,
+        list: [...addElement(state.list, payload)]
       };
     case 'FETCH_ROOM_INFO_SUCCESS':
       return {
@@ -40,18 +40,13 @@ export default (state = initialState, { type, payload }) => {
 };
 
 const addElement = (arr, element) => {
-  const { id } = element;
-  const myElement = arr.filter(e => e.id === id)[0];
+  //insert one room into array
   const newElement = addProperties([element])[0];
-  if (myElement) {
-    return addInfo(arr, newElement);
-  } else {
-    let res = arr.push(newElement);
-    return res;
-  }
+  return [...arr, newElement];
 };
 
 const addProperties = arr =>
+  //randomly generate additional fields
   arr.map(e => {
     const price = (Math.floor(Math.random() * 8) + 1) * 50;
     const beds = Math.floor(Math.random() * 4) + 1;
@@ -60,6 +55,7 @@ const addProperties = arr =>
   });
 
 const addInfo = (arr, data) => {
+  // load additional info for a particular room
   const { id } = data;
   let res = arr.map(element => {
     if (parseInt(element.id, 10) === parseInt(id, 10)) {
