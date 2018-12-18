@@ -17,4 +17,16 @@ module.exports = app => {
       res.status(200).send(user);
     })(req, res, done);
   });
+
+  app.post('/auth/login', (req, res, done) => {
+    passport.authenticate('local-login', (err, user, info) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return res.status(401).send(info);
+      }
+      res.status(200).send(user);
+    })(req, res, done);
+  });
 };

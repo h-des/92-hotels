@@ -34,6 +34,7 @@
     "express": "^4.16.4",
     "mongoose": "^5.4.0",
     "nodemon": "^1.18.9",
+    "object.omit": "^3.0.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   }
