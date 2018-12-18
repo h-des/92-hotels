@@ -6,6 +6,9 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 
+require('./models/User');
+require('./services/passport');
+
 const app = express();
 const port = process.env.PORT || 3030;
 
@@ -21,6 +24,13 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+mongoose.connect(
+  keys.mongoURI,
+  { useNewUrlParser: true }
+);
+
+require('./routes/authRoutes')(app);
 
 app.get('/', function(req, res, next) {
   // Update views

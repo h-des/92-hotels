@@ -24,4 +24,4 @@ userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-mongoose.model('User', userSchema);
+mongoose.model('users', userSchema);
