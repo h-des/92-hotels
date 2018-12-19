@@ -25,7 +25,6 @@ passport.use(
     },
     async (req, email, password, done) => {
       const existingUser = await User.findOne({ email });
-      console.log(existingUser);
       if (existingUser) {
         return done(null, false, { message: 'Email already in use' });
       }
@@ -65,7 +64,7 @@ passport.use(
           return done(null, false, { message: 'User does not exist' });
         }
         if (user.validatePassword(password)) {
-          return done(null, omit(user.toJSON(), 'password'));
+          return done(null, user);
         }
       });
     }

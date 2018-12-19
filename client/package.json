@@ -2,6 +2,7 @@
   "name": "hotel-black-92",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3030",
   "dependencies": {
     "@atlaskit/datetime-picker": "^6.3.17",
     "@atlaskit/select": "^6.1.12",

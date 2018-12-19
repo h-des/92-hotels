@@ -29,16 +29,8 @@ mongoose.connect(
   keys.mongoURI,
   { useNewUrlParser: true }
 );
-
 require('./routes/authRoutes')(app);
-
-app.get('/', function(req, res, next) {
-  // Update views
-  req.session.views = (req.session.views || 0) + 1;
-
-  // Write response
-  res.end(req.session.views + ' views');
-});
+require('./routes/userRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

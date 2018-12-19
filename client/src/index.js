@@ -7,6 +7,7 @@ import { injectGlobal } from 'styled-components';
 import App from './App';
 import rootReducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
+import axios from 'axios';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -14,6 +15,8 @@ const store = createStore(
   {},
   composeEnhancers(applyMiddleware(reduxThunk))
 );
+
+window.axios = axios;
 
 injectGlobal`
   * {

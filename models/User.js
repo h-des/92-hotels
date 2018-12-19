@@ -9,11 +9,17 @@ const userSchema = new Schema({
   },
   password: String,
   createdAt: Date,
+  phone: String,
   city: String,
   zipCode: String,
   address: String,
   firstName: String,
-  lastName: String
+  lastName: String,
+  avatar: {
+    small: String,
+    medium: String,
+    large: String
+  }
 });
 
 userSchema.methods.generateHash = password => {
