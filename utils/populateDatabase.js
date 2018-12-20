@@ -12,6 +12,8 @@ mongoose.connect(
 );
 const User = mongoose.model('users');
 const Hotel = mongoose.model('hotels');
+const Review = mongoose.model('reviews');
+const Room = mongoose.model('rooms');
 const axios = require('axios');
 
 const capitalizeFirstLetter = str => {
@@ -96,8 +98,46 @@ const populateHotels = async () => {
   });
 };
 
+const populateReviews = async () => {
+  const users = await User.find();
+  const hotels = await Hotel.find();
+  hotels.forEach(async hotel => {
+    users.forEach(async user => {
+      if (Math.random() > 0.25) {
+        let review = new Review();
+        rate = Math.ceil(Math.random() * 5);
+        review.body = faker.lorem.sentences();
+        review.createdAt = faker.date.past(1);
+        review.rate = rate;
+        review.hotel = hotel._id;
+        review.user = user._id;
+
+        try {
+          await Hotel.findOneAndUpdate(
+            { _id: hotel._id },
+            {
+              $addToSet: { reviews: review._id },
+              $inc: { rating: rate }
+            }
+          );
+
+          await User.findOneAndUpdate(
+            { _id: user._id },
+            { $addToSet: { reviews: review._id } }
+          );
+          review.save();
+          console.log('%s created a review for %s', user.firstName, hotel.city);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  });
+};
+
 // populateUsers();
 // populateHotels();
+// populateReviews();
 
 module.exports = {
   populateUsers,
