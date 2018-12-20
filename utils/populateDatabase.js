@@ -14,6 +14,7 @@ const User = mongoose.model('users');
 const Hotel = mongoose.model('hotels');
 const Review = mongoose.model('reviews');
 const Room = mongoose.model('rooms');
+const Booking = mongoose.model('bookings');
 const axios = require('axios');
 
 const capitalizeFirstLetter = str => {
@@ -125,7 +126,7 @@ const populateReviews = async () => {
             { _id: user._id },
             { $addToSet: { reviews: review._id } }
           );
-          review.save();
+          await review.save();
           console.log('%s created a review for %s', user.firstName, hotel.city);
         } catch (err) {
           console.log(err);
@@ -135,11 +136,71 @@ const populateReviews = async () => {
   });
 };
 
+const populateRooms = async () => {
+  const hotels = await Hotel.find();
+  const prices = [50, 80, 100, 150, 200];
+  const multiplyBy = [1, 1.5, 2, 2.5];
+  const getPhotos = arr => {
+    let res = [];
+    for (let i = 0; i < 3; i++) {
+      let id = Math.floor(Math.random() * arr.length);
+      res.push(arr[id]);
+      arr = [...arr.splice(0, id), ...arr.splice(id - 1)];
+    }
+    return res;
+  };
+
+  hotels.forEach(async hotel => {
+    hotel.roomTypes.forEach(async type => {
+      const count = Math.floor(Math.random() * 4);
+      for (let i = 0; i < count; i++) {
+        let room = new Room();
+        room.price = prices[hotel.stars - 1] * multiplyBy[type - 1];
+        room.name = faker.commerce.color();
+        room.hotel = hotel._id;
+        room.type = type;
+        room.photos = getPhotos(photos);
+
+        try {
+          await room.save();
+          console.log('Created room for %s', hotel.city);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
+  });
+};
+
+const populateBookings = async () => {};
+
 // populateUsers();
 // populateHotels();
 // populateReviews();
+// populateBookings();
+// populateRooms();
 
 module.exports = {
   populateUsers,
-  populateHotels
+  populateHotels,
+  populateReviews,
+  populateRooms,
+  populateBookings
 };
+
+const photos = [
+  'https://images.unsplash.com/photo-1523688471150-efdd09f0f312?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1527248808242-9887f8abccb4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1484995978482-cf913162930c?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1527675003271-c97d65cd58d0?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1466770402907-bddc096cf4a9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1509927639005-b822b0b5b750?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1432303492674-642e9d0944b2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1521607630287-ee2e81ad3ced?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9',
+  'https://images.unsplash.com/photo-1521147044359-e6c12eb7a189?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1400&h=800&fit=crop&ixid=eyJhcHBfaWQiOjF9'
+];
