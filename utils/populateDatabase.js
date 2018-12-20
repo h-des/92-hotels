@@ -1,4 +1,17 @@
+const mongoose = require('mongoose');
+const keys = require('../config/keys');
+const faker = require('faker');
+require('../models/User');
+require('../models/Hotel');
+require('../models/Bookings');
+require('../models/Room');
+require('../models/Review');
+mongoose.connect(
+  keys.mongoURI,
+  { useNewUrlParser: true }
+);
 const User = mongoose.model('users');
+const Hotel = mongoose.model('hotels');
 const axios = require('axios');
 
 const capitalizeFirstLetter = str => {
@@ -28,13 +41,65 @@ const populateUsers = async () => {
 
     try {
       await user.save();
-      console.log('saved');
+      console.log(profile.name.first, '--> Success');
     } catch (err) {
-      console.log(err);
+      console.log(profile.name.first, err);
     }
   });
 };
 
+const populateHotels = async () => {
+  const cities = [
+    'Hong Kong',
+    'New York',
+    'Dubai',
+    'Shanghai',
+    'Tokyo',
+    'Chichago',
+    'Singapore',
+    'Seoul',
+    'Bangkok',
+    'Toronto',
+    'Wuhan',
+    'Miami',
+    'Istanbul',
+    'Melbourne',
+    'Osaka',
+    'Beijing',
+    'Paris',
+    'Berlin'
+  ];
+
+  await cities.forEach(async city => {
+    const imageURL = `https://source.unsplash.com/600x200/?${city}`;
+    const stars = Math.ceil(Math.random() * 5);
+    const name = faker.company.companyName().split(' ')[0];
+    let roomTypes = [];
+    for (let i = 1; i <= 4; i++) {
+      if (Math.random() > 0.3) {
+        roomTypes.push(i);
+      }
+    }
+    let hotel = new Hotel();
+    hotel.image = imageURL;
+    hotel.name = name;
+    hotel.city = city;
+    hotel.stars = stars;
+    hotel.roomTypes = roomTypes;
+
+    try {
+      await hotel.save();
+      console.log(city, '--> Success');
+    } catch (err) {
+      console.log(city, err);
+    }
+  });
+};
+
+// populateUsers();
+// populateHotels();
+
 module.exports = {
-  populateUsers
+  populateUsers,
+  populateHotels
 };
