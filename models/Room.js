@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema.toString;
+const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const roomSchema = new Schema({
@@ -14,7 +14,7 @@ const roomSchema = new Schema({
       ref: 'Booking'
     }
   ],
-  hotelID: {
+  hotel: {
     type: ObjectId,
     ref: 'Hotel'
   }

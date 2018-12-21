@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 
 require('./models/User');
+require('./models/Hotel');
+require('./models/Bookings');
+require('./models/Room');
+require('./models/Review');
 require('./services/passport');
 
 const app = express();

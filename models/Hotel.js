@@ -6,6 +6,7 @@ const hotelSchema = new Schema({
   name: String,
   city: { type: String, trim: true },
   stars: Number,
+  image: String,
   roomTypes: [Number],
   roomList: [
     {
@@ -19,7 +20,10 @@ const hotelSchema = new Schema({
       ref: 'Review'
     }
   ],
-  rating: Number
+  rating: {
+    type: Number,
+    default: 0
+  }
 });
 
 mongoose.model('hotels', hotelSchema);

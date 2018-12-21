@@ -15,6 +15,10 @@ const reviewSchema = new Schema({
       ref: 'User'
     }
   ],
+  hotel: {
+    type: ObjectId,
+    ref: 'Hotel'
+  },
   createdAt: {
     type: Date,
     default: Date.now()

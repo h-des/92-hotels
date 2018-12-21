@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const userSchema = new Schema({
   email: {
@@ -15,6 +16,12 @@ const userSchema = new Schema({
   address: String,
   firstName: String,
   lastName: String,
+  reviews: [
+    {
+      type: ObjectId,
+      ref: 'review'
+    }
+  ],
   avatar: {
     small: String,
     medium: String,
