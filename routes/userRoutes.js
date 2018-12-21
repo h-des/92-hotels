@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const omit = require('object.omit');
 const requireLogin = require('../middlewares/requireLogin');
 const User = mongoose.model('users');
-const Hotel = mongoose.model('reviews');
 
 module.exports = app => {
   app.get('/api/profile', requireLogin, (req, res) => {

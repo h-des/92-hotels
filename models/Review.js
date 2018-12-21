@@ -3,19 +3,19 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const reviewSchema = new Schema({
-  body: String,
+  body: { type: String, required: true },
   rate: {
     type: Number,
     min: 0,
-    max: 5
+    max: 5,
+    required: true
   },
-  user: [
-    {
-      type: ObjectId,
-      ref: 'User'
-    }
-  ],
+  user: {
+    type: ObjectId,
+    ref: 'User'
+  },
   hotel: {
+    required: true,
     type: ObjectId,
     ref: 'Hotel'
   },

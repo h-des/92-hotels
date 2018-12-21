@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+const mongoosePaginate = require('mongoose-paginate');
 
 const hotelSchema = new Schema({
   name: String,
@@ -25,5 +26,5 @@ const hotelSchema = new Schema({
     default: 0
   }
 });
-
+hotelSchema.plugin(mongoosePaginate);
 mongoose.model('hotels', hotelSchema);

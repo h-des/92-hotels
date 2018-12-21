@@ -35,6 +35,8 @@ mongoose.connect(
 );
 require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app);
+require('./routes/reviewRoutes')(app);
+require('./routes/hotelRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
