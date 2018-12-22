@@ -163,6 +163,9 @@ const populateRooms = async () => {
 
         try {
           await room.save();
+          await Hotel.findByIdAndUpdate(hotel._id, {
+            $addToSet: { roomList: room._id }
+          });
           console.log('Created room for %s', hotel.city);
         } catch (err) {
           console.log(err);
