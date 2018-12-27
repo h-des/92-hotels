@@ -7,6 +7,7 @@ const omit = require('object.omit');
 const pick = require('object.pick');
 
 module.exports = app => {
+  //return details about specific hotel
   app.get('/api/hotel/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -17,27 +18,65 @@ module.exports = app => {
           return res.status(400).send({ error: 'Hotel does not exist.' });
         }
         //calculate rating
-        const len = hotel.reviews.length;
-        const rating = Math.floor((hotel.rating / len) * 10) / 10;
+        const rating = calcHotelRating(hotel);
         res.send({ ...hotel, reviews: hotel.reviews.splice(0, 10), rating });
       });
   });
 
-  app.post('/api/hotel/', async (req, res) => {
-    const filters = { ...req.body };
+  //return list of 10 hotels without filtering
+  app.get('/api/hotel/', async (req, res) => {
+    const { page } = req.query;
+    const result = await Hotel.paginate(
+      {},
+      {
+        page,
+        lean: true,
+        limit: 10
+      }
+    );
 
-    const result = await Hotel.paginate(filters, {
-      lean: true,
-      page: 1,
-      limit: 10
-    });
+    //format output data
     let hotels = result.docs;
     hotels = hotels.map(hotel => {
-      const len = hotel.reviews.length;
-      const rating = Math.floor((hotel.rating / len) * 10) / 10;
+      const rating = calcHotelRating(hotel);
       return { ...pick(hotel, ['name', 'city', 'stars', 'image']), rating };
     });
-    res.send(hotels);
+
+    res.send({ ...result, docs: hotels });
+  });
+
+  //return list of hotels, apply filtering
+  app.post('/api/hotel/', async (req, res) => {
+    const { city, roomType, from, to, page } = req.body;
+    if (!city || !from || !to || !roomType) {
+      return res.status(400).send({ error: 'Missing parameters' });
+    }
+
+    const result = await Hotel.paginate(
+      {
+        city: city,
+        roomTypes: roomType
+      },
+      {
+        page,
+        lean: true,
+        limit: 10
+      }
+    );
+    let hotels = result.docs;
+
+    //filter unavailable hotels
+    hotels = hotels.filter(hotel =>
+      checkAvailability(hotel, from, to, roomType)
+    );
+
+    //format output data
+    hotels = hotels.map(hotel => {
+      const rating = calcHotelRating(hotel);
+      return { ...pick(hotel, ['name', 'city', 'stars', 'image']), rating };
+    });
+
+    res.send({ ...result, docs: hotels });
   });
 
   app.get('/api/hotel/availability/:id', async (req, res) => {
@@ -46,34 +85,47 @@ module.exports = app => {
     if (!id || !from || !to || !roomType) {
       return res.status(400).send({ error: 'Missing parameters' });
     }
-    const fromDate = new Date(from);
-    const toDate = new Date(to);
 
     const hotel = await Hotel.findById(id);
-    const roomIDsList = hotel.roomList;
 
-    let roomList = await Room.find({
-      _id: { $in: roomIDsList },
-      type: parseInt(roomType)
-    });
-
-    for (let room of roomList) {
-      //find all bookings colliding with dates from query
-      const bookingsList = await Booking.findOne({
-        _id: { $in: room.bookingsList },
-        $and: [{ from: { $gte: fromDate } }, { from: { $lt: toDate } }],
-        $and: [{ to: { $lte: toDate } }, { to: { $gt: fromDate } }]
-      });
-
-      //if no colliding bookings are found, room is availible
-      if (!bookingsList) {
-        return res.send('Availible');
-      }
-
-      //otherwise check next room
+    if (checkAvailability(hotel, from, to, roomType)) {
+      return res.send('Available');
     }
 
     //none of rooms is available
     res.status('400').send({ error: 'Room not available' });
   });
+};
+
+const calcHotelRating = hotel => {
+  const len = hotel.reviews.length;
+  const rating = Math.floor((hotel.rating / len) * 10) / 10;
+  return rating;
+};
+
+const checkAvailability = async (hotel, from, to, roomType) => {
+  const roomIDsList = hotel.roomList;
+  const fromDate = new Date(from);
+  const toDate = new Date(to);
+
+  let roomList = await Room.find({
+    _id: { $in: roomIDsList },
+    type: parseInt(roomType)
+  }).lean();
+
+  for (let room of roomList) {
+    //find all bookings colliding with dates from query
+    const bookingsList = await Booking.findOne({
+      _id: { $in: room.bookingsList },
+      $and: [{ from: { $gte: fromDate } }, { from: { $lt: toDate } }],
+      $and: [{ to: { $lte: toDate } }, { to: { $gt: fromDate } }]
+    }).lean();
+
+    //if no colliding bookings are found, room is availible
+    if (!bookingsList) {
+      return true;
+    }
+
+    //otherwise check next room
+  }
 };
