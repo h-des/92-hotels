@@ -41,4 +41,22 @@ module.exports = app => {
       }
     );
   });
+
+  app.post('/api/profile/changePassword', requireLogin, async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const { _id } = req.user;
+    let user = new User();
+    let newHash = user.generateHash(newPassword);
+    await User.findByIdAndUpdate(
+      _id,
+      { password: newHash },
+      { new: true, select: '-password -__v' },
+      (err, user) => {
+        if (err) {
+          return res.status(400).send({ error: 'Cannot update. Try again.' });
+        }
+        res.send(user);
+      }
+    );
+  });
 };
