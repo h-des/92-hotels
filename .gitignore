@@ -9,6 +9,7 @@
 
 # production
 /client/build
+/config
 
 # misc
 /.vscode
