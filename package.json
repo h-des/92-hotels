@@ -1,7 +1,7 @@
 {
   "name": "92-hotels",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "description": "92-hotels is an fake app that allows you to find a room in a hotel, check availability and book it.",
   "main": "index.js",
   "engines": {
     "node": "10.13.0",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/h-des/hotel-black-92.git"
+    "url": "git+https://github.com/h-des/92-hotels.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/h-des/hotel-black-92/issues"
+    "url": "https://github.com/h-des/92-hotels/issues"
   },
-  "homepage": "https://github.com/h-des/hotel-black-92#readme",
+  "homepage": "https://github.com/h-des/92-hotels#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^3.0.2",
