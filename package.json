@@ -1,7 +1,7 @@
 {
   "name": "92-hotels",
   "version": "1.0.0",
-  "description": "92-hotels is an fake app that allows you to find a room in a hotel, check availability and book it.",
+  "description": "92-hotels is a fake app that allows you to find a room in a hotel, check availability and book it.",
   "main": "index.js",
   "engines": {
     "node": "10.13.0",

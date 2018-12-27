@@ -1,6 +1,6 @@
 # 92-hotels
 
-92-hotels is an fake app that allows you to find a room in a hotel, check availability and book it.
+92-hotels is a fake app that allows you to find a room in a hotel, check availability and book it.
 
 ## Description
 
