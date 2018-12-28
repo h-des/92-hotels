@@ -12,15 +12,18 @@ class Landing extends Component {
     if (this.props.promoted.status !== constants.SUCCESS) {
       this.props.fetchPromoted();
     }
-    if (this.props.promoted.status !== constants.SUCCESS) {
+    if (this.props.tiles.status !== constants.SUCCESS) {
       this.props.fetchTiles();
+    }
+    if (this.props.cities.status !== constants.SUCCESS) {
+      this.props.fetchCities();
     }
   }
 
   render() {
     return (
       <div>
-        <Main tiles={this.props.tiles.list} />
+        <Main tiles={this.props.tiles.list} cities={this.props.cities.list} />
         <Featured hotels={this.props.promoted.list} />
         <Subscribe />
       </div>
@@ -31,7 +34,8 @@ class Landing extends Component {
 const mapStateToProps = state => {
   return {
     promoted: state.promoted,
-    tiles: state.tiles
+    tiles: state.tiles,
+    cities: state.cities
   };
 };
 

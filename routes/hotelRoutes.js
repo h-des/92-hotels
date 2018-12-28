@@ -131,6 +131,11 @@ module.exports = app => {
       return res.status(400).send('Cannot get promoted hotels.');
     }
   });
+
+  app.get('/api/cities/', async (req, res) => {
+    const hotels = await Hotel.find({}, { city: true }, { lean: true });
+    res.send(hotels);
+  });
 };
 
 const calcHotelRating = hotel => {

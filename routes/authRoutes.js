@@ -21,12 +21,12 @@ module.exports = app => {
   });
 
   app.post('/auth/login', (req, res, done) => {
-    passport.authenticate('local-login', (err, user, info) => {
+    passport.authenticate('local-login', (err, user) => {
       if (err) {
         return res.status(401).send(err);
       }
       if (!user) {
-        return res.status(401).send(info);
+        return res.status(401).send(err);
       }
       req.logIn(user, err => {
         if (err) {

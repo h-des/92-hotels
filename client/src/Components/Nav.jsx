@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import hamburgerIcon from './../images/hamburger.svg';
 import Modal from './Modal';
 import { withRouter } from 'react-router-dom';
-import Login from './Login';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import AuthContainer from '../Pages/Auth/AuthContainer';
 
 const breakPoint = '425px';
 
@@ -241,7 +241,7 @@ class Nav extends Component {
         )}
         {this.state.showModal && (
           <Modal close={() => this.toggleModal()}>
-            <Login close={() => this.toggleModal()} />
+            <AuthContainer close={() => this.toggleModal()} />
           </Modal>
         )}
       </StyledNav>

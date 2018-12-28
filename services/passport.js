@@ -61,7 +61,7 @@ passport.use(
           return done(err);
         }
         if (!user) {
-          return done(null, false, 'User does not exist');
+          return done('Wrong credentials');
         }
         if (user.validatePassword(password)) {
           return done(null, user);

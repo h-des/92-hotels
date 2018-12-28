@@ -4,11 +4,13 @@ import userReducer from './userReducer';
 import checkoutReducer from './checkoutReducer';
 import tilesReducer from './tilesReducer';
 import promotedReducer from './promotedReducer';
+import citiesReducer from './citiesReducer';
 
 export default combineReducers({
   rooms: hotelReducer,
   user: userReducer,
   checkout: checkoutReducer,
   tiles: tilesReducer,
-  promoted: promotedReducer
+  promoted: promotedReducer,
+  cities: citiesReducer
 });

@@ -19,6 +19,7 @@ const buttonStyles = css`
       : '.6rem 1.2rem'};
   transition: all 0.2s ease-in-out;
   font-weight: 600;
+  min-height: 4rem;
   font-family: 'Nunito', sans-serif;
   font-size: ${props =>
     props.large ? '2.4rem' : props.small ? '1.6rem' : '2rem'};

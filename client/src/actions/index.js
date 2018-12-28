@@ -29,6 +29,20 @@ export const fetchTiles = () => async dispatch => {
   }
 };
 
+export const fetchCities = () => async dispatch => {
+  dispatch({ type: constants.FETCH_CITIES });
+
+  try {
+    const res = await axios.get('api/cities');
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_CITIES_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_CITIES_ERROR });
+  }
+};
+
 export const logIn = data => async dispatch => {
   dispatch({ type: constants.LOGIN });
 
