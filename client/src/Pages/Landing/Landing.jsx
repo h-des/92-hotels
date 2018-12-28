@@ -5,10 +5,13 @@ import * as actions from '../../actions';
 import Main from './Main';
 import Featured from './Featured';
 import Subscribe from './Subscribe';
+import constants from '../../utils/constants';
 
 class Landing extends Component {
   componentDidMount() {
-    this.props.fetchPromoted();
+    if (this.props.promoted.status !== constants.SUCCESS) {
+      this.props.fetchPromoted();
+    }
   }
 
   render() {

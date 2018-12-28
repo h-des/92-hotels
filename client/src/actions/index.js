@@ -1,16 +1,18 @@
 import axios from 'axios';
 import constants from '../utils/constants';
 
-export const fetchPromoted = () => dispatch => {
+export const fetchPromoted = () => async dispatch => {
   dispatch({ type: constants.FETCH_PROMOTED });
 
-  return axios.get('api/promoted').then(
-    res =>
-      dispatch({ payload: res.data, type: constants.FETCH_PROMOTED_SUCCESS }),
-    error => {
-      dispatch({ type: constants.FETCH_PROMOTED_ERROR });
-    }
-  );
+  try {
+    const res = await axios.get('api/promoted');
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_PROMOTED_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_PROMOTED_ERROR });
+  }
 };
 
 export const fetchRooms = () => dispatch => {
@@ -75,19 +77,20 @@ export const fetchFullRoomInfo = id => dispatch => {
   //   });
 };
 
-export const fetchUser = () => dispatch => {
-  // dispatch({ type: 'FETCH_USER_REQUEST' });
-  // return axios.get('https://jsonplaceholder.typicode.com/users/1').then(
-  //   json => dispatch({ type: 'FETCH_USER_SUCCESS', payload: json.data }),
-  //   err => {
-  //     console.log(err);
-  //     return dispatch({ type: 'FETCH_USER_FAILURE' });
-  //   }
-  // );
+export const logIn = data => async dispatch => {
+  dispatch({ type: constants.LOGIN });
+
+  try {
+    const res = await axios.post('auth/login/', data);
+    dispatch({ payload: res.data, type: constants.LOGIN_SUCCESS });
+  } catch (err) {
+    dispatch({ payload: err.response.data, type: constants.LOGIN_ERROR });
+  }
 };
 
-export const logOut = () => dispatch => {
-  // dispatch({ type: 'LOG_OUT' });
+export const logOut = () => async dispatch => {
+  await axios.get('auth/logout/');
+  dispatch({ type: constants.LOGOUT });
 };
 
 export const checkAvailability = data => dispatch => {

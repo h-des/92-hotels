@@ -12,7 +12,7 @@ module.exports = app => {
     const { id } = req.params;
     User.findById(id, 'avatar firstName', (err, user) => {
       if (err) {
-        return res.status(400).send({ error: 'User does not exist.' });
+        return res.status(400).send('User does not exist.');
       }
       res.send(user);
     });
@@ -35,7 +35,7 @@ module.exports = app => {
       { new: true, select: '-password -__v' },
       (err, user) => {
         if (err) {
-          return res.status(400).send({ error: 'Cannot update. Try again.' });
+          return res.status(400).send('Cannot update. Try again.');
         }
         res.send(user);
       }
@@ -53,7 +53,7 @@ module.exports = app => {
       { new: true, select: '-password -__v' },
       (err, user) => {
         if (err) {
-          return res.status(400).send({ error: 'Cannot update. Try again.' });
+          return res.status(400).send('Cannot update. Try again.');
         }
         res.send(user);
       }

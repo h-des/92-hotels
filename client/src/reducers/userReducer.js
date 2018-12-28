@@ -1,34 +1,17 @@
-const initialState = { data: null, status: 'NORMAL' };
+import constants from '../utils/constants';
+const initialState = { data: null, status: constants.INITIAL, error: null };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'FETCH_USER_REQUEST':
-      return { ...state, status: 'LOADING' };
-    case 'FETCH_USER_SUCCESS':
-      return { data: { ...getFormattedData(payload) }, status: 'SUCCESS' };
-    case 'FETCH_USER_FAILURE':
-      return { ...state, status: 'ERROR' };
-    case 'LOG_OUT':
-      return { data: null, status: 'NORMAL' };
+    case constants.LOGIN:
+      return { ...state, status: constants.LOADING };
+    case constants.LOGIN_ERROR:
+      return { ...state, error: payload, status: constants.ERROR };
+    case constants.LOGIN_SUCCESS:
+      return { data: payload, status: constants.SUCCESS };
+    case constants.LOGOUT:
+      return { data: null, status: constants.INITIAL };
     default:
       return state;
   }
-};
-
-const getFirstName = fullName => fullName.split(' ')[0];
-const getLastName = fullName => fullName.split(' ')[1];
-const getFormattedPhoneNumber = num => num.split(' ')[0];
-
-//manipulate data from fake api
-const getFormattedData = user => {
-  const { name, phone, address } = user;
-  return {
-    ...user,
-    firstName: getFirstName(name),
-    lastName: getLastName(name),
-    phone: getFormattedPhoneNumber(phone),
-    address: `${address.street} ${address.suite}`,
-    zipcode: address.zipcode,
-    city: address.city
-  };
 };

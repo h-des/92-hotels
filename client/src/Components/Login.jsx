@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import loginIcon from '../images/login_icon.svg';
 import { Button } from '../Components/Buttons';
 import { connect } from 'react-redux';
+import { SpinnerRectangles } from './Spinner';
 import * as actions from '../actions';
+import constants from '../utils/constants';
 
 const Contaier = styled.div`
   display: flex;
@@ -107,7 +109,8 @@ class Login extends Component {
 
   handleLogin = e => {
     e.preventDefault();
-    this.props.fetchUser();
+    const { email, password } = this.state;
+    this.props.logIn({ email, password });
   };
 
   handleNewAccount = e => {
@@ -130,7 +133,6 @@ class Login extends Component {
             id="email"
             onChange={this.handleInput}
           />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
           <StyledLabel htmlFor="password">Password</StyledLabel>
           <StyledInput
             type="password"
@@ -138,13 +140,21 @@ class Login extends Component {
             name="password"
             onChange={this.handleInput}
           />
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {this.props.user.status === constants.ERROR && (
+            <ErrorMessage>{this.props.user.error}</ErrorMessage>
+          )}
           {password && email && !error ? (
             <Button
               margin="0 0 2rem 0"
               onClick={this.handleLogin}
               color="primary"
             >
-              Login
+              {this.props.user.status === 'LOADING' ? (
+                <SpinnerRectangles color="white" />
+              ) : (
+                'Login'
+              )}
             </Button>
           ) : (
             <Button margin="0 0 2rem 0" color="disabled" disabled>

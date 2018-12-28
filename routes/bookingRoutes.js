@@ -12,12 +12,12 @@ module.exports = app => {
     const hotel = await Hotel.findById(hotelID).lean();
 
     if (!hotel) {
-      return res.status(400).send({ error: 'Hotel does not exist' });
+      return res.status(400).send('Hotel does not exist');
     }
 
     const availableRoom = await checkAvailability(hotel, from, to, roomType);
     if (!availableRoom) {
-      return res.status(400).send({ error: 'Room not available' });
+      return res.status(400).send('Room not available');
     }
 
     const booking = new Booking();
@@ -33,9 +33,7 @@ module.exports = app => {
       });
       res.send('Room successfully booked.');
     } catch (err) {
-      res
-        .status(400)
-        .send({ error: 'There was an error. Cannot book your room.' });
+      res.status(400).send('There was an error. Cannot book your room.');
     }
   });
 };

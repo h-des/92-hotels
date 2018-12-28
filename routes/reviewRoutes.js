@@ -12,9 +12,7 @@ module.exports = app => {
 
     //check wheter user already reviewed this hotel
     if (reviews.find(val => val == hotel)) {
-      return res
-        .status(400)
-        .send({ error: 'You have already reviewed this hotel.' });
+      return res.status(400).send('You have already reviewed this hotel.');
     }
 
     //otherwise create review
@@ -34,7 +32,7 @@ module.exports = app => {
       await User.findByIdAndUpdate(_id, { $addToSet: { reviews: review._id } });
       res.send({ message: 'Review successfully created.' });
     } catch (err) {
-      res.status(400).send({ error: 'Cannot add review.' });
+      res.status(400).send('Cannot add review.');
     }
   });
 };

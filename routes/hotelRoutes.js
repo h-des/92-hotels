@@ -14,7 +14,7 @@ module.exports = app => {
       .lean()
       .exec((err, hotel) => {
         if (err) {
-          return res.status(400).send({ error: 'Hotel does not exist.' });
+          return res.status(400).send('Hotel does not exist.');
         }
         //calculate rating
         const rating = calcHotelRating(hotel);
@@ -48,7 +48,7 @@ module.exports = app => {
   app.post('/api/hotel/', async (req, res) => {
     const { city, roomType, from, to, page } = req.body;
     if (!city || !from || !to || !roomType) {
-      return res.status(400).send({ error: 'Missing parameters' });
+      return res.status(400).send('Missing parameters');
     }
 
     const result = await Hotel.paginate(
@@ -82,7 +82,7 @@ module.exports = app => {
     const { id } = req.params;
     const { from, to, roomType } = req.query;
     if (!id || !from || !to || !roomType) {
-      return res.status(400).send({ error: 'Missing parameters' });
+      return res.status(400).send('Missing parameters');
     }
 
     const hotel = await Hotel.findById(id);
@@ -92,7 +92,7 @@ module.exports = app => {
     }
 
     //none of rooms is available
-    res.status('400').send({ error: 'Room not available' });
+    res.status('400').send('Room not available');
   });
 
   app.get('/api/promoted/', async (req, res) => {
@@ -105,7 +105,7 @@ module.exports = app => {
         await newPromoted.save();
         return res.send(newPromoted.hotels);
       } catch (err) {
-        return res.status(400).send({ error: 'Cannot get promoted hotels.' });
+        return res.status(400).send('Cannot get promoted hotels.');
       }
     }
 
@@ -122,7 +122,7 @@ module.exports = app => {
       await promoted.save();
       res.send(promoted.hotels);
     } catch (err) {
-      return res.status(400).send({ error: 'Cannot get promoted hotels.' });
+      return res.status(400).send('Cannot get promoted hotels.');
     }
   });
 };

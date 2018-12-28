@@ -41,7 +41,7 @@ passport.use(
         });
       } catch (error) {
         return done(null, false, {
-          message: 'Cannot create accoun, try again.'
+          message: 'Cannot create account, try again.'
         });
       }
     }
@@ -61,10 +61,12 @@ passport.use(
           return done(err);
         }
         if (!user) {
-          return done(null, false, { message: 'User does not exist' });
+          return done(null, false, 'User does not exist');
         }
         if (user.validatePassword(password)) {
           return done(null, user);
+        } else {
+          return done('Wrong credentials');
         }
       });
     }

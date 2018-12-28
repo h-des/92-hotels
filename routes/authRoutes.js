@@ -23,14 +23,14 @@ module.exports = app => {
   app.post('/auth/login', (req, res, done) => {
     passport.authenticate('local-login', (err, user, info) => {
       if (err) {
-        return done(err);
+        return res.status(401).send(err);
       }
       if (!user) {
         return res.status(401).send(info);
       }
       req.logIn(user, err => {
         if (err) {
-          return res.status(401).send({ message: 'Database error!' });
+          return res.status(401).send('Database error!');
         }
         return res.status(201).send(omit(user.toJSON(), 'password'));
       });
