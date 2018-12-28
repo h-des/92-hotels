@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
-import RoomList from './RoomList';
+import HotelList from './HotelList';
 import withScrollPosition from '../../Components/Utils/withScrollPostion';
 import CarouselSLiding from '../../Components/CarouselSliding';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import constants from '../../utils/constants';
 
 const TopMargin = styled.div`
   padding-top: 8rem;
 `;
 
-class RoomListContainer extends Component {
+class HotelListContainer extends Component {
   componentDidMount() {
-    this.props.fetchRooms();
-    this.props.fetchRoomTiles();
+    if (this.props.tiles.status !== constants.SUCCESS) {
+      this.props.fetchTiles();
+    }
+    if (this.props.hotels.status !== constants.SUCCESS) {
+      this.props.fetchHotels();
+    }
   }
 
   loadMore = () => {
-    this.props.fetchMoreRooms();
+    const { page, pages } = this.props.hotels;
+    if (page <= pages) {
+      this.props.fetchMoreHotels(page);
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -42,20 +50,22 @@ class RoomListContainer extends Component {
   };
 
   render() {
-    const { status } = this.props.rooms;
+    const { status } = this.props.hotels;
     if (status === 'FAILURE') {
       return 'Error: Cannot load rooms';
     }
     return (
       <TopMargin>
-        <CarouselSLiding
-          items={this.props.filters.tiles}
-          onClick={this.selectCityFilter}
-        />
-        <RoomList
+        {this.props.tiles.status === constants.SUCCESS && (
+          <CarouselSLiding
+            items={this.props.tiles.list}
+            onClick={this.selectCityFilter}
+          />
+        )}
+        <HotelList
           loadmore={this.loadMore}
-          rooms={this.props.rooms.list}
-          loading={status === 'LOADING'}
+          hotels={this.props.hotels.list}
+          loading={this.props.hotels.status === constants.LOADING}
         />
       </TopMargin>
     );
@@ -64,8 +74,9 @@ class RoomListContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    rooms: state.rooms,
-    filters: state.filters
+    hotels: state.hotels,
+    filters: state.filters,
+    tiles: state.tiles
   };
 };
 
@@ -73,5 +84,5 @@ export default withScrollPosition(
   connect(
     mapStateToProps,
     actions
-  )(RoomListContainer)
+  )(HotelListContainer)
 );

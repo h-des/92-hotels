@@ -176,8 +176,8 @@ class Nav extends Component {
   renderList = () => {
     const { pathname } = this.props.history.location;
     const list = this.props.user.data
-      ? ['rooms', 'about', 'settings']
-      : ['rooms', 'about'];
+      ? ['hotels', 'about', 'settings']
+      : ['hotels', 'about'];
     return list.map(e => {
       if (e === pathname.slice(1)) {
         return (

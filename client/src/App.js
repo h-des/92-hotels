@@ -2,14 +2,15 @@ import React, { Component, Suspense, lazy } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import theme from './utils/theme';
+import { connect } from 'react-redux';
 
 import ScrollToTop from './Components/Utils/ScrollToTop';
 import Nav from './Components/Nav';
 import Footer from './Components/Footer';
 
 import Landing from './Pages/Landing/Landing';
-const RoomListContainer = lazy(() =>
-  import('./Pages/RoomList/RoomListContainer')
+const HotelListContainer = lazy(() =>
+  import('./Pages/HotelList/HotelListContainer')
 );
 const RoomViewContainer = lazy(() =>
   import('./Pages/RoomView/RoomViewContainer')
@@ -42,18 +43,24 @@ class App extends Component {
                     render={props => <RoomViewContainer {...props} />}
                   />
                   <Route
-                    path="/rooms"
-                    render={props => <RoomListContainer {...props} />}
+                    path="/hotels"
+                    render={props => <HotelListContainer {...props} />}
                   />
                   <Route path="/about" render={props => <About {...props} />} />
-                  <Route
-                    path="/settings"
-                    render={props => <Settings {...props} />}
-                  />
-                  <Route
-                    path="/checkout"
-                    render={props => <Checkout {...props} />}
-                  />
+
+                  {/* protected routes */}
+                  {this.props.user.data && (
+                    <React.Fragment>
+                      <Route
+                        path="/settings"
+                        render={props => <Settings {...props} />}
+                      />
+                      <Route
+                        path="/checkout"
+                        render={props => <Checkout {...props} />}
+                      />
+                    </React.Fragment>
+                  )}
                   <Route render={props => <NotFound {...props} />} />
                 </Switch>
               </Suspense>
@@ -66,4 +73,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(App);

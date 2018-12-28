@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import RoomCard from './RoomCard';
+import HotelCard from './HotelCard';
 import Filters from '../../Components/Filters';
 import { Spinner } from '../../Components/Spinner';
 const Grid = styled.div`
@@ -23,9 +23,11 @@ const Center = styled.div`
   margin: 0 auto;
   text-align: center;
 `;
-class RoomList extends React.PureComponent {
-  renderRooms = () => {
-    return this.props.rooms.map((e, id) => <RoomCard data={e} key={id} />);
+class HotelList extends React.PureComponent {
+  renderHotels = () => {
+    return this.props.hotels.map((hotel, id) => (
+      <HotelCard data={hotel} key={id} />
+    ));
   };
 
   render() {
@@ -33,7 +35,7 @@ class RoomList extends React.PureComponent {
       <Grid>
         <Filters />
         <CenterCell>
-          {this.renderRooms()}
+          {this.renderHotels()}
           {this.props.loading && (
             <Center>
               <Spinner />
@@ -45,4 +47,4 @@ class RoomList extends React.PureComponent {
   }
 }
 
-export default RoomList;
+export default HotelList;

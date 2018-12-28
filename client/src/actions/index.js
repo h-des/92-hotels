@@ -43,6 +43,34 @@ export const fetchCities = () => async dispatch => {
   }
 };
 
+export const fetchHotels = () => async dispatch => {
+  dispatch({ type: constants.FETCH_HOTELS });
+
+  try {
+    const res = await axios.get('api/hotel/?page=1');
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_HOTELS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_HOTELS_ERROR });
+  }
+};
+
+export const fetchMoreHotels = page => async dispatch => {
+  dispatch({ type: constants.FETCH_MORE_HOTELS });
+
+  try {
+    const res = await axios.get(`api/hotel/?page=${page}`);
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_MORE_HOTELS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_MORE_HOTELS_ERROR });
+  }
+};
+
 export const logIn = data => async dispatch => {
   dispatch({ type: constants.LOGIN });
 

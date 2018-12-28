@@ -7,7 +7,7 @@ import promotedReducer from './promotedReducer';
 import citiesReducer from './citiesReducer';
 
 export default combineReducers({
-  rooms: hotelReducer,
+  hotels: hotelReducer,
   user: userReducer,
   checkout: checkoutReducer,
   tiles: tilesReducer,

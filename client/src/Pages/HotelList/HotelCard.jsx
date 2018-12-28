@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import bedIcon from './../../images/bed.svg';
-import dollarIcon from './../../images/dollar.svg';
-import userIcon from './../../images/user.svg';
 import heartIcon from './../../images/heart.svg';
+import Badges from '../../Components/Badges';
 
 const Card = styled.div`
   display: flex;
@@ -22,15 +20,17 @@ const Card = styled.div`
   }
 `;
 
+const calcImgHeight = url => url.split('&h=200').join('&h=450');
+
 const CardImage = styled.div`
   width: 75%;
-  background-image: url(${props => props.image});
+  background-image: url(${props => calcImgHeight(props.image)});
   background-position: center;
-  background-size: 40rem 40rem;
-  transition: all 0.3s;
+  background-size: 60rem 45rem;
+  transition: all 0.15s;
 
   :hover {
-    background-size: 60rem 60rem;
+    background-size: 67rem 50rem;
   }
 
   @media only screen and (max-width: 600px) {
@@ -101,9 +101,12 @@ const CardDetails = styled.div`
   justify-content: space-between;
 `;
 
-const Detail = styled.p`
+const Detail = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
   color: ${props => props.theme.colors.primary};
-  font-size: 2.8rem;
+  font-size: 2rem;
   font-weight: 400;
 `;
 
@@ -148,39 +151,34 @@ const LoveButton = styled.button`
   }
 `;
 
-export default class RoomCard extends Component {
+export default class HotelCard extends Component {
   likeRoom = id => {
     //
     console.log(`You liked room ${id}`);
   };
 
   render() {
-    const { id, title, url, beds, price, guests } = this.props.data;
+    const { _id, name, city, stars, rating, image } = this.props.data;
     return (
       <Card>
-        <CardImage image={url} />
+        <CardImage image={image} />
         <CardBody>
-          <LoveButton onClick={() => this.likeRoom(id)}>
+          <LoveButton onClick={() => this.likeRoom(_id)}>
             <Icon src={heartIcon} />
           </LoveButton>
           <FlexColumn>
-            <CardTitle to={`/rooms/${id}`}>Royal Appartment</CardTitle>
-            <CardDesc>{title.slice(0, 80)}</CardDesc>
+            <CardTitle to={`/hotels/${_id}`}>{name}</CardTitle>
+            <CardDesc>{city}</CardDesc>
           </FlexColumn>
           <CardDetails>
             <Detail>
-              {price}
-              <Icon src={dollarIcon} alt="" />
+              <Badges type="stars" count={stars} />
+              {stars} stars
             </Detail>
             <Separator />
             <Detail>
-              {beds}
-              <Icon src={bedIcon} alt="" />
-            </Detail>
-            <Separator />
-            <Detail>
-              {guests}
-              <Icon src={userIcon} alt="" />
+              <Badges count={Math.floor(rating)} />
+              {rating}/5
             </Detail>
           </CardDetails>
         </CardBody>
