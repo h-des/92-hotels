@@ -139,10 +139,10 @@ export default class CarouselSliding extends React.Component {
       return (
         <Item
           onClick={() => this.props.onClick(item.city)}
-          key={item.url}
+          key={item._id}
           index={index}
           status={status}
-          url={item.url}
+          url={item.image}
         >
           <Title>{item.city}</Title>
         </Item>
@@ -179,7 +179,7 @@ export default class CarouselSliding extends React.Component {
 
     [preLeft, preRight].map(id => {
       let image = new Image();
-      image.src = items[id].url;
+      image.src = items[id].image;
       return image;
     });
   };

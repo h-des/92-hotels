@@ -74,7 +74,11 @@ const populateHotels = async () => {
   ];
 
   await cities.forEach(async city => {
-    const imageURL = `https://source.unsplash.com/600x200/?${city}`;
+    let imageURL = await axios.get(
+      `https://source.unsplash.com/600x200/?${city}`
+    );
+    imageURL = imageURL.request.responseURL;
+
     const stars = Math.ceil(Math.random() * 5);
     const name = faker.company.companyName().split(' ')[0];
     let roomTypes = [];
@@ -177,6 +181,25 @@ const populateRooms = async () => {
 
 const populateBookings = async () => {};
 
+const updatePhotos = async () => {
+  const hotels = await Hotel.find({});
+
+  for (let hotel of hotels) {
+    let imageURL = await axios.get(
+      `https://source.unsplash.com/600x200/?${hotel.city}`
+    );
+    hotel.image = imageURL.request.res.responseUrl;
+
+    try {
+      await hotel.save();
+      console.count('saved hotel: ');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+
+// updatePhotos();
 // populateUsers();
 // populateHotels();
 // populateReviews();

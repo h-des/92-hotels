@@ -38,7 +38,10 @@ module.exports = app => {
     let hotels = result.docs;
     hotels = hotels.map(hotel => {
       const rating = calcHotelRating(hotel);
-      return { ...pick(hotel, ['name', 'city', 'stars', 'image']), rating };
+      return {
+        ...pick(hotel, ['_id', 'name', 'city', 'stars', 'image']),
+        rating
+      };
     });
 
     res.send({ ...result, docs: hotels });
@@ -72,7 +75,10 @@ module.exports = app => {
     //format output data
     hotels = hotels.map(hotel => {
       const rating = calcHotelRating(hotel);
-      return { ...pick(hotel, ['name', 'city', 'stars', 'image']), rating };
+      return {
+        ...pick(hotel, ['_id', 'name', 'city', 'stars', 'image']),
+        rating
+      };
     });
 
     res.send({ ...result, docs: hotels });
