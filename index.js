@@ -10,6 +10,7 @@ require('./models/User');
 require('./models/Hotel');
 require('./models/Bookings');
 require('./models/Room');
+require('./models/Promoted');
 require('./models/Review');
 require('./services/passport');
 

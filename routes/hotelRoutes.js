@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Hotel = mongoose.model('hotels');
+const Promoted = mongoose.model('promoted');
 const pick = require('object.pick');
+const omit = require('object.omit');
 const checkAvailability = require('../utils/checkAvailability');
 
 module.exports = app => {
@@ -92,10 +94,56 @@ module.exports = app => {
     //none of rooms is available
     res.status('400').send({ error: 'Room not available' });
   });
+
+  app.get('/api/promoted/', async (req, res) => {
+    const promoted = await Promoted.findOne({});
+
+    if (!promoted) {
+      let newPromoted = new Promoted();
+      newPromoted.hotels = await getBestHotels(4);
+      try {
+        await newPromoted.save();
+        return res.send(newPromoted.hotels);
+      } catch (err) {
+        return res.status(400).send({ error: 'Cannot get promoted hotels.' });
+      }
+    }
+
+    //update promoted list if the old one is older than 6 hours
+    const lastUpdate = (new Date() - promoted.updatedAt) / (60 * 60 * 1000);
+    if (lastUpdate < 6) {
+      return res.send(promoted.hotels);
+    }
+
+    promoted.hotels = await getBestHotels(4);
+    promoted.updatedAt = new Date();
+
+    try {
+      await promoted.save();
+      res.send(promoted.hotels);
+    } catch (err) {
+      return res.status(400).send({ error: 'Cannot get promoted hotels.' });
+    }
+  });
 };
 
 const calcHotelRating = hotel => {
   const len = hotel.reviews.length;
   const rating = Math.floor((hotel.rating / len) * 10) / 10;
   return rating;
+};
+
+const getBestHotels = async len => {
+  let hotels = await Hotel.find({}).lean();
+  hotels = hotels.map(hotel => {
+    const rating = calcHotelRating(hotel);
+    return {
+      ...omit(hotel, ['roomList', 'reviews', 'roomTypes']),
+      rating,
+      reviewsCount: hotel.reviews.length
+    };
+  });
+  hotels = hotels.sort((a, b) => b.rating - a.rating);
+  hotels = hotels.slice(0, len);
+  return hotels;
 };

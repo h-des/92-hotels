@@ -8,14 +8,14 @@ import Subscribe from './Subscribe';
 
 class Landing extends Component {
   componentDidMount() {
-    this.props.fetchRoomTiles();
+    this.props.fetchPromoted();
   }
 
   render() {
     return (
       <div>
-        <Main tiles={this.props.filters.tiles} />
-        <Featured cities={this.props.filters.tiles} />
+        <Main tiles={[]} />
+        <Featured hotels={this.props.promoted.list} />
         <Subscribe />
       </div>
     );
@@ -24,8 +24,7 @@ class Landing extends Component {
 
 const mapStateToProps = state => {
   return {
-    rooms: state.rooms,
-    filters: state.filters
+    promoted: state.promoted
   };
 };
 

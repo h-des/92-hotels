@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
-import roomReducer from './roomReducer';
+import hotelReducer from './hotelReducer';
 import userReducer from './userReducer';
-import checkout from './checkout';
-import filters from './filters';
+import checkoutReducer from './checkoutReducer';
+import filtersReducer from './filtersReducer';
+import promotedReducer from './promotedReducer';
 
 export default combineReducers({
-  rooms: roomReducer,
+  rooms: hotelReducer,
   user: userReducer,
-  checkout: checkout,
-  filters: filters
+  checkout: checkoutReducer,
+  filters: filtersReducer,
+  promoted: promotedReducer
 });

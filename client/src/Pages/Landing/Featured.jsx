@@ -45,17 +45,7 @@ const InnerContainer = styled.div`
 
 export default class Featured extends Component {
   renderCards = () => {
-    return this.props.cities
-      .filter((e, id) => id < 4)
-      .map((e, index) => (
-        <Card
-          image={e.url}
-          key={e.url}
-          city="Paris"
-          id={index}
-          hotel="Grand Hotel"
-        />
-      ));
+    return this.props.hotels.map(hotel => <Card key={hotel._id} {...hotel} />);
   };
 
   render() {

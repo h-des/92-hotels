@@ -159,22 +159,24 @@ const PinToBottom = styled.span`
   bottom: 2rem;
 `;
 
-export default ({ image, city, hotel, stars, rating, id }) => (
+export default ({ image, name, city, stars, rating, _id, reviewsCount }) => (
   <CardContainer>
     <CardImage url={image}>{city}</CardImage>
     <CardInfo>
-      <CardTitle>{hotel}</CardTitle>
+      <CardTitle>{name}</CardTitle>
       <StyledUL>
         <Stars count={stars || Math.floor(Math.random() * 4) + 2} />
       </StyledUL>
       <Row>
         <StyledUL>
-          <Badges count={rating || Math.floor(Math.random() * 4) + 2} />
+          <Badges
+            count={Math.floor(rating) || Math.floor(Math.random() * 4) + 2}
+          />
         </StyledUL>
-        <span>{Math.floor(Math.random() * 350) + 50} reviews</span>
+        <span>{reviewsCount} reviews</span>
       </Row>
       <PinToBottom>
-        <LinkButton to={`/rooms/${id + 1}`} color="primary">
+        <LinkButton to={`/hotels/${_id}`} color="primary">
           View details
         </LinkButton>
       </PinToBottom>
