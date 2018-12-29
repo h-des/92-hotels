@@ -35,4 +35,15 @@ module.exports = app => {
       res.status(400).send('Cannot add review.');
     }
   });
+
+  app.get('/api/review', async (req, res) => {
+    const { hotel } = req.query;
+    console.log('hotel: ', hotel);
+    const reviews = await Review.find({ hotel }, {}, { lean: true, limit: 10 });
+
+    if (!reviews) {
+      return res.status(400).send('Cannot find reviews.');
+    }
+    res.send(reviews);
+  });
 };

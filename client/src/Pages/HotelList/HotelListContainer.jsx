@@ -51,7 +51,9 @@ class HotelListContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.props.removeFilters();
+    if (this.props.filters) {
+      this.props.removeFilters();
+    }
   }
 
   selectCityFilter = city => {

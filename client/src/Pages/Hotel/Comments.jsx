@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { randomDate, capitalizeFirstLetter } from '../../utils/utilsFunctions';
+import moment from 'moment';
+import axios from 'axios';
 
 const StyledComment = styled.div`
   display: flex;
@@ -55,32 +56,51 @@ const CommentsContainer = styled.div`
   flex-direction: column;
 `;
 
-export default ({ list }) => {
-  return (
-    <CommentsContainer>
-      {list.map(e => {
-        const { body, email } = e;
-        const tempDate = randomDate(new Date(2015, 0, 1), new Date());
-        const date = `${tempDate.getUTCDate()}/${tempDate.getUTCMonth() +
-          1}/${tempDate.getUTCFullYear()}`;
-        const author = email.split('@')[0];
-        return (
-          <Comment
-            body={capitalizeFirstLetter(body)}
-            date={date}
-            author={author}
-            key={author}
-          />
-        );
-      })}
-    </CommentsContainer>
-  );
-};
+class Comments extends React.Component {
+  state = { reviews: [] };
+  async componentDidMount() {
+    const { id } = this.props;
+    const res = await axios.get(`/api/review/?hotel=${id}`);
+    let reviews = res.data;
+    let arr = await Promise.all(
+      reviews.map(async elem => {
+        const res = await axios.get(`/api/profile/${elem.user}`);
+        const user = res.data;
+        return {
+          ...elem,
+          username: user.firstName,
+          avatar: user.avatar.medium
+        };
+      })
+    );
+
+    this.setState({
+      reviews: arr
+    });
+  }
+
+  render() {
+    return (
+      <CommentsContainer>
+        {this.state.reviews
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .map(e => (
+            <Comment
+              author={e.username}
+              date={moment(e.createdAt).format('YYYY-MM-DD')}
+              body={e.body}
+              avatar={e.avatar}
+            />
+          ))}
+      </CommentsContainer>
+    );
+  }
+}
 
 const Comment = ({ author, date, body, avatar }) => (
   <StyledComment>
     <CommentHead>
-      <CommentAvatar src="https://via.placeholder.com/600/51aa97" />
+      <CommentAvatar src={avatar} />
       <CommentHeadContainer>
         <CommentAuthor>{author}</CommentAuthor>
         <CommentDate>{date}</CommentDate>
@@ -89,3 +109,5 @@ const Comment = ({ author, date, body, avatar }) => (
     <CommentBody>{body}</CommentBody>
   </StyledComment>
 );
+
+export default Comments;

@@ -149,7 +149,7 @@ const getBestHotels = async len => {
   hotels = hotels.map(hotel => {
     const rating = calcHotelRating(hotel);
     return {
-      ...omit(hotel, ['roomList', 'reviews', 'roomTypes']),
+      ...omit(hotel, ['roomList', 'reviews', 'roomTypes', 'interiorPhotos']),
       rating,
       reviewsCount: hotel.reviews.length
     };

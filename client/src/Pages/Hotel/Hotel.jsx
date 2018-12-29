@@ -13,9 +13,11 @@ import styled from 'styled-components';
 import FeatureIcon from './FeatureIcon';
 
 import Availability from './Availability';
+import constants from '../../utils/constants';
 
 const Container = styled.div`
   display: grid;
+  padding-top: 6rem;
   grid-template-columns: minmax(0, auto) minmax(auto, 96rem) minmax(0, auto);
 `;
 
@@ -66,63 +68,70 @@ const Content = styled.div`
   grid-column: 2 / span 1;
 `;
 
-class RoomView extends Component {
+class Hotel extends Component {
   renderImages = () => {
-    return this.props.roomData.images.map(image => (
+    return this.props.data.interiorPhotos.map(image => (
       <CarouselImage img={image} key={image} />
     ));
   };
 
-  renderFeatures = () => {
-    return this.props.roomData.features.map(feature => (
-      <FeatureIcon
-        description={feature.description}
-        key={feature.description}
-        bigText={feature.bigText}
-      />
-    ));
-  };
+  // renderFeatures = () => {
+  //   return this.props.roomData.features.map(feature => (
+  //     <FeatureIcon
+  //       description={feature.description}
+  //       key={feature.description}
+  //       bigText={feature.bigText}
+  //     />
+  //   ));
+  // };
 
   render() {
-    const { roomData } = this.props;
-    return (
-      <Container>
-        {!roomData ? (
-          <MainContent>
-            <Spinner />
-          </MainContent> // loading spinner
-        ) : (
-          <MainContent>
-            <Carousel>
-              <CarouselImagesContainer>
-                {this.renderImages()}
-              </CarouselImagesContainer>
-              <CarouselPanel>
-                <CarouselTitle>{roomData.name}</CarouselTitle>
-                <CarouselSubTitle>{roomData.desc}</CarouselSubTitle>
-              </CarouselPanel>
-            </Carousel>
-            <ContentContainer>
-              <Content>
-                <HeadingBig>{roomData.name}</HeadingBig>
-                <StyledHr />
-                <Paragraph>{roomData.longDesc}</Paragraph>
+    const { status, data } = this.props;
+    switch (status) {
+      case constants.LOADING:
+        return (
+          <Container>
+            <MainContent>
+              <Spinner />
+            </MainContent>
+          </Container>
+        );
+      case constants.SUCCESS:
+        return (
+          <Container>
+            <MainContent>
+              <Carousel>
+                <CarouselImagesContainer>
+                  {this.renderImages()}
+                </CarouselImagesContainer>
+                <CarouselPanel>
+                  <CarouselTitle>{data.name}</CarouselTitle>
+                  <CarouselSubTitle>{data.city}</CarouselSubTitle>
+                </CarouselPanel>
+              </Carousel>
+              <ContentContainer>
+                <Content>
+                  <HeadingBig>{data.name}</HeadingBig>
+                  <StyledHr />
+                  {/* <Paragraph>{data.city}</Paragraph>
                 <HeadingBig>Features</HeadingBig>
                 <StyledHr />
                 <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer>
                 <HeadingBig>Book</HeadingBig>
                 <StyledHr />
-                <Availability price={roomData.price} id={roomData.id} />
-                <HeadingBig>Comments</HeadingBig>
-                <StyledHr />
-                <Comments list={roomData.comments} />
-              </Content>
-            </ContentContainer>
-          </MainContent>
-        )}
-      </Container>
-    );
+                <Availability price={data.price} id={data.id} /> */}
+                  <HeadingBig>Comments</HeadingBig>
+                  <StyledHr />
+                  <Comments id={data._id} />
+                </Content>
+              </ContentContainer>
+            </MainContent>
+          </Container>
+        );
+      default:
+        return null;
+    }
   }
 }
 
-export default RoomView;
+export default Hotel;

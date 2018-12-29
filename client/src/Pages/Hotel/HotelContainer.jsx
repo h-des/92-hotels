@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
-import RoomView from './RoomView';
+import Hotel from './Hotel';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
 
-class RoomViewContainer extends Component {
+class HotelContainer extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchFullRoomInfo(id);
+    this.props.fetchHotelInfo(id);
   }
+
+  // componentWillUnmount() {
+  //   this.props.hotelUnmount();
+  // }
 
   render() {
     const { id } = this.props.match.params;
-    const { list } = this.props.rooms;
-    const myRoom = list.find(e => e.id === parseInt(id, 10));
-    if (myRoom && myRoom.comments) {
-      return <RoomView roomData={myRoom} />;
-    } else {
-      return <RoomView />;
-    }
+    const hotel = this.props.hotels.find(e => e._id === id);
+    return <Hotel data={hotel} status={this.props.status} />;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    rooms: state.rooms
+    hotels: state.hotels.list,
+    status: state.hotels.specificHotelStatus
   };
 };
 
@@ -32,5 +32,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     actions
-  )(RoomViewContainer)
+  )(HotelContainer)
 );

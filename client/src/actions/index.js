@@ -93,6 +93,19 @@ export const fetchMoreHotels = (page, filters) => async dispatch => {
   }
 };
 
+export const fetchHotelInfo = id => async dispatch => {
+  dispatch({ type: constants.FETCH_HOTEL_INFO });
+  try {
+    const res = await axios.get(`/api/hotel/${id}`);
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_HOTEL_INFO_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_HOTEL_INFO_ERROR });
+  }
+};
+
 export const addFilters = filters => dispatch => {
   dispatch({
     payload: filters,

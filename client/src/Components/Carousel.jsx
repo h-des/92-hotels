@@ -47,7 +47,7 @@ const ButtonGroup = styled.div`
   @media only screen and (max-width: 425px) {
     bottom: auto;
     right: 20px;
-    top: 80px;
+    top: 20px;
   }
 `;
 const StyledButton = styled.button`

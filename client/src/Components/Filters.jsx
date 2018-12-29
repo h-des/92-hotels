@@ -48,7 +48,7 @@ const Item = styled.div`
 const Button = styled.button`
   flex: 1 1 0;
   background-color: ${props =>
-    props.type == 'submit'
+    props.type === 'submit'
       ? props.theme.colors.primary
       : props.theme.colors.secondary};
   cursor: pointer;
@@ -61,7 +61,7 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${props =>
-      props.type == 'submit'
+      props.type === 'submit'
         ? props.theme.colorsHover.primary
         : props.theme.colorsHover.secondary};
   }

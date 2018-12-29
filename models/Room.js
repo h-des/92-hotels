@@ -7,7 +7,6 @@ const roomSchema = new Schema({
   name: String,
   type: Number,
   stars: Number,
-  photos: [String],
   bookings: [
     {
       type: ObjectId,

@@ -12,9 +12,7 @@ import Landing from './Pages/Landing/Landing';
 const HotelListContainer = lazy(() =>
   import('./Pages/HotelList/HotelListContainer')
 );
-const RoomViewContainer = lazy(() =>
-  import('./Pages/RoomView/RoomViewContainer')
-);
+const HotelContainer = lazy(() => import('./Pages/Hotel/HotelContainer'));
 const About = lazy(() => import('./Pages/About/About'));
 const Settings = lazy(() => import('./Pages/Settings/Settings'));
 const Checkout = lazy(() => import('./Pages/Checkout/Checkout'));
@@ -39,8 +37,8 @@ class App extends Component {
                 <Switch>
                   <Route path="/" exact component={Landing} />
                   <Route
-                    path="/rooms/:id"
-                    render={props => <RoomViewContainer {...props} />}
+                    path="/hotels/:id"
+                    render={props => <HotelContainer {...props} />}
                   />
                   <Route
                     path="/hotels"
