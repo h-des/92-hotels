@@ -9,7 +9,7 @@
 
 #config
 /config/dev.js
-/config/prod.js
+# /config/prod.js
 
 # production
 /client/build
