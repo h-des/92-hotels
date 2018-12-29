@@ -199,6 +199,32 @@ const updatePhotos = async () => {
   }
 };
 
+const addInteriorPhotos = async () => {
+  const hotels = await Hotel.find({});
+  const getPhotos = arr => {
+    arr = [...arr];
+    let res = [];
+    for (let i = 0; i < 3; i++) {
+      let id = Math.floor(Math.random() * arr.length);
+      res.push(arr[id]);
+      arr.splice(id, 1);
+    }
+    return res;
+  };
+
+  for (let hotel of hotels) {
+    let photosArr = getPhotos(photos);
+    hotel.interiorPhotos = photosArr;
+    try {
+      await hotel.save();
+      console.count('saved hotel: ');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+
+// addInteriorPhotos();
 // updatePhotos();
 // populateUsers();
 // populateHotels();
