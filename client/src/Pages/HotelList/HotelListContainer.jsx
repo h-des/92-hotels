@@ -16,8 +16,11 @@ class HotelListContainer extends Component {
     if (this.props.tiles.status !== constants.SUCCESS) {
       this.props.fetchTiles();
     }
+    if (this.props.tiles.cities !== constants.SUCCESS) {
+      this.props.fetchCities();
+    }
     if (this.props.hotels.status !== constants.SUCCESS) {
-      this.props.fetchHotels();
+      this.props.fetchHotels(this.props.filters);
     }
   }
 
@@ -29,6 +32,9 @@ class HotelListContainer extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.props.filters !== prevProps.filters) {
+      this.props.fetchHotels(this.props.filters);
+    }
     if (this.props.scrollInfo && prevProps.scrollInfo) {
       const { scrollY, innerHeight, scrollHeight } = this.props.scrollInfo;
 
@@ -42,6 +48,10 @@ class HotelListContainer extends Component {
         this.loadMore();
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.props.removeFilters();
   }
 
   selectCityFilter = city => {
@@ -65,6 +75,7 @@ class HotelListContainer extends Component {
         <HotelList
           loadmore={this.loadMore}
           hotels={this.props.hotels.list}
+          cities={this.props.cities.list}
           loading={this.props.hotels.status === constants.LOADING}
         />
       </TopMargin>
@@ -76,7 +87,8 @@ const mapStateToProps = state => {
   return {
     hotels: state.hotels,
     filters: state.filters,
-    tiles: state.tiles
+    tiles: state.tiles,
+    cities: state.cities
   };
 };
 

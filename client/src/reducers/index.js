@@ -5,6 +5,7 @@ import checkoutReducer from './checkoutReducer';
 import tilesReducer from './tilesReducer';
 import promotedReducer from './promotedReducer';
 import citiesReducer from './citiesReducer';
+import filtersReducer from './filtersReducer';
 
 export default combineReducers({
   hotels: hotelReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   checkout: checkoutReducer,
   tiles: tilesReducer,
   promoted: promotedReducer,
-  cities: citiesReducer
+  cities: citiesReducer,
+  filters: filtersReducer
 });

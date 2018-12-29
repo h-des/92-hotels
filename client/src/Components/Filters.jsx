@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
-import { NumberInput } from './Inputs';
 import { DatePicker } from '@atlaskit/datetime-picker';
+import Select from '@atlaskit/select';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 
 const StyledContainer = styled.form`
   background-color: white;
+  padding-top: 2rem;
   position: fixed;
   z-index: 20;
   display: flex;
@@ -22,37 +25,50 @@ const StyledContainer = styled.form`
 
   @media only screen and (max-width: 425px) {
     width: 100vh;
+    height: 100vh;
     transform: ${props =>
       props.show ? `translateX(0px)` : `translateX(-100%)`};
   }
 `;
 
 const ItemTitle = styled.label`
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 700;
   color: ${props => props.theme.colors.primary};
-  margin-bottom: 2rem;
+  margin-bottom: 1.4rem;
 `;
 
 const Item = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 3.5rem;
+  padding: 0 3.5rem;
+  margin-bottom: 1rem;
 `;
 
-const SubmitButton = styled.button`
-  background-color: ${props => props.theme.colors.primary};
+const Button = styled.button`
+  flex: 1 1 0;
+  background-color: ${props =>
+    props.type == 'submit'
+      ? props.theme.colors.primary
+      : props.theme.colors.secondary};
   cursor: pointer;
   font-weight: 600;
   color: white;
-  font-size: 20px;
-  min-height: 100px;
+  font-size: 2rem;
+  min-height: 6rem;
   border: none;
   font-family: 'Nunito';
 
   &:hover {
-    background-color: ${props => props.theme.colorsHover.primary};
+    background-color: ${props =>
+      props.type == 'submit'
+        ? props.theme.colorsHover.primary
+        : props.theme.colorsHover.secondary};
   }
+`;
+
+const Row = styled.div`
+  display: flex;
 `;
 
 const ShowButton = styled.button`
@@ -76,24 +92,33 @@ const ShowButton = styled.button`
   }
 
   @media only screen and (max-width: 425px) {
-    transform: ${props => props.show && `translateX(-80px)`};
+    transform: ${props => props.show && `translateX(-80px)`} translateY(-1.8rem);
     border-top-right-radius: ${props => props.show && `0px`};
     border-bottom-right-radius: ${props => props.show && `0px`};
     border-bottom-left-radius: ${props => props.show && `15px`};
   }
 `;
 
+const ErrorMessage = styled.p`
+  border-left: 3px solid red;
+  background-color: #fff9ed;
+  color: #744f11;
+  font-size: 1.6rem;
+  padding: 4px 8px;
+  margin-bottom: 0.5rem;
+`;
+
 class Filters extends Component {
   state = {
+    error: null,
     show: false,
     showBody: false,
     checkIn: moment().format('YYYY-MM-DD'),
     checkOut: moment()
       .add(1, 'days')
       .format('YYYY-MM-DD'),
-    adults: 0,
-    children: 0,
-    allIncusive: false
+    roomType: null,
+    city: null
   };
 
   toggleFilters = e => {
@@ -116,54 +141,37 @@ class Filters extends Component {
 
   sumbitForm = e => {
     e.preventDefault();
-
-    //fake api call
-    this.props.history.push('rooms');
-  };
-
-  handleChange = e => {
-    const { name, value } = e.target;
-    if (
-      (name === 'adults' || name === 'children') &&
-      value < 0 &&
-      !isNaN(value)
-    ) {
+    const { city, roomType, checkIn, checkOut } = this.state;
+    if (!city || !roomType || !checkIn || !checkOut) {
       this.setState({
-        [name]: 0
+        error: 'Fields cannot be empty!'
       });
-    } else if (!isNaN(value)) {
-      this.setState({
-        [name]: value
+    } else {
+      this.props.addFilters({
+        city: city.value,
+        roomType: roomType.value,
+        from: checkIn,
+        to: checkOut
       });
     }
   };
 
-  handleDateChange = (e, name) => {
-    this.setState({ [name]: e });
-  };
-
-  stepUp = (e, name) => {
+  clearFilters = e => {
     e.preventDefault();
-    this.setState(prevState => {
-      return {
-        [name]: parseInt(prevState[name], 10) + 1
-      };
+    this.setState({
+      roomType: null,
+      error: null,
+      city: null
     });
+    this.props.removeFilters();
   };
 
-  stepDown = (e, name) => {
-    e.preventDefault();
-    if (this.state[name] > 0) {
-      this.setState(prevState => {
-        return {
-          [name]: parseInt(prevState[name], 10) - 1
-        };
-      });
-    }
+  handleChange = (e, name) => {
+    this.setState({ [name]: e, error: null });
   };
 
   render() {
-    const { show, showBody } = this.state;
+    const { show, showBody, error } = this.state;
     return (
       <StyledContainer show={show}>
         {show ? (
@@ -178,12 +186,21 @@ class Filters extends Component {
         {showBody && (
           <React.Fragment>
             <Item>
+              <ItemTitle htmlFor="city">City</ItemTitle>
+              <Select
+                value={this.state.city}
+                name="city"
+                onChange={e => this.handleChange(e, 'city')}
+                options={this.props.cities}
+              />
+            </Item>
+            <Item>
               <ItemTitle htmlFor="checkIn">Check in</ItemTitle>
               <DatePicker
                 id="checkIn"
                 value={this.state.checkIn}
                 name="checkIn"
-                onChange={e => this.handleDateChange(e, 'checkIn')}
+                onChange={e => this.handleChange(e, 'checkIn')}
               />
             </Item>
             <Item>
@@ -192,32 +209,30 @@ class Filters extends Component {
                 id="checkOut"
                 value={this.state.checkOut}
                 name="checkOut"
-                onChange={e => this.handleDateChange(e, 'checkOut')}
+                onChange={e => this.handleChange(e, 'checkOut')}
               />
             </Item>
             <Item>
-              <ItemTitle htmlFor="adults">Adults</ItemTitle>
-              <NumberInput
-                fieldName={'adults'}
-                currentValue={this.state.adults}
-                onPlusClick={this.stepUp}
-                onChangeEvent={this.handleChange}
-                onMinusClick={this.stepDown}
+              <ItemTitle htmlFor="roomType">Room type</ItemTitle>
+              <Select
+                name="roomType"
+                value={this.state.roomType}
+                onChange={e => this.handleChange(e, 'roomType')}
+                options={[
+                  { label: 1, value: 1 },
+                  { label: 2, value: 2 },
+                  { label: 3, value: 3 },
+                  { label: 4, value: 4 }
+                ]}
               />
             </Item>
-            <Item>
-              <ItemTitle htmlFor="children">Children</ItemTitle>
-              <NumberInput
-                fieldName={'children'}
-                onChangeEvent={this.handleChange}
-                currentValue={this.state.children}
-                onPlusClick={this.stepUp}
-                onMinusClick={this.stepDown}
-              />
-            </Item>
-            <SubmitButton type="submit" onClick={this.sumbitForm}>
-              Submit
-            </SubmitButton>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <Row>
+              <Button type="submit" onClick={this.sumbitForm}>
+                Submit
+              </Button>
+              <Button onClick={this.clearFilters}>Clear</Button>
+            </Row>
           </React.Fragment>
         )}
       </StyledContainer>
@@ -225,4 +240,9 @@ class Filters extends Component {
   }
 }
 
-export default withRouter(Filters);
+export default withRouter(
+  connect(
+    null,
+    actions
+  )(Filters)
+);

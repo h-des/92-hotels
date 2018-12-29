@@ -19,6 +19,14 @@ const CenterCell = styled.div`
   grid-column-gap: 2rem;
 `;
 
+const Message = styled.p`
+  padding: 2rem 4rem;
+  font-size: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
+`;
+
 const Center = styled.div`
   margin: 0 auto;
   text-align: center;
@@ -33,9 +41,12 @@ class HotelList extends React.PureComponent {
   render() {
     return (
       <Grid>
-        <Filters />
+        <Filters cities={this.props.cities} />
         <CenterCell>
           {this.renderHotels()}
+          {this.props.hotels.length === 0 && !this.props.loading && (
+            <Message>No hotels found</Message>
+          )}
           {this.props.loading && (
             <Center>
               <Spinner />
