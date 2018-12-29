@@ -116,11 +116,15 @@ class Hotel extends Component {
                   {/* <Paragraph>{data.city}</Paragraph>
                 <HeadingBig>Features</HeadingBig>
                 <StyledHr />
-                <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer>
-                <HeadingBig>Book</HeadingBig>
-                <StyledHr />
-                <Availability price={data.price} id={data.id} /> */}
-                  <HeadingBig>Comments</HeadingBig>
+                <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer> */}
+                  <HeadingBig>Book</HeadingBig>
+                  <StyledHr />
+                  <Availability
+                    resetAvailability={this.props.resetAvailability}
+                    status={this.props.availability}
+                    id={data._id}
+                  />
+                  <HeadingBig>Reviews</HeadingBig>
                   <StyledHr />
                   <Comments id={data._id} />
                 </Content>

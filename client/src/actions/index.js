@@ -106,6 +106,26 @@ export const fetchHotelInfo = id => async dispatch => {
   }
 };
 
+export const checkAvailability = data => async dispatch => {
+  dispatch({ type: constants.CHECK_AVAILABILITY });
+  try {
+    const res = await axios.get(
+      `/api/hotel/availability/${data.id}?from=${data.from}&to=${
+        data.to
+      }&roomType=${data.roomType}`
+    );
+    dispatch({
+      type: constants.CHECK_AVAILABILITY_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.CHECK_AVAILABILITY_ERROR });
+  }
+};
+
+export const resetAvailability = () => dispatch => {
+  dispatch({ type: constants.RESET_AVAILABILITY });
+};
+
 export const addFilters = filters => dispatch => {
   dispatch({
     payload: filters,

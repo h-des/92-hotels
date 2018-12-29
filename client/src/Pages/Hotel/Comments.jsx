@@ -3,31 +3,59 @@ import styled from 'styled-components';
 import moment from 'moment';
 import axios from 'axios';
 
+const SVG = styled.svg`
+  height: 3rem;
+`;
+
+const Badge = ({ fillColor }) => (
+  <SVG
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 64 64"
+    aria-labelledby="title"
+    aria-describedby="desc"
+    role="img"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <title>Quality</title>
+    <desc>A solid styled icon from Orion Icon Library.</desc>
+    <path
+      data-name="layer2"
+      d="M54 21.4l-3.9-3.6 1.1-5.2-5-1.7L45 5.8l-5.3.5-3.1-4.2L32 4.7l-4.6-2.6-3.1 4.2-5.3-.5-1.1 5.2-5 1.7 1.1 5.2-4 3.5 3.1 4.3-2.1 4.8 4.6 2.7v5.3l5.3.6 2.1 4.8 5-1.6 4 3.5 4-3.5 5 1.6 2.2-4.8 5.3-.6v-5.3l4.5-2.7-2.1-4.8zM32 33.9a10 10 0 1 1 10-10 10 10 0 0 1-10 10z"
+      fill={fillColor}
+    />
+    <path
+      data-name="layer1"
+      d="M29.3 48.8l-2.3-2-2.9.9-1.2.2a4 4 0 0 1-3.6-2.3l-.9-2.1L16 61.9l14-5.3v-7.3zm15.3-3.2a4 4 0 0 1-3.6 2.3l-1.2-.2-2.9-.9-2.3 2-.7.5v7.4l14 5.3-2.2-18.7z"
+      fill={fillColor}
+    />
+  </SVG>
+);
+
 const StyledComment = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  grid-template-rows: min-content min-content;
+  grid-column-gap: 1rem;
   flex-direction: column;
   margin-bottom: 30px;
 `;
 
-const CommentHead = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const CommentHeadContainer = styled.div`
+  grid-column: 2/-1;
+  grid-row: 1 / span 1;
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 90%;
   justify-content: space-between;
 `;
 
 const CommentAvatar = styled.img`
   height: 4.5rem;
+  justify-self: center;
   width: 4.5rem;
   border-radius: 50%;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
 `;
 
 const CommentAuthor = styled.h4`
@@ -44,7 +72,8 @@ const CommentDate = styled.p`
 
 const CommentBody = styled.p`
   font-size: 1.8rem;
-  width: 90%;
+  grid-column: 2 / span 1;
+  grid-row: 2/-1;
   text-align: justify;
   font-style: italic;
   align-self: flex-end;
@@ -54,6 +83,17 @@ const CommentBody = styled.p`
 const CommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const Rating = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / span 1;
+  grid-row: 2/-1;
+  justify-content: center;
+  align-self: start;
+  font-size: 1.4rem;
 `;
 
 class Comments extends React.Component {
@@ -90,6 +130,7 @@ class Comments extends React.Component {
               date={moment(e.createdAt).format('YYYY-MM-DD')}
               body={e.body}
               avatar={e.avatar}
+              rating={e.rate}
             />
           ))}
       </CommentsContainer>
@@ -97,15 +138,18 @@ class Comments extends React.Component {
   }
 }
 
-const Comment = ({ author, date, body, avatar }) => (
+const Comment = ({ author, date, body, avatar, rating }) => (
   <StyledComment>
-    <CommentHead>
-      <CommentAvatar src={avatar} />
-      <CommentHeadContainer>
-        <CommentAuthor>{author}</CommentAuthor>
-        <CommentDate>{date}</CommentDate>
-      </CommentHeadContainer>
-    </CommentHead>
+    <CommentAvatar src={avatar} />
+    <Rating>
+      <Badge fillColor="blue" />
+      <p>{rating}/5</p>
+    </Rating>
+    <CommentHeadContainer>
+      <CommentAuthor>{author}</CommentAuthor>
+      <CommentDate>{date}</CommentDate>
+    </CommentHeadContainer>
+
     <CommentBody>{body}</CommentBody>
   </StyledComment>
 );

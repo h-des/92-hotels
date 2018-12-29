@@ -26,7 +26,7 @@ const Span = styled.span`
     display: inline-block;
     border: 2px solid #aaa;
     border-radius: 3px;
-    background-color: ${props => (props.checked ? `#222` : `transparent`)};
+    background-color: ${props => (props.checked ? `#666` : `transparent`)};
   }
 `;
 

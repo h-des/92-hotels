@@ -3,43 +3,14 @@ import { Button, LinkButton } from '../../Components/Buttons';
 import moment from 'moment';
 import styled from 'styled-components';
 import { DatePicker } from '@atlaskit/datetime-picker';
-import { NumberInput } from '../../Components/Inputs';
+import Select from '@atlaskit/select';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import constants from '../../utils/constants';
 
 const Container = styled.form`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 900px) {
-    flex-direction: column;
-  }
-`;
-
-const Fields = styled.div`
-  display: flex;
   flex-direction: column;
-  /* width: 70%; */
-`;
-
-const Actions = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* width: 20%; */
-  justify-content: space-between;
-  padding-top: 3.7rem;
-  padding-bottom: 0.7rem;
-`;
-
-const FieldGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-  @media only screen and (max-width: 670px) {
-    flex-direction: column;
-  }
 `;
 
 const Field = styled.div`
@@ -47,6 +18,7 @@ const Field = styled.div`
   flex-direction: column;
   text-align: left;
   width: 100%;
+  margin-bottom: 1.5rem;
 `;
 
 const Label = styled.label`
@@ -56,21 +28,15 @@ const Label = styled.label`
   margin-bottom: 1.5rem;
 `;
 
-const ResetCustomInput = styled.span`
-  font-size: 1.4rem;
-  width: 100%;
-  padding: 0 20px;
-  margin-bottom: 2.5rem;
-`;
-
 const Message = styled.p`
-  border-radius: 4px;
-  border: solid 1px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  font-size: 2rem;
-  border-color: ${props =>
-    props.available ? props.theme.colors.green : 'red'};
+  background-color: ${props => props.color};
+  border-left-style: solid;
+  border-left-width: 3px;
+  border-left-color: ${props => props.borderColor};
+  color: ${props => props.borderColor};
+  padding: 1rem 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
 `;
 
 class Availability extends Component {
@@ -79,85 +45,77 @@ class Availability extends Component {
     checkOut: moment()
       .add(1, 'days')
       .format('YYYY-MM-DD'),
-    adults: 1,
-    children: 0,
-    status: null,
-    available: false
+    roomType: null,
+    error: null
   };
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    if (this.props.availability.checkoutStatus !== 'WAITING') {
-      this.props.resetAvailability();
-    }
+  handleChange = (e, name) => {
     if (
-      (name === 'adults' || name === 'children') &&
-      value < 0 &&
-      !isNaN(value)
+      this.props.status === constants.ERROR ||
+      this.props.status === constants.SUCCESS
     ) {
-      this.setState({
-        [name]: 0
-      });
-    } else if (!isNaN(value)) {
-      this.setState({
-        [name]: value
-      });
-    }
-  };
-
-  handleDateChange = (e, name) => {
-    if (this.props.availability.scheckoutStatus !== 'WAITING') {
       this.props.resetAvailability();
     }
-    this.setState({ [name]: e });
-  };
-
-  stepUp = (e, name) => {
-    e.preventDefault();
-    if (this.props.availability.checkoutStatus !== 'WAITING') {
-      this.props.resetAvailability();
-    }
-    this.setState(prevState => {
-      return {
-        [name]: parseInt(prevState[name], 10) + 1
-      };
-    });
-  };
-
-  stepDown = (e, name) => {
-    e.preventDefault();
-    if (this.props.availability.checkoutStatus !== 'WAITING') {
-      this.props.resetAvailability();
-    }
-    if (this.state[name] > 0) {
-      this.setState(prevState => {
-        return {
-          [name]: parseInt(prevState[name], 10) - 1
-        };
-      });
-    }
+    this.setState({ [name]: e, error: null });
   };
 
   checkAvailability = e => {
     e.preventDefault();
-    const { checkIn, checkOut, adults, children } = this.state;
-    const { price, id } = this.props;
-    const data = { checkIn, checkOut, adults, children, price, id };
+    const { checkIn, checkOut, roomType } = this.state;
+    if (!checkIn || !checkOut || !roomType) {
+      return this.setState({ error: 'Fields cannot be empty!' });
+    }
+    const { id } = this.props;
+    const data = { from: checkIn, to: checkOut, roomType: roomType.value, id };
 
     this.props.checkAvailability(data);
   };
 
-  renderCTA = () => {
-    switch (this.props.availability.checkoutStatus) {
-      case 'AVAILABLE':
-        return <Message available>Available!</Message>;
-      case 'NOT_AVAILABLE':
-        return <Message>Not avaiable</Message>;
-      default:
+  componentWillUnmount() {
+    this.props.resetAvailability();
+  }
+
+  renderButtons = () => {
+    switch (this.props.status) {
+      case constants.INITIAL:
         return (
-          <Button color="primary" onClick={this.checkAvailability}>
-            Check availability
-          </Button>
+          <React.Fragment>
+            <Button color="primary" onClick={this.checkAvailability}>
+              Check availability
+            </Button>
+          </React.Fragment>
+        );
+      case constants.LOADING:
+        return (
+          <React.Fragment>
+            <Button color="disabled" disabled onClick={this.checkAvailability}>
+              Loading...
+            </Button>
+          </React.Fragment>
+        );
+
+      case constants.ERROR:
+        return (
+          <React.Fragment>
+            <Message color="#FFEE58" borderColor="#D32F2F">
+              Not available.
+            </Message>
+            <Button color="disabled" disabled onClick={this.checkAvailability}>
+              Check availability
+            </Button>
+          </React.Fragment>
+        );
+
+      case constants.SUCCESS:
+        return (
+          <React.Fragment>
+            <Message color="#A5D6A7" borderColor="#388E3C">
+              Available!
+            </Message>
+            <Button color="green" onClick={this.checkAvailability}>
+              Book now
+            </Button>
+          </React.Fragment>
         );
     }
   };
@@ -165,70 +123,42 @@ class Availability extends Component {
   render() {
     return (
       <Container>
-        <Fields>
-          <FieldGroup>
-            <ResetCustomInput>
-              <Field>
-                <Label htmlFor="checkIn" style={{ marginLeft: '-20px' }}>
-                  Check in
-                </Label>
-                <DatePicker
-                  id="checkIn"
-                  name="checkIn"
-                  onChange={e => this.handleDateChange(e, 'checkIn')}
-                />
-              </Field>
-            </ResetCustomInput>
-            <ResetCustomInput>
-              <Field>
-                <Label htmlFor="checkOut" style={{ marginLeft: '-20px' }}>
-                  Check out
-                </Label>
-                <DatePicker
-                  id="checkOut"
-                  name="checkOut"
-                  onChange={e => this.handleDateChange(e, 'checkOut')}
-                />
-              </Field>
-            </ResetCustomInput>
-          </FieldGroup>
-          <FieldGroup>
-            <Field>
-              <Label htmlFor="adults">Adults</Label>
-              <NumberInput
-                fieldName="adults"
-                onPlusClick={this.stepUp}
-                onMinusClick={this.stepDown}
-                currentValue={this.state.adults}
-                onChangeEvent={this.handleChange}
-                marginBottom="2.5rem"
-              />
-            </Field>
-            <Field>
-              <Label htmlFor="children">Children</Label>
-              <NumberInput
-                fieldName="children"
-                onPlusClick={this.stepUp}
-                onMinusClick={this.stepDown}
-                currentValue={this.state.children}
-                onChangeEvent={this.handleChange}
-                marginBottom="2.5rem"
-              />
-            </Field>
-          </FieldGroup>
-        </Fields>
-        <Actions>
-          {this.renderCTA()}
-          {this.props.availability.checkoutStatus === 'AVAILABLE' ? (
-            <LinkButton to="/checkout" color="green">
-              Book now!
-            </LinkButton>
-          ) : (
-            <Button color="disabled" disabled>
-              Book now!
-            </Button>
-          )}
-        </Actions>
+        <Field>
+          <Label htmlFor="checkIn">Check in</Label>
+          <DatePicker
+            id="checkIn"
+            name="checkIn"
+            onChange={e => this.handleChange(e, 'checkIn')}
+          />
+        </Field>
+        <Field>
+          <Label htmlFor="checkOut">Check out</Label>
+          <DatePicker
+            id="checkOut"
+            name="checkOut"
+            onChange={e => this.handleChange(e, 'checkOut')}
+          />
+        </Field>
+        <Field>
+          <Label htmlFor="roomType">Room type</Label>
+          <Select
+            id="roomType"
+            name="roomType"
+            options={[
+              { label: 1, value: 1 },
+              { label: 2, value: 2 },
+              { label: 3, value: 3 },
+              { label: 4, value: 4 }
+            ]}
+            onChange={e => this.handleChange(e, 'roomType')}
+          />
+        </Field>
+        {this.state.error && (
+          <Message color="#FFEE58" borderColor="#D32F2F">
+            {this.state.error}
+          </Message>
+        )}
+        {this.renderButtons()}
       </Container>
     );
   }

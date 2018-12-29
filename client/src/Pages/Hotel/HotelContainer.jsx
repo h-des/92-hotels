@@ -17,14 +17,22 @@ class HotelContainer extends Component {
   render() {
     const { id } = this.props.match.params;
     const hotel = this.props.hotels.find(e => e._id === id);
-    return <Hotel data={hotel} status={this.props.status} />;
+    return (
+      <Hotel
+        data={hotel}
+        availability={this.props.availability}
+        resetAvailability={this.props.resetAvailability}
+        status={this.props.status}
+      />
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
     hotels: state.hotels.list,
-    status: state.hotels.specificHotelStatus
+    status: state.hotels.specificHotelStatus,
+    availability: state.checkout.availability
   };
 };
 
