@@ -70,11 +70,11 @@ const NumberInput = ({
 };
 
 NumberInput.propTypes = {
-  onChangeEvent: PropTypes.func,
+  onChangeEvent: PropTypes.func.isRequired,
   onPlusClick: PropTypes.func,
   onMinusClick: PropTypes.func,
-  currentValue: PropTypes.number,
-  fieldName: PropTypes.string
+  currentValue: PropTypes.number.isRequired,
+  fieldName: PropTypes.string.isRequired
 };
 
 export { Input, NumberInput };

@@ -168,7 +168,7 @@ export default class Footer extends Component {
                 <h4>Map</h4>
                 <StyledUl>
                   <li>
-                    <StyledLink to="/Rooms">Rooms</StyledLink>
+                    <StyledLink to="/Hotels">Hotels</StyledLink>
                   </li>
                   <li>
                     <StyledLink to="/About">About</StyledLink>

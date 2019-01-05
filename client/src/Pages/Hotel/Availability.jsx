@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, LinkButton } from '../../Components/Buttons';
+import { Button } from '../../Components/Buttons';
 import moment from 'moment';
 import styled from 'styled-components';
 import { DatePicker } from '@atlaskit/datetime-picker';
@@ -77,14 +77,6 @@ class Availability extends Component {
 
   renderButtons = () => {
     switch (this.props.status) {
-      case constants.INITIAL:
-        return (
-          <React.Fragment>
-            <Button color="primary" onClick={this.checkAvailability}>
-              Check availability
-            </Button>
-          </React.Fragment>
-        );
       case constants.LOADING:
         return (
           <React.Fragment>
@@ -114,6 +106,14 @@ class Availability extends Component {
             </Message>
             <Button color="green" onClick={this.checkAvailability}>
               Book now
+            </Button>
+          </React.Fragment>
+        );
+      default:
+        return (
+          <React.Fragment>
+            <Button color="primary" onClick={this.checkAvailability}>
+              Check availability
             </Button>
           </React.Fragment>
         );

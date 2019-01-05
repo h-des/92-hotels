@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import HotelCard from './HotelCard';
 import Filters from '../../Components/Filters';
 import { Spinner } from '../../Components/Spinner';
+import PropTypes from 'prop-types';
+
 const Grid = styled.div`
   display: grid;
   grid-template-columns: minmax(20px, auto) minmax(auto, 114rem) minmax(
@@ -31,6 +33,7 @@ const Center = styled.div`
   margin: 0 auto;
   text-align: center;
 `;
+
 class HotelList extends React.PureComponent {
   renderHotels = () => {
     return this.props.hotels.map((hotel, id) => (
@@ -57,5 +60,10 @@ class HotelList extends React.PureComponent {
     );
   }
 }
+
+HotelList.propTypes = {
+  hotels: PropTypes.array.isRequired,
+  cities: PropTypes.array.isRequired
+};
 
 export default HotelList;

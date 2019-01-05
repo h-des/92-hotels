@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Card from '../../Components/Card';
 
 const StyledContainer = styled.section`
@@ -57,3 +58,7 @@ export default class Featured extends Component {
     );
   }
 }
+
+Featured.propTypes = {
+  hotels: PropTypes.array.isRequired
+};

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Title = styled.p`
   font-size: 2rem;
@@ -197,6 +198,11 @@ export default class CarouselSliding extends React.Component {
     );
   }
 }
+
+CarouselSliding.propTypes = {
+  items: PropTypes.array.isRequired,
+  onClick: PropTypes.func
+};
 
 CarouselSliding.defaultProps = {
   items: []

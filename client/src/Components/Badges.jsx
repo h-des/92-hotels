@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SVG = styled.svg`
   height: 1.4rem;
@@ -90,6 +91,12 @@ const Badges = ({ count, marginBottom, type }) => {
     }
   }
   return <StyledUL marginBottom={marginBottom}>{res}</StyledUL>;
+};
+
+Badges.propTypes = {
+  count: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  marginBottom: PropTypes.string
 };
 
 export default Badges;

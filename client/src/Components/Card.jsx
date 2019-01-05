@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { LinkButton } from './Buttons';
 import Badges from './Badges';
+import PropTypes from 'prop-types';
 
 const CardContainer = styled.div`
   height: 40rem;
@@ -62,7 +63,7 @@ const PinToBottom = styled.span`
   bottom: 2rem;
 `;
 
-export default ({ image, name, city, stars, rating, _id, reviewsCount }) => (
+const Card = ({ image, name, city, stars, rating, _id, reviewsCount }) => (
   <CardContainer>
     <CardImage url={image}>{city}</CardImage>
     <CardInfo>
@@ -87,3 +88,15 @@ export default ({ image, name, city, stars, rating, _id, reviewsCount }) => (
     </CardInfo>
   </CardContainer>
 );
+
+Card.propTypes = {
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  city: PropTypes.string.isRequired,
+  stars: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
+  reviewsCount: PropTypes.number.isRequired
+};
+
+export default Card;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const SVG = styled.svg`
   height: 3rem;
@@ -153,5 +154,17 @@ const Comment = ({ author, date, body, avatar, rating }) => (
     <CommentBody>{body}</CommentBody>
   </StyledComment>
 );
+
+Comments.propTypes = {
+  id: PropTypes.string.isRequired
+};
+
+Comment.propTypes = {
+  author: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired
+};
 
 export default Comments;
