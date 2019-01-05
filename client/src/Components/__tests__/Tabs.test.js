@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Tab, TabTitle, TabsContainer } from '../Components/Tabs';
+import { shallow, mount } from 'enzyme';
+import { Tab, TabTitle, TabsContainer } from '../Tabs';
 
 describe('Tabs render properly', () => {
   test('Render tab body with children', () => {
@@ -38,5 +38,20 @@ describe('Tabs render properly', () => {
     );
 
     expect(wrapper.find('[isActive=true]')).toHaveLength(1);
+  });
+
+  test('Render correct tab', () => {
+    const wrapper = mount(
+      <TabsContainer activeTab={0}>
+        <Tab>0</Tab>
+        <Tab>1</Tab>
+        <Tab>2</Tab>
+      </TabsContainer>
+    );
+
+    expect(wrapper.find('[isActive=true]').get(0).props.children).toEqual('0');
+    wrapper.setProps({ activeTab: 2 });
+    expect(wrapper.find('[isActive=true]').get(0).props.children).toEqual('2');
+    wrapper.unmount();
   });
 });

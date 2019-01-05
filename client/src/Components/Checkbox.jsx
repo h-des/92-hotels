@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Label = styled.label`
   font-size: 1.6rem;
@@ -26,11 +27,12 @@ const Span = styled.span`
     display: inline-block;
     border: 2px solid #aaa;
     border-radius: 3px;
-    background-color: ${props => (props.checked ? `#666` : `transparent`)};
+    background-color: ${props =>
+      props.checked ? props.theme.colors.primary : `transparent`};
   }
 `;
 
-export default ({ name, onChange, checked, children, margin }) => (
+const Checkbox = ({ name, onChange, checked, children, margin }) => (
   <Label htmlFor={name} margin={margin}>
     <Span checked={checked} />
     <Input
@@ -43,3 +45,12 @@ export default ({ name, onChange, checked, children, margin }) => (
     {children}
   </Label>
 );
+
+Checkbox.propTypes = {
+  name: PropTypes.string,
+  checked: PropTypes.bool,
+  onChange: PropTypes.func,
+  margin: PropTypes.string
+};
+
+export default Checkbox;

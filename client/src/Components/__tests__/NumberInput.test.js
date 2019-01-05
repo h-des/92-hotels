@@ -1,18 +1,22 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { NumberInput } from '../Components/Inputs';
+import { NumberInput } from '../Inputs';
 
 describe('Test NumberInput', () => {
+  let wrapper;
   const mockOnClickPlus = jest.fn();
   const mockOnClickMinus = jest.fn();
-  const wrapper = shallow(
-    <NumberInput
-      fieldName="test"
-      onMinusClick={mockOnClickMinus}
-      onPlusClick={mockOnClickPlus}
-      currentVal={10}
-    />
-  );
+
+  beforeEach(() => {
+    wrapper = shallow(
+      <NumberInput
+        fieldName="test"
+        onMinusClick={mockOnClickMinus}
+        onPlusClick={mockOnClickPlus}
+        currentValue={10}
+      />
+    );
+  });
 
   test('Renders properly', () => {
     expect(wrapper).toMatchSnapshot();
@@ -35,7 +39,7 @@ describe('Test NumberInput', () => {
   test('Set current val', () => {
     expect(wrapper.find('[value=10]')).toHaveLength(1);
 
-    wrapper.setProps({ currentVal: 2 });
+    wrapper.setProps({ currentValue: 2 });
     expect(wrapper.find('[value=2]')).toHaveLength(1);
   });
 });

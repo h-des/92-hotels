@@ -1,22 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import reduxThunk from 'redux-thunk';
 import { injectGlobal } from 'styled-components';
 import App from './App';
-import rootReducer from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios';
+import Root from './Root';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  rootReducer,
-  {},
-  composeEnhancers(applyMiddleware(reduxThunk))
-);
-
-window.axios = axios;
+if (process.env.NODE_ENV !== 'production') {
+  window.axios = axios;
+}
 
 injectGlobal`
   * {
@@ -60,9 +52,9 @@ injectGlobal`
 `;
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Root>
     <App />
-  </Provider>,
+  </Root>,
   document.getElementById('root')
 );
 registerServiceWorker();

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import theme from '../utils/theme';
-import { Button } from '../Components/Buttons';
+import theme from '../../utils/theme';
+import { Button } from '../Buttons';
 
 test('Button renders properly', () => {
   const wrapper = shallow(<Button theme={theme} />);

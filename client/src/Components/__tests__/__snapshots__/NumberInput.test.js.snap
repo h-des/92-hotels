@@ -4,11 +4,11 @@ exports[`Test NumberInput Renders properly 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <NumberInput
-    currentVal={10}
+    currentValue={10}
     fieldName="test"
-    onMinusClick={[Function]}
-    onPlusClick={[Function]}
-/>,
+    onMinusClick={[MockFunction]}
+    onPlusClick={[MockFunction]}
+  />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -25,21 +25,22 @@ ShallowWrapper {
       "children": Array [
         <styled.button
           onClick={[Function]}
->
+        >
           -
-</styled.button>,
+        </styled.button>,
         <styled.input
+          id="test"
           min={0}
           name="test"
-          onChange={undefined}
           value={10}
-/>,
+        />,
         <styled.button
           onClick={[Function]}
->
+        >
           +
-</styled.button>,
+        </styled.button>,
       ],
+      "marginBottom": undefined,
     },
     "ref": null,
     "rendered": Array [
@@ -60,6 +61,7 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "class",
         "props": Object {
+          "id": "test",
           "min": 0,
           "name": "test",
           "onChange": undefined,
@@ -93,21 +95,22 @@ ShallowWrapper {
         "children": Array [
           <styled.button
             onClick={[Function]}
->
+          >
             -
-</styled.button>,
+          </styled.button>,
           <styled.input
+            id="test"
             min={0}
             name="test"
-            onChange={undefined}
             value={10}
-/>,
+          />,
           <styled.button
             onClick={[Function]}
->
+          >
             +
-</styled.button>,
+          </styled.button>,
         ],
+        "marginBottom": undefined,
       },
       "ref": null,
       "rendered": Array [
@@ -128,6 +131,7 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "class",
           "props": Object {
+            "id": "test",
             "min": 0,
             "name": "test",
             "onChange": undefined,
