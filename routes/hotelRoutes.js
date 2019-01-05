@@ -94,10 +94,10 @@ module.exports = app => {
     const hotel = await Hotel.findById(id);
     const availableRoom = await checkAvailability(hotel, from, to, roomType);
     if (availableRoom) {
-      return res.send('Available');
+      return res.send({ from, to, roomType, id, price: availableRoom.price });
     }
 
-    //none of rooms is available
+    //not available
     res.status('400').send('Room not available');
   });
 

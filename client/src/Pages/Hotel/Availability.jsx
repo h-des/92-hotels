@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from '../../Components/Buttons';
+import { Button, LinkButton } from '../../Components/Buttons';
 import moment from 'moment';
 import styled from 'styled-components';
 import { DatePicker } from '@atlaskit/datetime-picker';
@@ -104,9 +104,9 @@ class Availability extends Component {
             <Message color="#A5D6A7" borderColor="#388E3C">
               Available!
             </Message>
-            <Button color="green" onClick={this.checkAvailability}>
+            <LinkButton color="green" to="/checkout/">
               Book now
-            </Button>
+            </LinkButton>
           </React.Fragment>
         );
       default:
@@ -128,12 +128,14 @@ class Availability extends Component {
           <DatePicker
             id="checkIn"
             name="checkIn"
+            value={this.state.checkIn}
             onChange={e => this.handleChange(e, 'checkIn')}
           />
         </Field>
         <Field>
           <Label htmlFor="checkOut">Check out</Label>
           <DatePicker
+            value={this.state.checkOut}
             id="checkOut"
             name="checkOut"
             onChange={e => this.handleChange(e, 'checkOut')}

@@ -127,6 +127,7 @@ class Comments extends React.Component {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map(e => (
             <Comment
+              key={e.username}
               author={e.username}
               date={moment(e.createdAt).format('YYYY-MM-DD')}
               body={e.body}

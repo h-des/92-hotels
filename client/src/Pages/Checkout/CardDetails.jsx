@@ -4,7 +4,10 @@ import formatString from 'format-string-by-pattern';
 import { Form, Field } from 'react-final-form';
 import { capitalizeFirstLetter } from '../../utils/utilsFunctions';
 import { SpinnerRectangles } from '../../Components/Spinner';
-import { calcDateDiff } from '../../utils/utilsFunctions';
+import Modal from '../../Components/Modal';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import { Redirect } from 'react-router-dom';
 
 const Contaier = styled.div`
   display: flex;
@@ -153,25 +156,20 @@ const details = [
   { name: 'cvv', parse: 'xxx', validate: lengthEqualTo3 }
 ];
 
-export default class CardDetails extends Component {
-  constructor(props) {
-    super(props);
-    const { checkIn, checkOut, price } = props.data;
-    let a = new Date(checkIn);
-    let b = new Date(checkOut);
-    const len = calcDateDiff(a, b);
-    const totalPrice = len * price || 0;
-
-    this.state = {
-      totalPrice
-    };
-  }
-
+class CardDetails extends Component {
   pay = e => {
+    const { hash } = this.props.checkout;
     this.props.pay(e);
   };
 
+  close = () => {
+    this.props.resetTransaction();
+  };
+
   render() {
+    if (!this.props.checkout.hash) {
+      return <Redirect to="/hotels" />;
+    }
     if (this.props.status === 'PAYMENT_SUCCESS')
       return (
         <Contaier>
@@ -185,90 +183,104 @@ export default class CardDetails extends Component {
         </Contaier>
       );
     return (
-      <Contaier>
-        <Form
-          onSubmit={this.pay}
-          render={({ handleSubmit, invalid, pristine }) => (
-            <StyledForm>
-              <FormTitle>Card details</FormTitle>
-              <Field
-                name="owner"
-                validate={required}
-                render={({ input, meta }) => (
-                  <React.Fragment>
-                    <Label htmlFor="owner">Card owner</Label>
-                    <Input
-                      {...input}
-                      error={meta.touched && meta.error && meta.invalid}
-                    />
-                    {meta.touched && meta.error && (
-                      <Message>{meta.error}</Message>
-                    )}
-                  </React.Fragment>
-                )}
-              />
-              <Field
-                name="number"
-                validate={lengthEqualTo16}
-                parse={formatOnlyNumbers(mask.parse)}
-                render={({ input, meta }) => (
-                  <React.Fragment>
-                    <Label htmlFor="number">Number</Label>
-                    <Input
-                      {...input}
-                      error={meta.touched && meta.error && meta.invalid}
-                    />
-                    {meta.touched && meta.error && (
-                      <Message>{meta.error}</Message>
-                    )}
-                  </React.Fragment>
-                )}
-              />
-              <Fieldset>
-                <Legend>Expiration Date</Legend>
-                <HorizontalContainer>
-                  {details.map(e => (
-                    <VerticalContainer key={e.name}>
-                      <Field
-                        name={e.name}
-                        validate={e.validate}
-                        parse={formatOnlyNumbers(e.parse)}
-                        render={({ input, meta }) => (
-                          <React.Fragment>
-                            <Label htmlFor={e.name}>
-                              {capitalizeFirstLetter(e.name)}
-                            </Label>
-                            <Input
-                              short
-                              placeholder={e.parse}
-                              {...input}
-                              error={meta.touched && meta.error && meta.invalid}
-                            />
-                            {meta.touched && meta.error && (
-                              <Message>{meta.error}</Message>
-                            )}
-                          </React.Fragment>
-                        )}
+      <Modal close={this.close}>
+        <Contaier>
+          <Form
+            onSubmit={this.pay}
+            render={({ handleSubmit, invalid, pristine }) => (
+              <StyledForm>
+                <FormTitle>Card details</FormTitle>
+                <Field
+                  name="owner"
+                  validate={required}
+                  render={({ input, meta }) => (
+                    <React.Fragment>
+                      <Label htmlFor="owner">Card owner</Label>
+                      <Input
+                        {...input}
+                        error={meta.touched && meta.error && meta.invalid}
                       />
-                    </VerticalContainer>
-                  ))}
-                </HorizontalContainer>
-              </Fieldset>
-              <PayButton
-                onClick={handleSubmit}
-                type="submit"
-                disabled={pristine || invalid}
-              >
-                {this.props.status === 'PAYMENT_IN_PROGRESS' ? (
-                  <SpinnerRectangles color={'#333'} />
-                ) : (
-                  `Pay ${this.state.totalPrice}$`
-                )}
-              </PayButton>
-            </StyledForm>
-          )}
-        />
-      </Contaier>
+                      {meta.touched && meta.error && (
+                        <Message>{meta.error}</Message>
+                      )}
+                    </React.Fragment>
+                  )}
+                />
+                <Field
+                  name="number"
+                  validate={lengthEqualTo16}
+                  parse={formatOnlyNumbers(mask.parse)}
+                  render={({ input, meta }) => (
+                    <React.Fragment>
+                      <Label htmlFor="number">Number</Label>
+                      <Input
+                        {...input}
+                        error={meta.touched && meta.error && meta.invalid}
+                      />
+                      {meta.touched && meta.error && (
+                        <Message>{meta.error}</Message>
+                      )}
+                    </React.Fragment>
+                  )}
+                />
+                <Fieldset>
+                  <Legend>Expiration Date</Legend>
+                  <HorizontalContainer>
+                    {details.map(e => (
+                      <VerticalContainer key={e.name}>
+                        <Field
+                          name={e.name}
+                          validate={e.validate}
+                          parse={formatOnlyNumbers(e.parse)}
+                          render={({ input, meta }) => (
+                            <React.Fragment>
+                              <Label htmlFor={e.name}>
+                                {capitalizeFirstLetter(e.name)}
+                              </Label>
+                              <Input
+                                short
+                                placeholder={e.parse}
+                                {...input}
+                                error={
+                                  meta.touched && meta.error && meta.invalid
+                                }
+                              />
+                              {meta.touched && meta.error && (
+                                <Message>{meta.error}</Message>
+                              )}
+                            </React.Fragment>
+                          )}
+                        />
+                      </VerticalContainer>
+                    ))}
+                  </HorizontalContainer>
+                </Fieldset>
+                <PayButton
+                  onClick={handleSubmit}
+                  type="submit"
+                  disabled={pristine || invalid}
+                >
+                  {this.props.status === 'PAYMENT_IN_PROGRESS' ? (
+                    <SpinnerRectangles color={'#333'} />
+                  ) : (
+                    `Pay`
+                  )}
+                </PayButton>
+              </StyledForm>
+            )}
+          />
+        </Contaier>
+      </Modal>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    checkout: state.checkout
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  actions
+)(CardDetails);

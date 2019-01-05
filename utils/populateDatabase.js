@@ -34,7 +34,7 @@ const populateUsers = async () => {
     user.firstName = capitalizeFirstLetter(profile.name.first);
     user.lastName = capitalizeFirstLetter(profile.name.last);
     user.city = capitalizeFirstLetter(profile.location.city);
-    user.zipcode = profile.location.postcode;
+    user.zipCode = profile.location.postcode;
     user.address = profile.location.street;
     user.createdAt = profile.registered.date;
     user.avatar.small = profile.picture.thumbnail;
@@ -224,6 +224,25 @@ const addInteriorPhotos = async () => {
   }
 };
 
+const addZipCodes = async () => {
+  const profiles = await axios
+    .get('https://randomuser.me/api/?results=10')
+    .then(res => res.data.results);
+
+  const users = await User.find({});
+
+  users.forEach(async (user, index) => {
+    user.zipCode = profiles[index].location.postcode;
+    try {
+      await user.save();
+      console.log(' --> Success');
+    } catch (err) {
+      console.log(err);
+    }
+  });
+};
+
+addZipCodes();
 // addInteriorPhotos();
 // updatePhotos();
 // populateUsers();

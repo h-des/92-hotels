@@ -38,7 +38,6 @@ module.exports = app => {
 
   app.get('/api/review', async (req, res) => {
     const { hotel } = req.query;
-    console.log('hotel: ', hotel);
     const reviews = await Review.find({ hotel }, {}, { lean: true, limit: 10 });
 
     if (!reviews) {

@@ -6,23 +6,26 @@ const Room = mongoose.model('rooms');
 const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = app => {
-  app.post('/api/booking/start', requireLogin, async (req, res) => {
-    const { hotel: hotelID, from, to, roomType } = req.body;
-    const user = req.user;
-    if (!hotel || !from || !to || !roomType) {
+  app.post('/api/booking/', requireLogin, async (req, res) => {
+    //check if any parameter is missing
+    if (Object.values(req.body).some(el => el === undefined)) {
       return res.status(401).send('Missing parameters.');
     }
+    const user = req.user;
 
     const base64 = Buffer.from(
-      JSON.stringify({ hotelID, from, to, roomType, user: user._id })
+      JSON.stringify({
+        ...req.body,
+        user: user._id
+      })
     ).toString('base64');
 
     res.send(base64);
-    // const decrypted = Buffer.from(base64, 'base64').toString('ascii');
   });
 
-  app.post('/api/booking/', requireLogin, async (req, res) => {
-    const { hotel: hotelID, from, to, roomType } = req.body;
+  app.post('/api/booking/pay', requireLogin, async (req, res) => {
+    const decrypted = Buffer.from(req.body.id, 'base64').toString('ascii');
+    const { hotelID, from, to, roomType } = decrypted;
     const user = req.user;
     const hotel = await Hotel.findById(hotelID).lean();
 

@@ -9,6 +9,7 @@ import Nav from './Components/Nav';
 import Footer from './Components/Footer';
 
 import Landing from './Pages/Landing/Landing';
+import CardDetails from './Pages/Checkout/CardDetails';
 const HotelListContainer = lazy(() =>
   import('./Pages/HotelList/HotelListContainer')
 );
@@ -52,6 +53,10 @@ class App extends Component {
                       <Route
                         path="/settings"
                         render={props => <Settings {...props} />}
+                      />
+                      <Route
+                        path="/pay"
+                        render={props => <CardDetails {...props} />}
                       />
                       <Route
                         path="/checkout"

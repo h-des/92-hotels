@@ -32,7 +32,9 @@ const Price = styled.p`
   color: #1fb6ff;
 `;
 
-const Features = styled.ul``;
+const Features = styled.ul`
+  list-style: none;
+`;
 
 const FlexColumn = styled.div`
   display: flex;
@@ -48,11 +50,12 @@ const Feature = styled.li`
 
 export default class Total extends Component {
   render() {
-    const { checkIn, checkOut, price, adults, children } = this.props.data;
+    const { from: checkIn, to: checkOut, price, roomType } = this.props.data;
     let a = moment(checkIn);
     let b = moment(checkOut);
     const len = Math.abs(a.diff(b, 'days'));
-    const totalPrice = len * price || 0;
+    const breakfastPrice = this.props.breakfast ? roomType * len * 10 : 0;
+    const totalPrice = len * price + breakfastPrice || 0;
     return (
       <TotalContainer>
         <FlexColumn>
@@ -62,12 +65,7 @@ export default class Total extends Component {
             <Feature>{price}$ per night</Feature>
             <Feature>From: {checkIn}</Feature>
             <Feature>To: {checkOut}</Feature>
-            <Feature>
-              {adults} {adults !== 1 ? 'adults' : 'adult'}
-            </Feature>
-            <Feature>
-              {children} {children !== 1 ? 'children' : 'child'}
-            </Feature>
+            <Feature>Room type: {roomType}</Feature>
           </Features>
         </FlexColumn>
         {this.props.children}

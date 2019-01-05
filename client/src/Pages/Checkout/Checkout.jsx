@@ -115,29 +115,47 @@ const NextButton = styled.button`
 const required = value => (value ? undefined : 'Required');
 
 class Checkout extends Component {
+  componentWillUnmount() {
+    this.props.resetCheckoutData();
+  }
+
   pay = e => {
-    this.props.proceedToPayment(e);
+    const data = { ...e, ...this.props.checkout.data };
+    console.log('e: ', e);
+    console.log('data: ', data);
+    this.props.proceedToPayment(data);
   };
 
   render() {
-    if (this.props.checkout.checkoutStatus === 'CARD_DETAILS') {
-      return (
-        <Modal close={this.props.resetAvailability}>
-          <CardDetails
-            data={this.props.checkout.data}
-            pay={this.props.pay}
-            status={this.props.checkout.paymentStatus}
-          />
-        </Modal>
-      );
+    const { hash } = this.props.checkout;
+    const {
+      firstName,
+      lastName,
+      email,
+      zipCode,
+      phone,
+      address,
+      city
+    } = this.props.user.data;
+    if (!this.props.checkout.data) {
+      return <Redirect to="/hotels" />;
     }
-    if (this.props.checkout.checkoutStatus !== 'AVAILABLE') {
-      return <Redirect to="/rooms" />;
+    if (hash) {
+      return <Redirect to="/pay" />;
     }
     return (
       <Form
         onSubmit={this.pay}
-        initialValues={{ breakfast: false }}
+        initialValues={{
+          firstName,
+          lastName,
+          email,
+          zipCode,
+          phone,
+          address,
+          city,
+          breakfast: false
+        }}
         render={({ handleSubmit, pristine, invalid, values }) => {
           return (
             <StyledForm onSubmit={handleSubmit}>
@@ -197,6 +215,25 @@ class Checkout extends Component {
                   />
                   <FormSubTitle>Contact</FormSubTitle>
                   <Field
+                    name="email"
+                    validate={required}
+                    render={({ input, meta }) => (
+                      <React.Fragment>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          {...input}
+                          error={meta.touched && meta.error}
+                          marginBottom={
+                            meta.touched && meta.invalid ? '0' : '2.5rem'
+                          }
+                        />
+                        {meta.touched && meta.error && (
+                          <Message>{meta.error}</Message>
+                        )}
+                      </React.Fragment>
+                    )}
+                  />
+                  <Field
                     name="address"
                     validate={required}
                     render={({ input, meta }) => (
@@ -235,11 +272,11 @@ class Checkout extends Component {
                     )}
                   />
                   <Field
-                    name="zipcode"
+                    name="zipCode"
                     validate={required}
                     render={({ input, meta }) => (
                       <React.Fragment>
-                        <Label htmlFor="zipcode">Zip code</Label>
+                        <Label htmlFor="zipcCode">Zip code</Label>
                         <Input
                           {...input}
                           error={meta.touched && meta.error}
@@ -276,8 +313,11 @@ class Checkout extends Component {
                     Back
                   </BackButton>
                 </CheckoutBody>
-                <Total data={this.props.checkout.data}>
-                  <NextButton disabled={pristine || invalid} type="submit">
+                <Total
+                  data={this.props.checkout.data}
+                  breakfast={values.breakfast}
+                >
+                  <NextButton disabled={invalid} type="submit">
                     Pay
                   </NextButton>
                 </Total>
@@ -292,6 +332,7 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     checkout: state.checkout
   };
 };
