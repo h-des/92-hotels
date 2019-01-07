@@ -12,7 +12,12 @@ export default (state = initialState, { type, payload }) => {
     case constants.RESET_AVAILABILITY:
       return { ...state, availability: constants.INITIAL };
     case constants.RESET_TRANSACTION:
-      return { ...state, hash: null, data: null };
+      return {
+        ...state,
+        hash: null,
+        data: null,
+        paymentStatus: constants.INITIAL
+      };
     case constants.RESET_CHECKOUT_DATA:
       return { ...state, availability: constants.INITIAL, data: null };
     case constants.CHECK_AVAILABILITY:

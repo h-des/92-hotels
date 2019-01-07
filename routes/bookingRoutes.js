@@ -2,10 +2,19 @@ const mongoose = require('mongoose');
 const checkAvailability = require('../utils/checkAvailability');
 const Booking = mongoose.model('bookings');
 const Hotel = mongoose.model('hotels');
+const User = mongoose.model('users');
 const Room = mongoose.model('rooms');
 const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = app => {
+  app.get('/api/booking/:id', requireLogin, async (req, res) => {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) {
+      return res.status(400).send('Cannot find booking!');
+    }
+    res.send(booking);
+  });
+
   app.post('/api/booking/', requireLogin, async (req, res) => {
     //check if any parameter is missing
     if (Object.values(req.body).some(el => el === undefined)) {
@@ -29,9 +38,9 @@ module.exports = app => {
       res.status(400).send('Missing parameters.');
     }
     const decrypted = Buffer.from(hash, 'base64').toString('ascii');
-    const { hotelID, from, to, roomType } = decrypted;
+    const { id, from, to, roomType } = JSON.parse(decrypted);
     const user = req.user;
-    const hotel = await Hotel.findById(hotelID).lean();
+    const hotel = await Hotel.findById(id).lean();
 
     if (!hotel) {
       return res.status(400).send('Hotel does not exist');
@@ -43,6 +52,7 @@ module.exports = app => {
     }
 
     const booking = new Booking();
+    booking.hotel = id;
     booking.room = availableRoom._id;
     booking.user = user._id;
     booking.from = new Date(from);
@@ -51,6 +61,9 @@ module.exports = app => {
     try {
       await booking.save();
       await Room.findByIdAndUpdate(availableRoom._id, {
+        $addToSet: { bookings: booking._id }
+      });
+      await User.findByIdAndUpdate(user._id, {
         $addToSet: { bookings: booking._id }
       });
       res.send('Room successfully booked.');

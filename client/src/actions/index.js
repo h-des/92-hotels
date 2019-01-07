@@ -138,7 +138,7 @@ export const pay = hash => async dispatch => {
   //totally fake
   dispatch({ type: constants.PAYMENT });
   try {
-    const res = await axios.post('/api/booking/', { hash });
+    const res = await axios.post('/api/booking/pay', { hash });
     dispatch({
       type: constants.PAYMENT_SUCCESS,
       payload: res.data

@@ -50,10 +50,6 @@ const Title = styled.h3`
   margin-bottom: 1.5rem;
 `;
 
-const formattedDate = tempDate =>
-  `${tempDate.getUTCDate()}/${tempDate.getUTCMonth() +
-    1}/${tempDate.getUTCFullYear()}`;
-
 const Item = ({ date, stars, review, city, hotel }) => (
   <Container>
     <Rating>
@@ -79,6 +75,9 @@ export default class Reviews extends Component {
 
   async componentDidMount() {
     const { reviews } = this.props.user.data;
+    if (reviews.length < 1) {
+      return null;
+    }
     //get all full reviews
     let arr = await Promise.all(
       reviews.map(async id => {
@@ -91,7 +90,9 @@ export default class Reviews extends Component {
       })
     );
     //filter null values
+    console.log(arr);
     arr = arr.filter(e => e);
+    console.log(arr);
 
     arr = await Promise.all(
       arr.map(async review => {
@@ -103,6 +104,7 @@ export default class Reviews extends Component {
         }
       })
     );
+    console.log(arr);
 
     this.setState({ reviews: arr });
   }
@@ -121,6 +123,7 @@ function Items({ items }) {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .map(e => (
       <Item
+        key={e.hotel}
         date={e.createdAt}
         review={e.body}
         stars={e.rate}

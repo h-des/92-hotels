@@ -12,6 +12,10 @@ const bookingSchema = new Schema({
   user: {
     type: ObjectId,
     ref: 'users'
+  },
+  hotel: {
+    type: ObjectId,
+    ref: 'hotels'
   }
 });
 

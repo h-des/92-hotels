@@ -38,23 +38,20 @@ module.exports = app => {
 
   app.get('/api/review/', async (req, res) => {
     //return 10 reviews for a specific hotel
-    const { hotel, id } = req.query;
+    const { hotel, id: _id } = req.query;
+
+    query = {
+      ...(hotel && { hotel }),
+      ...(_id && { _id })
+    };
     let result;
-    if (hotel && id) {
-      result = await Review.find(
-        { hotel, _id: id },
-        {},
-        { lean: true, limit: 10 }
-      );
-    } else if (hotel) {
-      result = await Review.find({ hotel }, {}, { lean: true, limit: 10 });
-    } else if (id) {
-      result = await Review.findById(id);
+    if (_id) {
+      result = await Review.findOne(query, {}, { lean: true, limit: 10 });
     } else {
-      return res.status(400).send('Cannot find reviews.');
+      result = await Review.find(query, {}, { lean: true, limit: 10 });
     }
 
-    if (!result) {
+    if (!result || result.length < 1) {
       return res.status(400).send('Cannot find reviews.');
     }
     res.send(result);

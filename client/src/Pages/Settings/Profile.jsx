@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import UserData from './UserData';
 import Address from './Address';
 import Reviews from './Reviews';
+import History from './History';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
@@ -52,7 +53,7 @@ class Profile extends Component {
                 <Reviews user={this.props.user} />
               </Tab>
               <Tab>
-                <Reviews user={this.props.user} />
+                <History user={this.props.user} />
               </Tab>
             </TabsContainer>
           </Tabs>
