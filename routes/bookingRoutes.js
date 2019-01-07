@@ -9,7 +9,7 @@ module.exports = app => {
   app.post('/api/booking/', requireLogin, async (req, res) => {
     //check if any parameter is missing
     if (Object.values(req.body).some(el => el === undefined)) {
-      return res.status(401).send('Missing parameters.');
+      return res.status(400).send('Missing parameters.');
     }
     const user = req.user;
 
@@ -24,7 +24,11 @@ module.exports = app => {
   });
 
   app.post('/api/booking/pay', requireLogin, async (req, res) => {
-    const decrypted = Buffer.from(req.body.id, 'base64').toString('ascii');
+    const { hash } = req.body;
+    if (!hash) {
+      res.status(400).send('Missing parameters.');
+    }
+    const decrypted = Buffer.from(hash, 'base64').toString('ascii');
     const { hotelID, from, to, roomType } = decrypted;
     const user = req.user;
     const hotel = await Hotel.findById(hotelID).lean();

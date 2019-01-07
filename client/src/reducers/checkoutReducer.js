@@ -3,6 +3,7 @@ import constants from '../utils/constants';
 const initialState = {
   data: null,
   availability: constants.INITIAL,
+  paymentStatus: constants.INITIAL,
   hash: null
 };
 
@@ -24,6 +25,12 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, availability: constants.LOADING };
     case constants.PROCEED_TO_PAYMENT_SUCCESS:
       return { ...state, availability: constants.INITIAL, hash: payload };
+    case constants.PAYMENT:
+      return { ...state, paymentStatus: constants.LOADING };
+    case constants.PAYMENT_ERROR:
+      return { ...state, paymentStatus: constants.ERROR };
+    case constants.PAYMENT_SUCCESS:
+      return { ...state, paymentStatus: constants.SUCCESS };
     default:
       return state;
   }

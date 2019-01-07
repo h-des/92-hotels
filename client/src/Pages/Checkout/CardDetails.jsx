@@ -159,7 +159,7 @@ const details = [
 class CardDetails extends Component {
   pay = e => {
     const { hash } = this.props.checkout;
-    this.props.pay(e);
+    this.props.pay(hash);
   };
 
   close = () => {
@@ -170,17 +170,21 @@ class CardDetails extends Component {
     if (!this.props.checkout.hash) {
       return <Redirect to="/hotels" />;
     }
-    if (this.props.status === 'PAYMENT_SUCCESS')
+    if (this.props.checkout.paymentStatus === 'SUCCESS')
       return (
-        <Contaier>
-          <Status>Success!</Status>
-        </Contaier>
+        <Modal close={this.close}>
+          <Contaier>
+            <Status>Success!</Status>
+          </Contaier>
+        </Modal>
       );
-    if (this.props.status === 'PAYMENT_ERROR')
+    if (this.props.checkout.paymentStatus === 'ERROR')
       return (
-        <Contaier>
-          <Status color={'red'}>Something went wrong. Try again</Status>
-        </Contaier>
+        <Modal close={this.close}>
+          <Contaier>
+            <Status color={'red'}>Something went wrong. Try again</Status>
+          </Contaier>
+        </Modal>
       );
     return (
       <Modal close={this.close}>
@@ -260,7 +264,7 @@ class CardDetails extends Component {
                   type="submit"
                   disabled={pristine || invalid}
                 >
-                  {this.props.status === 'PAYMENT_IN_PROGRESS' ? (
+                  {this.props.checkout.paymentStatus === 'LOADING' ? (
                     <SpinnerRectangles color={'#333'} />
                   ) : (
                     `Pay`

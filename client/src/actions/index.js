@@ -135,16 +135,17 @@ export const proceedToPayment = data => async dispatch => {
 };
 
 export const pay = hash => async dispatch => {
-  dispatch({ type: constants.PAY });
+  //totally fake
+  dispatch({ type: constants.PAYMENT });
   try {
     const res = await axios.post('/api/booking/', { hash });
     dispatch({
-      type: constants.PAY_SUCCESS,
+      type: constants.PAYMENT_SUCCESS,
       payload: res.data
     });
   } catch (err) {
     dispatch({
-      type: constants.PAY_ERROR
+      type: constants.PAYMENT_ERROR
     });
   }
 };
