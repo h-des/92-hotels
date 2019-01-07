@@ -259,7 +259,7 @@ const addBookingsToUser = async () => {
   });
 };
 
-addBookingsToUser();
+// addBookingsToUser();
 // addZipCodes();
 // addInteriorPhotos();
 // updatePhotos();
