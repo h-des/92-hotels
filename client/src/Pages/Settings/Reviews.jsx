@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { randomDate } from '../../utils/utilsFunctions';
 import styled from 'styled-components';
 import starIcon from '../../images/star.svg';
+import axios from 'axios';
+import moment from 'moment';
+import { SpinnerRectangles } from '../../Components/Spinner';
 
 const List = styled.ul`
   list-style: none;
@@ -52,15 +54,19 @@ const formattedDate = tempDate =>
   `${tempDate.getUTCDate()}/${tempDate.getUTCMonth() +
     1}/${tempDate.getUTCFullYear()}`;
 
-const Item = ({ from, to, stars, review, city }) => (
+const Item = ({ date, stars, review, city, hotel }) => (
   <Container>
     <Rating>
       <StarIcon src={starIcon} alt="star" />
       <Rate>{stars}/5</Rate>
     </Rating>
     <Review>
-      <City>{city}</City>
-      <StyledDate>{from + ' - ' + to} </StyledDate>
+      <City>
+        {hotel}
+        {', '}
+        {city}
+      </City>
+      <StyledDate>{moment(date).format('YYYY/MM/DD')}</StyledDate>
       <Text>{review}</Text>
     </Review>
   </Container>
@@ -68,47 +74,58 @@ const Item = ({ from, to, stars, review, city }) => (
 
 export default class Reviews extends Component {
   state = {
-    items: []
+    reviews: null
   };
 
-  componentDidMount = () => {
-    let res = [];
-    for (let i = 0; i < 10; i++) {
-      let from = formattedDate(randomDate(new Date(2015, 0, 1), new Date()));
-      let to = formattedDate(randomDate(new Date(2015, 0, 1), new Date()));
-      res.push({
-        from,
-        to,
-        stars: Math.floor(Math.random() * 6),
-        city: 'Paris',
-        review:
-          'Repellat explicabo voluptas adipisci necessitatibus ex in in ut sit. Nemo aut sit est omnis et sit aut.'
-      });
-    }
-    this.setState({ items: res });
-  };
+  async componentDidMount() {
+    const { reviews } = this.props.user.data;
+    //get all full reviews
+    let arr = await Promise.all(
+      reviews.map(async id => {
+        try {
+          const res = await axios.get(`/api/review/?id=${id}`);
+          return res.data;
+        } catch (err) {
+          return null;
+        }
+      })
+    );
+    //filter null values
+    arr = arr.filter(e => e);
 
-  renderItems = () => {
-    return this.state.items.map(e => (
-      <Item
-        from={e.from}
-        to={e.to}
-        review={e.review}
-        stars={e.stars}
-        city={e.city}
-      />
-    ));
-  };
+    arr = await Promise.all(
+      arr.map(async review => {
+        try {
+          const res = await axios.get(`/api/city/?hotel=${review.hotel}`);
+          return { ...review, city: res.data.city, hotel: res.data.hotel };
+        } catch (err) {
+          return review;
+        }
+      })
+    );
+
+    this.setState({ reviews: arr });
+  }
 
   render() {
-    if (this.state.items.length) {
-      return (
-        <React.Fragment>
-          <Title>Your reviews</Title>
-          <List>{this.renderItems()}</List>
-        </React.Fragment>
-      );
-    }
-    return null;
+    return this.state.reviews ? (
+      <Items items={this.state.reviews} />
+    ) : (
+      <SpinnerRectangles color="blue" />
+    );
   }
+}
+
+function Items({ items }) {
+  return items
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .map(e => (
+      <Item
+        date={e.createdAt}
+        review={e.body}
+        stars={e.rate}
+        city={e.city}
+        hotel={e.hotel}
+      />
+    ));
 }

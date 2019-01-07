@@ -9,7 +9,6 @@ const StyledTabsPanel = styled.ul`
 
 const StyledTabTitle = styled.li`
   background-color: ${props => (props.active ? 'white' : '#DFDFDF')};
-  color: ${props => (props.active ? 'black' : 'rgba(0,0,0, 0.6)')};
   border-radius: 0.5rem 0.5rem 0 0;
   padding: 1rem 2rem;
   margin-right: 1rem;
@@ -25,11 +24,21 @@ const StyledTab = styled.div`
   width: 100%;
   border-radius: 0 0 0.5rem 0.5rem;
   display: block;
-  font-size: 1.6rem;
   z-index: 30;
   box-shadow: 0 0.8rem 1.3rem rgba(0, 0, 0, 0.1);
   padding: ${props => (props.padding ? props.padding : '2rem')};
+  font-size: 1.6rem;
   margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '5rem')};
+`;
+
+const StyledButton = styled.button`
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  color: ${props => (props.active ? 'black' : 'rgba(0,0,0, 0.6)')};
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 `;
 
 export class Tabs extends Component {
@@ -73,13 +82,10 @@ export class TabsPanel extends Component {
 
 export const TabTitle = ({ click, isActive, index, children }) => {
   return (
-    <StyledTabTitle
-      active={isActive}
-      role="tab"
-      aria-selected={isActive ? 'true' : 'false'}
-      onClick={() => click(index)}
-    >
-      {children}
+    <StyledTabTitle active={isActive} onClick={() => click(index)}>
+      <StyledButton role="tab" aria-selected={isActive ? 'true' : 'false'}>
+        {children}
+      </StyledButton>
     </StyledTabTitle>
   );
 };

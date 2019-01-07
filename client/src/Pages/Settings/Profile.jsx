@@ -1,76 +1,67 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Input } from '../../Components/Inputs';
-import { Button } from '../../Components/Buttons';
-import Label from '../../Components/Label';
-import { Form, Field } from 'react-final-form';
+import {
+  Tabs,
+  TabsPanel,
+  TabTitle,
+  TabsContainer,
+  Tab
+} from '../../Components/Tabs';
 import styled from 'styled-components';
+import UserData from './UserData';
+import Address from './Address';
+import Reviews from './Reviews';
+import { connect } from 'react-redux';
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(auto, 96rem) minmax(0, auto);
+`;
+
+const MainContent = styled.div`
+  grid-column: 2 / span 1;
+  padding-top: 8rem;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 425px) {
+    width: 98%;
+  }
 `;
 
 class Profile extends Component {
-  submitForm = e => {
-    //fake api call
-    console.log(e);
-  };
-
   render() {
     return (
-      <Form
-        onSubmit={this.submitForm}
-        initialValues={this.props.user.data}
-        render={({ handleSubmit, values }) => (
-          <StyledForm onSubmit={handleSubmit}>
-            <Field name="firstName">
-              {({ input }) => (
-                <React.Fragment>
-                  <Label>First name</Label>
-                  <Input {...input} marginBottom={'2.5rem'} />
-                </React.Fragment>
-              )}
-            </Field>
-            <Field name="lastName">
-              {({ input }) => (
-                <React.Fragment>
-                  <Label>Last name</Label>
-                  <Input {...input} marginBottom={'2.5rem'} />
-                </React.Fragment>
-              )}
-            </Field>
-            <Field name="email">
-              {({ input }) => (
-                <React.Fragment>
-                  <Label>Email</Label>
-                  <Input {...input} marginBottom={'2.5rem'} />
-                </React.Fragment>
-              )}
-            </Field>
-            <Field name="phone">
-              {({ input }) => (
-                <React.Fragment>
-                  <Label>Phone</Label>
-                  <Input {...input} marginBottom={'2.5rem'} />
-                </React.Fragment>
-              )}
-            </Field>
-            <Button color="primary" type="submit">
-              Save
-            </Button>
-          </StyledForm>
-        )}
-      />
+      <Container>
+        <MainContent>
+          <Tabs>
+            <TabsPanel>
+              <TabTitle>Info</TabTitle>
+              <TabTitle>Address</TabTitle>
+              <TabTitle>Reviews</TabTitle>
+              <TabTitle>History</TabTitle>
+            </TabsPanel>
+            <TabsContainer>
+              <Tab>
+                <UserData user={this.props.user} />
+              </Tab>
+              <Tab>
+                <Address user={this.props.user} />
+              </Tab>
+              <Tab>
+                <Reviews user={this.props.user} />
+              </Tab>
+              <Tab>
+                <Reviews user={this.props.user} />
+              </Tab>
+            </TabsContainer>
+          </Tabs>
+        </MainContent>
+      </Container>
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
+const mapStateToProps = state => ({ user: state.user });
 
 export default connect(
   mapStateToProps,

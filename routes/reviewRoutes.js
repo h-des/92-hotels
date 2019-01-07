@@ -36,13 +36,27 @@ module.exports = app => {
     }
   });
 
-  app.get('/api/review', async (req, res) => {
-    const { hotel } = req.query;
-    const reviews = await Review.find({ hotel }, {}, { lean: true, limit: 10 });
-
-    if (!reviews) {
+  app.get('/api/review/', async (req, res) => {
+    //return 10 reviews for a specific hotel
+    const { hotel, id } = req.query;
+    let result;
+    if (hotel && id) {
+      result = await Review.find(
+        { hotel, _id: id },
+        {},
+        { lean: true, limit: 10 }
+      );
+    } else if (hotel) {
+      result = await Review.find({ hotel }, {}, { lean: true, limit: 10 });
+    } else if (id) {
+      result = await Review.findById(id);
+    } else {
       return res.status(400).send('Cannot find reviews.');
     }
-    res.send(reviews);
+
+    if (!result) {
+      return res.status(400).send('Cannot find reviews.');
+    }
+    res.send(result);
   });
 };

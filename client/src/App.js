@@ -16,7 +16,7 @@ const HotelListContainer = lazy(() =>
 );
 const HotelContainer = lazy(() => import('./Pages/Hotel/HotelContainer'));
 const About = lazy(() => import('./Pages/About/About'));
-const Settings = lazy(() => import('./Pages/Settings/Settings'));
+const Profile = lazy(() => import('./Pages/Settings/Profile'));
 const Checkout = lazy(() => import('./Pages/Checkout/Checkout'));
 const NotFound = lazy(() => import('./Pages/404/404'));
 
@@ -60,7 +60,7 @@ class App extends Component {
                     <React.Fragment>
                       <Route
                         path="/settings"
-                        render={props => <Settings {...props} />}
+                        render={props => <Profile {...props} />}
                       />
                       <Route
                         path="/pay"

@@ -11,7 +11,7 @@ const StyledForm = styled.form`
   flex-direction: column;
 `;
 
-class Address extends Component {
+export default class UserData extends Component {
   submitForm = e => {
     //fake api call
     console.log(e);
@@ -24,26 +24,34 @@ class Address extends Component {
         initialValues={this.props.user.data}
         render={({ handleSubmit, values }) => (
           <StyledForm onSubmit={handleSubmit}>
-            <Field name="address">
+            <Field name="firstName">
               {({ input }) => (
                 <React.Fragment>
-                  <Label>Address</Label>
+                  <Label>First name</Label>
                   <Input {...input} marginBottom={'2.5rem'} />
                 </React.Fragment>
               )}
             </Field>
-            <Field name="city">
+            <Field name="lastName">
               {({ input }) => (
                 <React.Fragment>
-                  <Label>City</Label>
+                  <Label>Last name</Label>
                   <Input {...input} marginBottom={'2.5rem'} />
                 </React.Fragment>
               )}
             </Field>
-            <Field name="zipCode">
+            <Field name="email">
               {({ input }) => (
                 <React.Fragment>
-                  <Label>Zip code</Label>
+                  <Label>Email</Label>
+                  <Input {...input} marginBottom={'2.5rem'} />
+                </React.Fragment>
+              )}
+            </Field>
+            <Field name="phone">
+              {({ input }) => (
+                <React.Fragment>
+                  <Label>Phone</Label>
                   <Input {...input} marginBottom={'2.5rem'} />
                 </React.Fragment>
               )}
@@ -57,14 +65,3 @@ class Address extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  null
-)(Address);

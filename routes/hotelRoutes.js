@@ -136,6 +136,15 @@ module.exports = app => {
     const hotels = await Hotel.find({}, { city: true }, { lean: true });
     res.send(hotels);
   });
+
+  app.get('/api/city', async (req, res) => {
+    const { hotel } = req.query;
+    const result = await Hotel.findById(hotel).lean();
+    if (!result) {
+      res.status(400).send('Cannot find city name.');
+    }
+    res.send({ city: result.city, hotel: result.name });
+  });
 };
 
 const calcHotelRating = hotel => {
