@@ -19,7 +19,13 @@ const userSchema = new Schema({
   reviews: [
     {
       type: ObjectId,
-      ref: 'review'
+      ref: 'reviews'
+    }
+  ],
+  bookings: [
+    {
+      type: ObjectId,
+      ref: 'bookings'
     }
   ],
   avatar: {

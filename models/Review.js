@@ -17,7 +17,7 @@ const reviewSchema = new Schema({
   hotel: {
     required: true,
     type: ObjectId,
-    ref: 'Hotel'
+    ref: 'hotels'
   },
   createdAt: {
     type: Date,

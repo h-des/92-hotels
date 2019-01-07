@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components';
 import Profile from './Profile';
 import Address from './Address';
-import History from './History';
+import Reviews from './Reviews';
 
 const Container = styled.div`
   display: grid;
@@ -37,6 +37,7 @@ export default class Contact extends Component {
             <TabsPanel>
               <TabTitle>Info</TabTitle>
               <TabTitle>Address</TabTitle>
+              <TabTitle>Reviews</TabTitle>
               <TabTitle>History</TabTitle>
             </TabsPanel>
             <TabsContainer>
@@ -47,7 +48,10 @@ export default class Contact extends Component {
                 <Address />
               </Tab>
               <Tab>
-                <History />
+                <Reviews />
+              </Tab>
+              <Tab>
+                <Reviews />
               </Tab>
             </TabsContainer>
           </Tabs>

@@ -38,9 +38,11 @@ const CloseIcon = styled.img`
 `;
 
 export default class Modal extends Component {
+  closeButton = React.createRef();
   element = document.createElement('div');
 
   componentDidMount() {
+    setTimeout(() => this.closeButton.focus(), 1);
     modalContainer.appendChild(this.element);
   }
   componentWillUnmount() {
@@ -50,7 +52,12 @@ export default class Modal extends Component {
   render() {
     return ReactDOM.createPortal(
       <StyledModal>
-        <StyledCloseButton onClick={this.props.close}>
+        <StyledCloseButton
+          innerRef={close => {
+            this.closeButton = close;
+          }}
+          onClick={this.props.close}
+        >
           <CloseIcon src={closeIcon} />
         </StyledCloseButton>
         {this.props.children}

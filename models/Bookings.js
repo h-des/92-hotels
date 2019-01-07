@@ -7,11 +7,11 @@ const bookingSchema = new Schema({
   to: Date,
   room: {
     type: ObjectId,
-    ref: 'Room'
+    ref: 'rooms'
   },
   user: {
     type: ObjectId,
-    ref: 'User'
+    ref: 'users'
   }
 });
 

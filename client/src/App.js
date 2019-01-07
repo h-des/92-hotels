@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import theme from './utils/theme';
 import { connect } from 'react-redux';
+import * as actions from './actions';
 
 import ScrollToTop from './Components/Utils/ScrollToTop';
 import Nav from './Components/Nav';
@@ -27,6 +28,13 @@ const StyledApp = styled.div`
 `;
 
 class App extends Component {
+  componentDidMount() {
+    const autoLogin = localStorage.getItem('#45123');
+    if (this.props.user.data === null && autoLogin === 'true') {
+      this.props.autoLogin();
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -82,5 +90,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  null
+  actions
 )(App);

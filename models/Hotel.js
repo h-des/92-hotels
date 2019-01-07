@@ -13,13 +13,13 @@ const hotelSchema = new Schema({
   roomList: [
     {
       type: ObjectId,
-      ref: 'Room'
+      ref: 'rooms'
     }
   ],
   reviews: [
     {
       type: ObjectId,
-      ref: 'Review'
+      ref: 'reviews'
     }
   ],
   rating: {

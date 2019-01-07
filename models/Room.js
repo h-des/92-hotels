@@ -10,12 +10,12 @@ const roomSchema = new Schema({
   bookings: [
     {
       type: ObjectId,
-      ref: 'Booking'
+      ref: 'bookings'
     }
   ],
   hotel: {
     type: ObjectId,
-    ref: 'Hotel'
+    ref: 'hotels'
   }
 });
 

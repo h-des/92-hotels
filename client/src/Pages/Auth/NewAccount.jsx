@@ -40,10 +40,9 @@ class NewAccount extends Component {
     });
   };
 
-  handleLogin = e => {
+  handleNewAccount = e => {
     e.preventDefault();
-    const { email, password } = this.state;
-    this.props.logIn({ email, password });
+    //not implemented yet
   };
 
   render() {
@@ -83,7 +82,7 @@ class NewAccount extends Component {
           {password && email && !error ? (
             <Button
               margin="0 0 2rem 0"
-              onClick={this.handleLogin}
+              onClick={this.handleNewAccount}
               color="primary"
             >
               {this.props.user.status === 'LOADING' ? (

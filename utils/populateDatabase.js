@@ -17,6 +17,8 @@ const Room = mongoose.model('rooms');
 const Booking = mongoose.model('bookings');
 const axios = require('axios');
 
+// all functions below are meant to populate the database with fake data
+
 const capitalizeFirstLetter = str => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -242,7 +244,23 @@ const addZipCodes = async () => {
   });
 };
 
-addZipCodes();
+const addBookingsToUser = async () => {
+  const bookingList = await Booking.find({});
+  bookingList.forEach(async booking => {
+    const id = booking.user;
+    try {
+      await User.findByIdAndUpdate(id, {
+        $addToSet: { bookings: booking._id }
+      });
+      console.log(booking._id, ' --> Added');
+    } catch (err) {
+      console.log(err);
+    }
+  });
+};
+
+addBookingsToUser();
+// addZipCodes();
 // addInteriorPhotos();
 // updatePhotos();
 // populateUsers();

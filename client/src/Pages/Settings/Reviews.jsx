@@ -66,7 +66,7 @@ const Item = ({ from, to, stars, review, city }) => (
   </Container>
 );
 
-export default class History extends Component {
+export default class Reviews extends Component {
   state = {
     items: []
   };

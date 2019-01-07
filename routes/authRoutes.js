@@ -37,6 +37,13 @@ module.exports = app => {
     })(req, res, done);
   });
 
+  app.get('/auth/autoLogin', async (req, res) => {
+    if (!req.user) {
+      return req.status(401).send('You must log in!');
+    }
+    res.send(omit(req.user.toJSON(), ['password', '__v']));
+  });
+
   app.get('/auth/logout', (req, res) => {
     req.logout();
     res.send('Successfully logout');

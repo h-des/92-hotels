@@ -173,18 +173,37 @@ export const removeFilters = () => dispatch => {
   dispatch({ type: constants.REMOVE_FILTERS });
 };
 
-export const logIn = data => async dispatch => {
+export const autoLogin = () => async dispatch => {
+  console.log('ehy');
   dispatch({ type: constants.LOGIN });
 
   try {
-    const res = await axios.post('/auth/login/', data);
+    const res = await axios.get('/auth/autoLogin/');
     dispatch({ payload: res.data, type: constants.LOGIN_SUCCESS });
   } catch (err) {
     dispatch({ payload: err.response.data, type: constants.LOGIN_ERROR });
   }
 };
 
+export const logIn = data => async dispatch => {
+  dispatch({ type: constants.LOGIN });
+
+  try {
+    const res = await axios.post('/auth/login/', data);
+    dispatch({ payload: res.data, type: constants.LOGIN_SUCCESS });
+
+    //set autologin flag in localstorage to true
+    localStorage.setItem('#45123', true);
+  } catch (err) {
+    dispatch({ payload: err.response.data, type: constants.LOGIN_ERROR });
+  }
+};
+
 export const logOut = () => async dispatch => {
-  await axios.get('/auth/logout/');
-  dispatch({ type: constants.LOGOUT });
+  try {
+    await axios.get('/auth/logout/');
+    dispatch({ type: constants.LOGOUT });
+    //set autologin flag in localstorage to false
+    localStorage.setItem('#45123', false);
+  } catch (err) {}
 };
