@@ -6,6 +6,7 @@ const checkAvailability = async (hotel, from, to, roomType) => {
   const roomIDsList = hotel.roomList;
   const fromDate = new Date(from);
   const toDate = new Date(to);
+  if (toDate <= fromDate) return false;
 
   let roomList = await Room.find({
     _id: { $in: roomIDsList },

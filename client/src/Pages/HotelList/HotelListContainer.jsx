@@ -20,20 +20,22 @@ class HotelListContainer extends Component {
       this.props.fetchCities();
     }
     if (this.props.hotels.status !== constants.SUCCESS) {
-      this.props.fetchHotels(this.props.filters);
+      const { page } = this.props.hotels;
+      this.props.fetchHotels({ ...this.props.filters, page });
     }
   }
 
   loadMore = () => {
     const { page, pages } = this.props.hotels;
     if (page <= pages) {
-      this.props.fetchMoreHotels(page);
+      this.props.fetchMoreHotels({ ...this.props.filters, page });
     }
   };
 
   componentDidUpdate(prevProps, prevState) {
+    const { page, pages } = this.props.hotels;
     if (this.props.filters !== prevProps.filters) {
-      this.props.fetchHotels(this.props.filters);
+      this.props.fetchHotels({ ...this.props.filters, page });
     }
     if (this.props.scrollInfo && prevProps.scrollInfo) {
       const { scrollY, innerHeight, scrollHeight } = this.props.scrollInfo;
@@ -57,8 +59,7 @@ class HotelListContainer extends Component {
   }
 
   selectCityFilter = city => {
-    //fake api call
-    console.log(city);
+    this.props.addFilters({ city });
   };
 
   render() {

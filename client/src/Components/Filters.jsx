@@ -146,6 +146,8 @@ class Filters extends Component {
       this.setState({
         error: 'Fields cannot be empty!'
       });
+    } else if (new Date(checkOut) <= new Date(checkIn)) {
+      return this.setState({ error: 'Invalid date!' });
     } else {
       this.props.addFilters({
         city: city.value,

@@ -122,7 +122,7 @@ class Hotel extends Component {
                   <Availability
                     resetAvailability={this.props.resetAvailability}
                     status={this.props.availability}
-                    id={data._id}
+                    data={data}
                   />
                   <HeadingBig>Reviews</HeadingBig>
                   <StyledHr />

@@ -45,51 +45,35 @@ export const fetchCities = () => async dispatch => {
 
 export const fetchHotels = filters => async dispatch => {
   dispatch({ type: constants.FETCH_HOTELS });
-  if (filters) {
-    try {
-      const res = await axios.post('/api/hotel/', { ...filters, page: 1 });
-      dispatch({
-        payload: res.data,
-        type: constants.FETCH_HOTELS_SUCCESS
-      });
-    } catch (error) {
-      dispatch({ type: constants.FETCH_HOTELS_ERROR });
-    }
-  } else {
-    try {
-      const res = await axios.get('/api/hotel/?page=1');
-      dispatch({
-        payload: res.data,
-        type: constants.FETCH_HOTELS_SUCCESS
-      });
-    } catch (error) {
-      dispatch({ type: constants.FETCH_HOTELS_ERROR });
-    }
+  const query = Object.entries(filters)
+    .map(e => `${e[0]}=${e[1]}`)
+    .join('&');
+  console.log(query);
+  try {
+    const res = await axios.get(`/api/hotel/?${query}`);
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_HOTELS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_HOTELS_ERROR });
   }
 };
 
-export const fetchMoreHotels = (page, filters) => async dispatch => {
+export const fetchMoreHotels = filters => async dispatch => {
   dispatch({ type: constants.FETCH_MORE_HOTELS });
-  if (filters) {
-    try {
-      const res = await axios.post('/api/hotel/', { ...filters, page });
-      dispatch({
-        payload: res.data,
-        type: constants.FETCH_MORE_HOTELS_SUCCESS
-      });
-    } catch (error) {
-      dispatch({ type: constants.FETCH_MORE_HOTELS_ERROR });
-    }
-  } else {
-    try {
-      const res = await axios.get(`/api/hotel/?page=${page}`);
-      dispatch({
-        payload: res.data,
-        type: constants.FETCH_MORE_HOTELS_SUCCESS
-      });
-    } catch (error) {
-      dispatch({ type: constants.FETCH_MORE_HOTELS_ERROR });
-    }
+  const query = Object.entries(filters)
+    .map(e => `${e[0]}=${e[1]}`)
+    .join('&');
+  console.log(query);
+  try {
+    const res = await axios.get(`/api/hotel/?&${query}`);
+    dispatch({
+      payload: res.data,
+      type: constants.FETCH_MORE_HOTELS_SUCCESS
+    });
+  } catch (error) {
+    dispatch({ type: constants.FETCH_MORE_HOTELS_ERROR });
   }
 };
 

@@ -4,7 +4,9 @@ import backgroundPhoto from '../../images/landing.JPG';
 import CarouselSliding from '../../Components/CarouselSliding';
 import { DatePicker } from '@atlaskit/datetime-picker';
 import Select from '@atlaskit/select';
+import moment from 'moment';
 import { Button } from '../../Components/Buttons';
+import { withRouter } from 'react-router-dom';
 
 const StyledContainer = styled.section`
   background-image: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1)),
@@ -85,7 +87,7 @@ const Field = styled.div`
   margin-right: 2rem;
   font-size: 1.4rem;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     margin: 0 auto;
     margin-bottom: 1rem;
   }
@@ -108,36 +110,20 @@ const StyledForm = styled.form`
   border-radius: 1rem;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     flex-direction: column;
     margin-bottom: 5rem;
   }
 `;
 
-export default class Main extends Component {
+class Main extends Component {
   render() {
     return (
       <StyledContainer>
         <InnerContainer>
           <Heading>Find your next favourite place!</Heading>
           <BottomContainer>
-            <StyledForm>
-              <Field>
-                <Label>City</Label>
-                <Select options={this.props.cities} />
-              </Field>
-              <Field>
-                <Label>Check In</Label>
-                <DatePicker />
-              </Field>
-              <Field>
-                <Label>Check Out</Label>
-                <DatePicker />
-              </Field>
-              <Button type="submit" color="primary">
-                Submit
-              </Button>
-            </StyledForm>
+            <Form {...this.props} />
             <SecondaryHeading>Get inspired</SecondaryHeading>
             <CarouselSliding items={this.props.tiles} onClick={() => {}} />
           </BottomContainer>
@@ -146,3 +132,90 @@ export default class Main extends Component {
     );
   }
 }
+
+class Form extends Component {
+  state = {
+    error: null,
+    checkIn: moment().format('YYYY-MM-DD'),
+    checkOut: moment()
+      .add(1, 'days')
+      .format('YYYY-MM-DD'),
+    roomType: null,
+    city: null
+  };
+
+  handleChange = (e, name) => {
+    this.setState({ [name]: e, error: null });
+  };
+
+  submitForm = e => {
+    e.preventDefault();
+    const { city, roomType, checkIn, checkOut } = this.state;
+    if (!city || !roomType || !checkIn || !checkOut) {
+      this.setState({
+        error: 'Fields cannot be empty!'
+      });
+    } else if (new Date(checkOut) <= new Date(checkIn)) {
+      return this.setState({ error: 'Invalid date!' });
+    } else {
+      this.props.addFilters({
+        city: city.value,
+        roomType: roomType.value,
+        from: checkIn,
+        to: checkOut
+      });
+      this.props.history.push('/hotels');
+    }
+  };
+
+  render() {
+    return (
+      <StyledForm onSubmit={this.submitForm}>
+        <Field>
+          <Label htmlFor="city">City</Label>
+          <Select
+            options={this.props.cities}
+            name="city"
+            id="city"
+            onChange={e => this.handleChange(e, 'city')}
+          />
+        </Field>
+        <Field>
+          <Label htmlFor="checkIn">Check In</Label>
+          <DatePicker
+            onChange={e => this.handleChange(e, 'checkIn')}
+            name="checkIn"
+            id="checkIn"
+          />
+        </Field>
+        <Field>
+          <Label htmlFor="checkOut">Check Out</Label>
+          <DatePicker
+            onChange={e => this.handleChange(e, 'checkOut')}
+            name="checkOut"
+            id="checkOut"
+          />
+        </Field>
+        <Field>
+          <Label htmlFor="roomType">Room type</Label>
+          <Select
+            name="roomType"
+            id="roomType"
+            options={[
+              { label: '1 person', value: 1 },
+              { label: '2 people', value: 3 },
+              { label: '3 people', value: 2 },
+              { label: '4 people', value: 4 }
+            ]}
+            onChange={e => this.handleChange(e, 'roomType')}
+          />
+        </Field>
+        <Button type="submit" color="primary">
+          Submit
+        </Button>
+      </StyledForm>
+    );
+  }
+}
+
+export default withRouter(Main);

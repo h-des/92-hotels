@@ -22,56 +22,40 @@ module.exports = app => {
       });
   });
 
-  //return list of 10 hotels without filtering
+  //return list of 10 hotels
   app.get('/api/hotel/', async (req, res) => {
-    const { page } = req.query;
-    const result = await Hotel.paginate(
-      {},
-      {
+    const { page, city, from, to, roomType } = req.query;
+    let hotels;
+
+    if (city && from && to && roomType) {
+      // full filtering
+      // use city, from, to, roomType
+      result = await Hotel.paginate(
+        {
+          city: city,
+          roomTypes: roomType
+        },
+        {
+          page,
+          lean: true,
+          limit: 10
+        }
+      );
+      //filter unavailable hotels
+      hotels = result.docs.filter(
+        async hotel => await checkAvailability(hotel, from, to, roomType)
+      );
+    } else {
+      // no filtering or filtering by city
+      const query = { ...(city && { city }) };
+      result = await Hotel.paginate(query, {
         page,
         lean: true,
         limit: 10
-      }
-    );
-
-    //format output data
-    let hotels = result.docs;
-    hotels = hotels.map(hotel => {
-      const rating = calcHotelRating(hotel);
-      return {
-        ...pick(hotel, ['_id', 'name', 'city', 'stars', 'image']),
-        rating
-      };
-    });
-
-    res.send({ ...result, docs: hotels });
-  });
-
-  //return list of hotels, apply filtering
-  app.post('/api/hotel/', async (req, res) => {
-    const { city, roomType, from, to, page } = req.body;
-    if (!city || !from || !to || !roomType) {
-      return res.status(400).send('Missing parameters');
+      });
+      hotels = result.docs;
     }
 
-    const result = await Hotel.paginate(
-      {
-        city: city,
-        roomTypes: roomType
-      },
-      {
-        page,
-        lean: true,
-        limit: 10
-      }
-    );
-    let hotels = result.docs;
-
-    //filter unavailable hotels
-    hotels = hotels.filter(
-      async hotel => await checkAvailability(hotel, from, to, roomType)
-    );
-
     //format output data
     hotels = hotels.map(hotel => {
       const rating = calcHotelRating(hotel);
@@ -80,6 +64,9 @@ module.exports = app => {
         rating
       };
     });
+    if (hotels.length < 1) {
+      res.status(400).send('Hotels not found!');
+    }
 
     res.send({ ...result, docs: hotels });
   });

@@ -23,7 +23,11 @@ class Landing extends Component {
   render() {
     return (
       <div>
-        <Main tiles={this.props.tiles.list} cities={this.props.cities.list} />
+        <Main
+          tiles={this.props.tiles.list}
+          addFilters={this.props.addFilters}
+          cities={this.props.cities.list}
+        />
         <Featured hotels={this.props.promoted.list} />
         <Subscribe />
       </div>

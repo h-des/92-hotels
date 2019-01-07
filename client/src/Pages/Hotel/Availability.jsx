@@ -65,7 +65,10 @@ class Availability extends Component {
     if (!checkIn || !checkOut || !roomType) {
       return this.setState({ error: 'Fields cannot be empty!' });
     }
-    const { id } = this.props;
+    if (new Date(checkOut) <= new Date(checkIn)) {
+      return this.setState({ error: 'Invalid date!' });
+    }
+    const { id } = this.props.data;
     const data = { from: checkIn, to: checkOut, roomType: roomType.value, id };
 
     this.props.checkAvailability(data);
@@ -121,6 +124,7 @@ class Availability extends Component {
   };
 
   render() {
+    const { roomTypes } = this.props.data;
     return (
       <Container>
         <Field>
@@ -146,12 +150,7 @@ class Availability extends Component {
           <Select
             id="roomType"
             name="roomType"
-            options={[
-              { label: '1 person', value: 1 },
-              { label: '2 people', value: 2 },
-              { label: '3 people', value: 3 },
-              { label: '4 people', value: 4 }
-            ]}
+            options={getSelectOptions(roomTypes)}
             onChange={e => this.handleChange(e, 'roomType')}
           />
         </Field>
@@ -164,6 +163,13 @@ class Availability extends Component {
       </Container>
     );
   }
+}
+
+function getSelectOptions(arr) {
+  return arr.map(e => {
+    if (e > 1) return { label: `${e} people`, value: e };
+    return { label: `${e} person`, value: e };
+  });
 }
 
 const mapStateToProps = state => {

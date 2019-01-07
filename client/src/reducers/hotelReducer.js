@@ -11,8 +11,10 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case constants.ADD_FILTERS:
+      return { ...state, page: 1 };
     case constants.REMOVE_FILTERS:
-      return { ...state, status: constants.INITIAL };
+      return { ...state, status: constants.INITIAL, page: 1 };
     case constants.FETCH_HOTELS:
       return { ...state, status: constants.LOADING };
     case constants.FETCH_HOTELS_ERROR:
