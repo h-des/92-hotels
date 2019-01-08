@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Input } from '../../Components/Inputs';
 import { Button } from '../../Components/Buttons';
 import Label from '../../Components/Label';
 import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
+import { SpinnerRectangles } from '../../Components/Spinner';
+import constants from '../../utils/constants';
 
 const StyledForm = styled.form`
   display: flex;
@@ -13,10 +14,8 @@ const StyledForm = styled.form`
 
 export default class UserData extends Component {
   submitForm = e => {
-    //fake api call
-    console.log(e);
+    this.props.editUser(e);
   };
-
   render() {
     return (
       <Form
@@ -56,12 +55,36 @@ export default class UserData extends Component {
                 </React.Fragment>
               )}
             </Field>
-            <Button color="primary" type="submit">
-              Save
-            </Button>
+
+            <SubmitButton {...this.props} />
           </StyledForm>
         )}
       />
     );
+  }
+}
+
+function SubmitButton(props) {
+  switch (props.user.editUserStatus) {
+    case constants.LOADING:
+      return (
+        <Button color="primary">
+          <SpinnerRectangles color="white" />
+        </Button>
+      );
+    case constants.ERROR:
+      return (
+        <Button color="disabled" disabled>
+          Error
+        </Button>
+      );
+    case constants.SUCCESS:
+      return <Button color="green">Saved</Button>;
+    default:
+      return (
+        <Button color="primary" type="submit">
+          Save
+        </Button>
+      );
   }
 }

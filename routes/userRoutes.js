@@ -33,17 +33,15 @@ module.exports = app => {
     ];
     //exclude unsafe fields
     const toChange = omit(req.body, notAllowed);
-    await User.findByIdAndUpdate(
-      _id,
-      toChange,
-      { new: true, select: '-password -__v' },
-      (err, user) => {
-        if (err) {
-          return res.status(400).send('Cannot update. Try again.');
-        }
-        res.send(user);
-      }
-    );
+    try {
+      const user = await User.findByIdAndUpdate(_id, toChange, {
+        new: true,
+        select: '-password -__v'
+      });
+      res.send(user);
+    } catch (err) {
+      return res.status(400).send('Cannot update. Try again.');
+    }
   });
 
   app.post('/api/profile/changePassword', requireLogin, async (req, res) => {

@@ -5,6 +5,8 @@ import { Button } from '../../Components/Buttons';
 import Label from '../../Components/Label';
 import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
+import { SpinnerRectangles } from '../../Components/Spinner';
+import constants from '../../utils/constants';
 
 const StyledForm = styled.form`
   display: flex;
@@ -12,15 +14,10 @@ const StyledForm = styled.form`
 `;
 
 class Address extends Component {
-  submitForm = e => {
-    //fake api call
-    console.log(e);
-  };
-
   render() {
     return (
       <Form
-        onSubmit={this.submitForm}
+        onSubmit={this.props.editUser}
         initialValues={this.props.user.data}
         render={({ handleSubmit, values }) => (
           <StyledForm onSubmit={handleSubmit}>
@@ -48,9 +45,7 @@ class Address extends Component {
                 </React.Fragment>
               )}
             </Field>
-            <Button color="primary" type="submit">
-              Save
-            </Button>
+            <SubmitButton {...this.props} />
           </StyledForm>
         )}
       />
@@ -68,3 +63,28 @@ export default connect(
   mapStateToProps,
   null
 )(Address);
+
+function SubmitButton(props) {
+  switch (props.user.editUserStatus) {
+    case constants.LOADING:
+      return (
+        <Button color="primary">
+          <SpinnerRectangles color="white" />
+        </Button>
+      );
+    case constants.ERROR:
+      return (
+        <Button color="disabled" disabled>
+          Error
+        </Button>
+      );
+    case constants.SUCCESS:
+      return <Button color="green">Saved</Button>;
+    default:
+      return (
+        <Button color="primary" type="submit">
+          Save
+        </Button>
+      );
+  }
+}

@@ -173,7 +173,7 @@ export default class HotelCard extends Component {
           <CardDetails>
             <Detail>
               <Badges type="stars" count={stars} />
-              {stars} stars
+              {stars} {stars > 1 ? 'stars' : 'star'}
             </Detail>
             <Separator />
             <Detail>

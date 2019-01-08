@@ -12,6 +12,7 @@ import Address from './Address';
 import Reviews from './Reviews';
 import History from './History';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 const Container = styled.div`
   display: grid;
@@ -31,6 +32,10 @@ const MainContent = styled.div`
 `;
 
 class Profile extends Component {
+  saveUser = data => {
+    this.props.editUser({ ...this.props.user.data, ...data });
+  };
+
   render() {
     return (
       <Container>
@@ -44,10 +49,10 @@ class Profile extends Component {
             </TabsPanel>
             <TabsContainer>
               <Tab>
-                <UserData user={this.props.user} />
+                <UserData editUser={this.saveUser} user={this.props.user} />
               </Tab>
               <Tab>
-                <Address user={this.props.user} />
+                <Address editUser={this.saveUser} user={this.props.user} />
               </Tab>
               <Tab>
                 <Reviews user={this.props.user} />
@@ -66,5 +71,5 @@ const mapStateToProps = state => ({ user: state.user });
 
 export default connect(
   mapStateToProps,
-  null
+  actions
 )(Profile);

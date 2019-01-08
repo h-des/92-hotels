@@ -169,6 +169,17 @@ export const autoLogin = () => async dispatch => {
   }
 };
 
+export const editUser = data => async dispatch => {
+  dispatch({ type: constants.EDIT_USER });
+
+  try {
+    const user = await axios.post('/api/profile/edit', data);
+    dispatch({ payload: user.data, type: constants.EDIT_USER_SUCCESS });
+  } catch (err) {
+    dispatch({ type: constants.EDIT_USER_ERROR });
+  }
+};
+
 export const logIn = data => async dispatch => {
   dispatch({ type: constants.LOGIN });
 

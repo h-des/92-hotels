@@ -39,7 +39,7 @@ module.exports = app => {
 
   app.get('/auth/autoLogin', async (req, res) => {
     if (!req.user) {
-      return req.status(401).send('You must log in!');
+      return res.status(401).send('You must log in!');
     }
     res.send(omit(req.user.toJSON(), ['password', '__v']));
   });
