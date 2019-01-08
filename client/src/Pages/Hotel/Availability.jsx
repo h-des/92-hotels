@@ -68,8 +68,8 @@ class Availability extends Component {
     if (new Date(checkOut) <= new Date(checkIn)) {
       return this.setState({ error: 'Invalid date!' });
     }
-    const { id } = this.props.data;
-    const data = { from: checkIn, to: checkOut, roomType: roomType.value, id };
+    const { _id } = this.props.data;
+    const data = { from: checkIn, to: checkOut, roomType: roomType.value, _id };
 
     this.props.checkAvailability(data);
   };
