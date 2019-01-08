@@ -94,7 +94,7 @@ export const checkAvailability = data => async dispatch => {
   dispatch({ type: constants.CHECK_AVAILABILITY });
   try {
     const res = await axios.get(
-      `/api/hotel/availability/${data.id}?from=${data.from}&to=${
+      `/api/hotel/availability/${data._id}?from=${data.from}&to=${
         data.to
       }&roomType=${data.roomType}`
     );

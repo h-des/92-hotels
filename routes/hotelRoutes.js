@@ -124,7 +124,7 @@ module.exports = app => {
     res.send(hotels);
   });
 
-  app.get('/api/city', async (req, res) => {
+  app.get('/api/city/', async (req, res) => {
     const { hotel } = req.query;
     const result = await Hotel.findById(hotel).lean();
     if (!result) {

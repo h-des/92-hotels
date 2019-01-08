@@ -117,6 +117,10 @@ const StyledForm = styled.form`
 `;
 
 class Main extends Component {
+  selectCityFilter = city => {
+    this.props.addFilters({ city });
+  };
+
   render() {
     return (
       <StyledContainer>
@@ -125,7 +129,10 @@ class Main extends Component {
           <BottomContainer>
             <Form {...this.props} />
             <SecondaryHeading>Get inspired</SecondaryHeading>
-            <CarouselSliding items={this.props.tiles} onClick={() => {}} />
+            <CarouselSliding
+              items={this.props.tiles}
+              onClick={this.selectCityFilter}
+            />
           </BottomContainer>
         </InnerContainer>
       </StyledContainer>
