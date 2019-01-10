@@ -158,7 +158,6 @@ export const removeFilters = () => dispatch => {
 };
 
 export const autoLogin = () => async dispatch => {
-  console.log('ehy');
   dispatch({ type: constants.LOGIN });
 
   try {

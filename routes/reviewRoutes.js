@@ -4,6 +4,7 @@ const requireLogin = require('../middlewares/requireLogin');
 const User = mongoose.model('users');
 const Hotel = mongoose.model('hotels');
 const Review = mongoose.model('reviews');
+const logger = require('../utils/logger');
 
 module.exports = app => {
   app.post('/api/review/add', requireLogin, async (req, res) => {
@@ -30,6 +31,7 @@ module.exports = app => {
       });
 
       await User.findByIdAndUpdate(_id, { $addToSet: { reviews: review._id } });
+      logger.info(`User ${_id} added a review -- id: ${review._id}`);
       res.send({ message: 'Review successfully created.' });
     } catch (err) {
       res.status(400).send('Cannot add review.');

@@ -5,6 +5,7 @@ const Hotel = mongoose.model('hotels');
 const User = mongoose.model('users');
 const Room = mongoose.model('rooms');
 const requireLogin = require('../middlewares/requireLogin');
+const logger = require('../utils/logger');
 
 module.exports = app => {
   app.get('/api/booking/:id', requireLogin, async (req, res) => {
@@ -66,6 +67,7 @@ module.exports = app => {
       await User.findByIdAndUpdate(user._id, {
         $addToSet: { bookings: booking._id }
       });
+      logger.info(`Booking created -- id: ${booking._id}`);
       res.send('Room successfully booked.');
     } catch (err) {
       res.status(400).send('There was an error. Cannot book your room.');

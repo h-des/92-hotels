@@ -67,11 +67,7 @@ export default connect(
 function SubmitButton(props) {
   switch (props.user.editUserStatus) {
     case constants.LOADING:
-      return (
-        <Button color="primary">
-          <SpinnerRectangles color="white" />
-        </Button>
-      );
+      return <Button color="primary" loading />;
     case constants.ERROR:
       return (
         <Button color="disabled" disabled>

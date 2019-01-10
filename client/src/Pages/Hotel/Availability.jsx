@@ -81,13 +81,7 @@ class Availability extends Component {
   renderButtons = () => {
     switch (this.props.status) {
       case constants.LOADING:
-        return (
-          <React.Fragment>
-            <Button color="disabled" disabled onClick={this.checkAvailability}>
-              Loading...
-            </Button>
-          </React.Fragment>
-        );
+        return <Button color="disabled" disabled loading />;
 
       case constants.ERROR:
         return (

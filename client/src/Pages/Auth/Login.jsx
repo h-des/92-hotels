@@ -77,12 +77,9 @@ class Login extends Component {
               margin="0 0 2rem 0"
               onClick={this.handleLogin}
               color="primary"
+              loading={this.props.user.status === 'LOADING'}
             >
-              {this.props.user.status === 'LOADING' ? (
-                <SpinnerRectangles color="white" />
-              ) : (
-                'Login'
-              )}
+              Login
             </Button>
           ) : (
             <Button margin="0 0 2rem 0" color="disabled" disabled>

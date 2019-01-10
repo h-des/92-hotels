@@ -16,6 +16,7 @@ module.exports = app => {
       if (!user) {
         return res.status(401).send(info);
       }
+      logger.info(`New user -- id: ${user._id}`);
       res.status(200).send(omit(user.toJSON(), 'password'));
     })(req, res, done);
   });

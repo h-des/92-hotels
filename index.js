@@ -5,7 +5,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
-
+const logger = require('./utils/logger');
 require('./models/User');
 require('./models/Hotel');
 require('./models/Bookings');
@@ -29,11 +29,14 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 mongoose.connect(
   keys.mongoURI,
-  { useNewUrlParser: true }
+  { useNewUrlParser: true },
+  err => {
+    logger.error('Cannot connect to database');
+  }
 );
+
 require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app);
 require('./routes/reviewRoutes')(app);

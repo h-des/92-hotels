@@ -40,6 +40,7 @@ module.exports = app => {
       });
       res.send(user);
     } catch (err) {
+      logger.error(`User data cannot be updated -- id: ${booking._id}`);
       return res.status(400).send('Cannot update. Try again.');
     }
   });
