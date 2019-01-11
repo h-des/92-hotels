@@ -113,10 +113,7 @@ class Hotel extends Component {
                 <Content>
                   <HeadingBig>{data.name}</HeadingBig>
                   <StyledHr />
-                  {/* <Paragraph>{data.city}</Paragraph>
-                <HeadingBig>Features</HeadingBig>
-                <StyledHr />
-                <FeaturesContainer>{this.renderFeatures()}</FeaturesContainer> */}
+                  <Paragraph>{data.description}</Paragraph>
                   <HeadingBig>Book</HeadingBig>
                   <StyledHr />
                   <Availability

@@ -8,6 +8,7 @@ const hotelSchema = new Schema({
   city: { type: String, trim: true },
   stars: Number,
   image: String,
+  description: String,
   interiorPhotos: [String],
   roomTypes: [Number],
   roomList: [

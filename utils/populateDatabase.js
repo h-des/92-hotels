@@ -74,6 +74,16 @@ const populateHotels = async () => {
     'Paris',
     'Berlin'
   ];
+  const getPhotos = arr => {
+    arr = [...arr];
+    let res = [];
+    for (let i = 0; i < 3; i++) {
+      let id = Math.floor(Math.random() * arr.length);
+      res.push(arr[id]);
+      arr.splice(id, 1);
+    }
+    return res;
+  };
 
   await cities.forEach(async city => {
     let imageURL = await axios.get(
@@ -95,7 +105,8 @@ const populateHotels = async () => {
     hotel.city = city;
     hotel.stars = stars;
     hotel.roomTypes = roomTypes;
-
+    hotel.interiorPhotos = getPhotos(photos);
+    hotel.description = faker.lorem.paragraphs();
     try {
       await hotel.save();
       console.log(city, '--> Success');
@@ -183,86 +194,6 @@ const populateRooms = async () => {
 
 const populateBookings = async () => {};
 
-const updatePhotos = async () => {
-  const hotels = await Hotel.find({});
-
-  for (let hotel of hotels) {
-    let imageURL = await axios.get(
-      `https://source.unsplash.com/600x200/?${hotel.city}`
-    );
-    hotel.image = imageURL.request.res.responseUrl;
-
-    try {
-      await hotel.save();
-      console.count('saved hotel: ');
-    } catch (err) {
-      console.log(err);
-    }
-  }
-};
-
-const addInteriorPhotos = async () => {
-  const hotels = await Hotel.find({});
-  const getPhotos = arr => {
-    arr = [...arr];
-    let res = [];
-    for (let i = 0; i < 3; i++) {
-      let id = Math.floor(Math.random() * arr.length);
-      res.push(arr[id]);
-      arr.splice(id, 1);
-    }
-    return res;
-  };
-
-  for (let hotel of hotels) {
-    let photosArr = getPhotos(photos);
-    hotel.interiorPhotos = photosArr;
-    try {
-      await hotel.save();
-      console.count('saved hotel: ');
-    } catch (err) {
-      console.log(err);
-    }
-  }
-};
-
-const addZipCodes = async () => {
-  const profiles = await axios
-    .get('https://randomuser.me/api/?results=10')
-    .then(res => res.data.results);
-
-  const users = await User.find({});
-
-  users.forEach(async (user, index) => {
-    user.zipCode = profiles[index].location.postcode;
-    try {
-      await user.save();
-      console.log(' --> Success');
-    } catch (err) {
-      console.log(err);
-    }
-  });
-};
-
-const addBookingsToUser = async () => {
-  const bookingList = await Booking.find({});
-  bookingList.forEach(async booking => {
-    const id = booking.user;
-    try {
-      await User.findByIdAndUpdate(id, {
-        $addToSet: { bookings: booking._id }
-      });
-      console.log(booking._id, ' --> Added');
-    } catch (err) {
-      console.log(err);
-    }
-  });
-};
-
-// addBookingsToUser();
-// addZipCodes();
-// addInteriorPhotos();
-// updatePhotos();
 // populateUsers();
 // populateHotels();
 // populateReviews();

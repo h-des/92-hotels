@@ -33,7 +33,9 @@ mongoose.connect(
   keys.mongoURI,
   { useNewUrlParser: true },
   err => {
-    logger.error('Cannot connect to database');
+    if (err) {
+      logger.error('Cannot connect to database');
+    }
   }
 );
 

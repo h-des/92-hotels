@@ -19,6 +19,7 @@ const About = lazy(() => import('./Pages/About/About'));
 const Profile = lazy(() => import('./Pages/Settings/Profile'));
 const Checkout = lazy(() => import('./Pages/Checkout/Checkout'));
 const NotFound = lazy(() => import('./Pages/404/404'));
+const Unauthorised = lazy(() => import('./Pages/404/Unauthorised'));
 
 const StyledApp = styled.div`
   display: flex;
@@ -56,22 +57,22 @@ class App extends Component {
                   <Route path="/about" render={props => <About {...props} />} />
 
                   {/* protected routes */}
-                  {this.props.user.data && (
-                    <React.Fragment>
-                      <Route
-                        path="/settings"
-                        render={props => <Profile {...props} />}
-                      />
-                      <Route
-                        path="/pay"
-                        render={props => <CardDetails {...props} />}
-                      />
-                      <Route
-                        path="/checkout"
-                        render={props => <Checkout {...props} />}
-                      />
-                    </React.Fragment>
-                  )}
+                  <PrivateRoute
+                    user={this.props.user}
+                    path="/settings"
+                    component={Profile}
+                  />
+                  <PrivateRoute
+                    user={this.props.user}
+                    path="/pay"
+                    component={CardDetails}
+                  />
+                  <PrivateRoute
+                    user={this.props.user}
+                    path="/checkout"
+                    component={Checkout}
+                  />
+
                   <Route render={props => <NotFound {...props} />} />
                 </Switch>
               </Suspense>
@@ -82,6 +83,17 @@ class App extends Component {
       </Router>
     );
   }
+}
+
+function PrivateRoute({ component: Component, user, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        user.data ? <Component {...props} /> : <Unauthorised />
+      }
+    />
+  );
 }
 
 const mapStateToProps = state => ({
