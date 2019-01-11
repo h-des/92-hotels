@@ -20,6 +20,7 @@ const StyledFooter = styled.footer`
 
 export const SocialIcon = styled.img`
   height: 30px;
+  margin: 0 1rem;
 `;
 
 const Container = styled.div`
@@ -28,26 +29,24 @@ const Container = styled.div`
   width: 100%;
   padding-bottom: 10vh;
   text-align: center;
-`;
-
-const SocialContainer = styled.ul`
-  display: flex;
-  list-style: none;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 30rem;
-`;
-const UpperContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 2rem;
 
   @media only screen and (max-width: 650px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
   }
+`;
+
+const SocialIconsContainer = styled.ul`
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 30rem;
 `;
 const InfoContainer = styled.div`
   display: flex;
@@ -58,10 +57,10 @@ const InfoContainer = styled.div`
   @media only screen and (max-width: 650px) {
     width: 100%;
     justify-content: space-around;
+    margin-bottom: 1rem;
   }
-
   @media only screen and (max-width: 425px) {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 `;
 const LinksContainer = styled.div`
@@ -86,32 +85,6 @@ const ContactContainer = styled.div`
     margin-bottom: 30px;
   }
 `;
-const ActionContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  text-align: left;
-
-  @media only screen and (max-width: 650px) {
-    width: 80%;
-    margin-bottom: 20px;
-  }
-`;
-const BottomContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 650px) {
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  @media only screen and (max-width: 425px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
 const Logo = styled(Link)`
   text-decoration: none;
   color: white;
@@ -130,15 +103,6 @@ const StyledLink = styled(Link)`
     color: #ddd;
   }
 `;
-const StyledInput = styled.input`
-  height: 3rem;
-  font-weight: 700;
-  font-family: 'Source Sans Pro', sans-serif;
-  color: #333;
-  padding: 1rem 2rem;
-  width: 80%;
-`;
-
 export const StyledButton = styled.button`
   width: 20%;
   height: 3rem;
@@ -157,50 +121,43 @@ const StyledUl = styled.ul`
   list-style: none;
 `;
 
+const SocialContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 export default class Footer extends Component {
   render() {
     return (
       <StyledFooter>
         <Container>
-          <UpperContainer>
-            <InfoContainer>
-              <LinksContainer>
-                <h4>Map</h4>
-                <StyledUl>
-                  <li>
-                    <StyledLink to="/Hotels">Hotels</StyledLink>
-                  </li>
-                  <li>
-                    <StyledLink to="/About">About</StyledLink>
-                  </li>
-                  <li>
-                    <StyledLink to="/Contact">Contact</StyledLink>
-                  </li>
-                </StyledUl>
-              </LinksContainer>
-              <ContactContainer>
-                <h4>Contact</h4>
-                <p>Hotel Black 92</p>
-                <p>
-                  574 Cronin Cliffs, Edenton Cambridgeshire, 68575-0942 United
-                  Kingdom
-                </p>
-              </ContactContainer>
-            </InfoContainer>
-            <ActionContainer>
-              <label htmlFor="subscribe">Subscribe!</label>
-              <div>
-                <StyledInput type="email" id="subscribe" />
-                <StyledButton type="submit">GO</StyledButton>
-                <p>
-                  Sign up for a newsletter to Dolor nostrum saepe ea sequi
-                  quisquam.
-                </p>
-              </div>
-            </ActionContainer>
-          </UpperContainer>
-          <BottomContainer>
-            <SocialContainer>
+          <InfoContainer>
+            <LinksContainer>
+              <h4>Map</h4>
+              <StyledUl>
+                <li>
+                  <StyledLink to="/Hotels">Hotels</StyledLink>
+                </li>
+                <li>
+                  <StyledLink to="/About">About</StyledLink>
+                </li>
+                <li>
+                  <StyledLink to="/Contact">Contact</StyledLink>
+                </li>
+              </StyledUl>
+            </LinksContainer>
+            <ContactContainer>
+              <h4>Contact</h4>
+              <p>Hotel Black 92</p>
+              <p>
+                574 Cronin Cliffs, Edenton Cambridgeshire, 68575-0942 United
+                Kingdom
+              </p>
+            </ContactContainer>
+          </InfoContainer>
+          <SocialContainer>
+            <SocialIconsContainer>
               <li>
                 <StyledLink to="/">
                   <SocialIcon src={fbIcon} />
@@ -221,9 +178,9 @@ export default class Footer extends Component {
                   <SocialIcon src={twitterIcon} />
                 </StyledLink>
               </li>
-            </SocialContainer>
+            </SocialIconsContainer>
             <Logo to="/">Hotel Black 92</Logo>
-          </BottomContainer>
+          </SocialContainer>
         </Container>
       </StyledFooter>
     );
