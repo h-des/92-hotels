@@ -20,6 +20,21 @@ The second version is more compound. It's a **node** + **express** + **mongoose*
 - [Node server + client-side app](https://hotels-92.herokuapp.com)
 - [Client-side](https://92-hotels.now.sh)
 
+### Example users
+
+| email                         | password |
+| ----------------------------- | -------- |
+| saana.wuori@example.com       | test     |
+| patricia.reyes@example.com    | test     |
+| sueli.damata@example.com      | test     |
+| etienne.campbell@example.com  | test     |
+| micheal.andrews@example.com   | test     |
+| sophia.heinisch@example.com   | test     |
+| ahmad.stellmacher@example.com | test     |
+| anton.koivisto@example.com    | test     |
+| byron.herrera@example.com     | test     |
+| ralph.guerin@example.co       | test     |
+
 ## Run locally
 
 ### `master` branch
