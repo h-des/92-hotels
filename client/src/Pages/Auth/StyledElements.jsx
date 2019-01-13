@@ -68,7 +68,7 @@ const ErrorMessage = styled.p`
   background-color: #fff9ed;
   color: #744f11;
   font-size: 1.6rem;
-  padding: 4px 8px;
+  padding: 0.4rem 0.8rem;
 `;
 
 const ForgotLink = styled.a`

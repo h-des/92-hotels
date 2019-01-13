@@ -79,16 +79,35 @@ const SecondaryHeading = styled.h3`
   color: white;
 `;
 
+const FieldsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+const ErrorMessage = styled.p`
+  margin: 1rem 0;
+  flex-basis: 100%;
+  font-size: 1.4;
+  padding: 1rem;
+  border-left: 3px solid red;
+  background-color: #fff9ed;
+  color: #744f11;
+`;
+
 const Field = styled.div`
   display: flex;
   flex-direction: column;
   text-align: left;
-  width: 100%;
-  margin-right: 2rem;
+  flex-basis: 25%;
+  padding-right: 2rem;
   font-size: 1.4rem;
 
   @media only screen and (max-width: 800px) {
+    width: 100%;
     margin: 0 auto;
+    flex-basis: 100%;
     margin-bottom: 1rem;
   }
 `;
@@ -178,45 +197,52 @@ class Form extends Component {
   render() {
     return (
       <StyledForm onSubmit={this.submitForm}>
-        <Field>
-          <Label htmlFor="city">City</Label>
-          <Select
-            options={this.props.cities}
-            name="city"
-            id="city"
-            onChange={e => this.handleChange(e, 'city')}
-          />
-        </Field>
-        <Field>
-          <Label htmlFor="checkIn">Check In</Label>
-          <DatePicker
-            onChange={e => this.handleChange(e, 'checkIn')}
-            name="checkIn"
-            id="checkIn"
-          />
-        </Field>
-        <Field>
-          <Label htmlFor="checkOut">Check Out</Label>
-          <DatePicker
-            onChange={e => this.handleChange(e, 'checkOut')}
-            name="checkOut"
-            id="checkOut"
-          />
-        </Field>
-        <Field>
-          <Label htmlFor="roomType">Room type</Label>
-          <Select
-            name="roomType"
-            id="roomType"
-            options={[
-              { label: '1 person', value: 1 },
-              { label: '2 people', value: 3 },
-              { label: '3 people', value: 2 },
-              { label: '4 people', value: 4 }
-            ]}
-            onChange={e => this.handleChange(e, 'roomType')}
-          />
-        </Field>
+        <FieldsContainer>
+          <Field>
+            <Label htmlFor="city">City</Label>
+            <Select
+              options={this.props.cities}
+              name="city"
+              id="city"
+              value={this.state.city}
+              onChange={e => this.handleChange(e, 'city')}
+            />
+          </Field>
+          <Field>
+            <Label htmlFor="checkIn">Check In</Label>
+            <DatePicker
+              onChange={e => this.handleChange(e, 'checkIn')}
+              name="checkIn"
+              value={this.state.checkIn}
+              id="checkIn"
+            />
+          </Field>
+          <Field>
+            <Label htmlFor="checkOut">Check Out</Label>
+            <DatePicker
+              onChange={e => this.handleChange(e, 'checkOut')}
+              name="checkOut"
+              value={this.state.checkOut}
+              id="checkOut"
+            />
+          </Field>
+          <Field>
+            <Label htmlFor="roomType">Room type</Label>
+            <Select
+              name="roomType"
+              value={this.state.roomType}
+              id="roomType"
+              options={[
+                { label: '1 person', value: 1 },
+                { label: '2 people', value: 3 },
+                { label: '3 people', value: 2 },
+                { label: '4 people', value: 4 }
+              ]}
+              onChange={e => this.handleChange(e, 'roomType')}
+            />
+          </Field>
+          {this.state.error && <ErrorMessage>{this.state.error}</ErrorMessage>}
+        </FieldsContainer>
         <Button type="submit" color="primary">
           Submit
         </Button>

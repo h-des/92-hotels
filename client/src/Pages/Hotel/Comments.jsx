@@ -33,17 +33,23 @@ const Badge = ({ fillColor }) => (
 );
 
 const StyledComment = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 9fr;
-  grid-template-rows: min-content min-content;
-  grid-column-gap: 1rem;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   margin-bottom: 30px;
 `;
 
+const ContainerLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-right: 1rem;
+`;
+const ContainerRight = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const CommentHeadContainer = styled.div`
-  grid-column: 2/-1;
-  grid-row: 1 / span 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -55,8 +61,6 @@ const CommentAvatar = styled.img`
   justify-self: center;
   width: 4.5rem;
   border-radius: 50%;
-  grid-column: 1 / span 1;
-  grid-row: 1 / span 1;
 `;
 
 const CommentAuthor = styled.h4`
@@ -73,8 +77,6 @@ const CommentDate = styled.p`
 
 const CommentBody = styled.p`
   font-size: 1.8rem;
-  grid-column: 2 / span 1;
-  grid-row: 2/-1;
   text-align: justify;
   font-style: italic;
   align-self: flex-end;
@@ -89,9 +91,8 @@ const CommentsContainer = styled.div`
 const Rating = styled.div`
   margin-top: 1rem;
   display: flex;
+  width: 100%;
   flex-direction: column;
-  grid-column: 1 / span 1;
-  grid-row: 2/-1;
   justify-content: center;
   align-self: start;
   font-size: 1.4rem;
@@ -142,17 +143,20 @@ class Comments extends React.Component {
 
 const Comment = ({ author, date, body, avatar, rating }) => (
   <StyledComment>
-    <CommentAvatar src={avatar} />
-    <Rating>
-      <Badge fillColor="blue" />
-      <p>{rating}/5</p>
-    </Rating>
-    <CommentHeadContainer>
-      <CommentAuthor>{author}</CommentAuthor>
-      <CommentDate>{date}</CommentDate>
-    </CommentHeadContainer>
-
-    <CommentBody>{body}</CommentBody>
+    <ContainerLeft>
+      <CommentAvatar src={avatar} />
+      <Rating>
+        <Badge fillColor="blue" />
+        <p>{rating}/5</p>
+      </Rating>
+    </ContainerLeft>
+    <ContainerRight>
+      <CommentHeadContainer>
+        <CommentAuthor>{author}</CommentAuthor>
+        <CommentDate>{date}</CommentDate>
+      </CommentHeadContainer>
+      <CommentBody>{body}</CommentBody>
+    </ContainerRight>
   </StyledComment>
 );
 

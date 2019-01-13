@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { injectGlobal } from 'styled-components';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import axios from 'axios';
 import Root from './Root';
 
@@ -57,4 +57,4 @@ ReactDOM.render(
   </Root>,
   document.getElementById('root')
 );
-registerServiceWorker();
+unregister();
