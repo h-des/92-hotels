@@ -5,7 +5,6 @@ import { Button } from '../../Components/Buttons';
 import Label from '../../Components/Label';
 import { Form, Field } from 'react-final-form';
 import styled from 'styled-components';
-import { SpinnerRectangles } from '../../Components/Spinner';
 import constants from '../../utils/constants';
 
 const StyledForm = styled.form`

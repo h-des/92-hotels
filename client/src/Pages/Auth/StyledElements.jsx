@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+//Elements for Login and New Account form
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;

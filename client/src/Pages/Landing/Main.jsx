@@ -138,6 +138,7 @@ const StyledForm = styled.form`
 class Main extends Component {
   selectCityFilter = city => {
     this.props.addFilters({ city });
+    this.props.history.push('/hotels');
   };
 
   render() {
@@ -233,10 +234,10 @@ class Form extends Component {
               value={this.state.roomType}
               id="roomType"
               options={[
-                { label: '1 person', value: 1 },
-                { label: '2 people', value: 3 },
-                { label: '3 people', value: 2 },
-                { label: '4 people', value: 4 }
+                { label: '1 guest', value: 1 },
+                { label: '2 guests', value: 3 },
+                { label: '3 guests', value: 2 },
+                { label: '4 guests', value: 4 }
               ]}
               onChange={e => this.handleChange(e, 'roomType')}
             />

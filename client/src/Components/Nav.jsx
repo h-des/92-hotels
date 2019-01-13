@@ -122,7 +122,10 @@ const LoginButton = styled.button`
   }
 `;
 
-const NavLink = styled(({ landing, ...props }) => <Link {...props} />)`
+//filter props to avoid passing it to the DOM
+const NavLink = styled(({ landing, isActive, ...props }) => (
+  <Link {...props} />
+))`
   text-decoration: none;
   color: ${props =>
     props.isActive ? `#5862ef` : props.landing ? 'white' : `#0c0c0c`};
@@ -175,12 +178,14 @@ class Nav extends Component {
 
   renderList = () => {
     const { pathname } = this.props.history.location;
+    //remove protected routes form nav when user is not logged in
     const list = this.props.user.data
       ? ['hotels', 'about', 'settings']
       : ['hotels', 'about'];
     return list.map(e => {
       if (e === pathname.slice(1)) {
         return (
+          //add isAvtive prop to active route to set proper styling
           <NavLink
             to={`/${e}`}
             landing={pathname === '/' ? true : undefined}

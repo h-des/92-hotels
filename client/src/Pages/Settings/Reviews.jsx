@@ -5,11 +5,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { SpinnerRectangles } from '../../Components/Spinner';
 
-const List = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-`;
 const Container = styled.li`
   display: flex;
   flex-direction: row;
@@ -41,13 +36,6 @@ const Text = styled.p`
   text-align: justify;
   font-style: italic;
   color: ${props => props.theme.colors.black};
-`;
-
-const Title = styled.h3`
-  font-size: 1.6rem;
-  color: #666;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
 `;
 
 const Item = ({ date, stars, review, city, hotel }) => (
@@ -90,10 +78,7 @@ export default class Reviews extends Component {
       })
     );
     //filter null values
-    console.log(arr);
     arr = arr.filter(e => e);
-    console.log(arr);
-
     arr = await Promise.all(
       arr.map(async review => {
         try {
@@ -104,7 +89,6 @@ export default class Reviews extends Component {
         }
       })
     );
-    console.log(arr);
 
     this.setState({ reviews: arr });
   }

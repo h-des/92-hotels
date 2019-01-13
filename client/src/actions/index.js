@@ -48,7 +48,6 @@ export const fetchHotels = filters => async dispatch => {
   const query = Object.entries(filters)
     .map(e => `${e[0]}=${e[1]}`)
     .join('&');
-  console.log(query);
   try {
     const res = await axios.get(`/api/hotel/?${query}`);
     dispatch({

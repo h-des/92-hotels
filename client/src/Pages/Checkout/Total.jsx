@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -48,28 +48,29 @@ const Feature = styled.li`
   margin-bottom: 1rem;
 `;
 
-export default class Total extends Component {
-  render() {
-    const { from: checkIn, to: checkOut, price, roomType } = this.props.data;
-    let a = moment(checkIn);
-    let b = moment(checkOut);
-    const len = Math.abs(a.diff(b, 'days'));
-    const breakfastPrice = this.props.breakfast ? roomType * len * 10 : 0;
-    const totalPrice = len * price + breakfastPrice || 0;
-    return (
-      <TotalContainer>
-        <FlexColumn>
-          <TotalTitle>Total</TotalTitle>
-          <Price>{totalPrice}$</Price>
-          <Features>
-            <Feature>{price}$ per night</Feature>
-            <Feature>From: {checkIn}</Feature>
-            <Feature>To: {checkOut}</Feature>
-            <Feature>Room type: {roomType}</Feature>
-          </Features>
-        </FlexColumn>
-        {this.props.children}
-      </TotalContainer>
-    );
-  }
-}
+export default ({
+  data: { from: checkIn, to: checkOut, price, roomType },
+  breakfast,
+  children
+}) => {
+  let a = moment(checkIn);
+  let b = moment(checkOut);
+  const len = Math.abs(a.diff(b, 'days'));
+  const breakfastPrice = breakfast ? roomType * len * 10 : 0;
+  const totalPrice = len * price + breakfastPrice || 0;
+  return (
+    <TotalContainer>
+      <FlexColumn>
+        <TotalTitle>Total</TotalTitle>
+        <Price>{totalPrice}$</Price>
+        <Features>
+          <Feature>{price}$ per night</Feature>
+          <Feature>From: {checkIn}</Feature>
+          <Feature>To: {checkOut}</Feature>
+          <Feature>Room type: {roomType}</Feature>
+        </Features>
+      </FlexColumn>
+      {children}
+    </TotalContainer>
+  );
+};

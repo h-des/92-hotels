@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import loginIcon from '../../images/login_icon.svg';
 import { Button } from '../../Components/Buttons';
-import { SpinnerRectangles } from '../../Components/Spinner';
 import constants from '../../utils/constants';
 import {
   ForgotLink,

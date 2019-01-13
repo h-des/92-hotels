@@ -5,8 +5,6 @@ import { Input } from '../../Components/Inputs';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Checkbox from '../../Components/Checkbox';
-import CardDetails from './CardDetails';
-import Modal from '../../Components/Modal';
 import { Form, Field } from 'react-final-form';
 import Total from './Total';
 

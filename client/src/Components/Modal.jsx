@@ -42,8 +42,9 @@ export default class Modal extends Component {
   element = document.createElement('div');
 
   componentDidMount() {
-    setTimeout(() => this.closeButton.focus(), 1);
     modalContainer.appendChild(this.element);
+    //focus on modal
+    this.closeButton.focus();
   }
   componentWillUnmount() {
     modalContainer.removeChild(this.element);

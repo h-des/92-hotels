@@ -27,14 +27,18 @@ class HotelListContainer extends Component {
 
   loadMore = () => {
     const { page, pages } = this.props.hotels;
+    // pages - number of pages of data on server
+    // page - current client page
     if (page <= pages) {
+      //check wheter there are any data to fetch
       this.props.fetchMoreHotels({ ...this.props.filters, page });
     }
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { page, pages } = this.props.hotels;
+    const { page } = this.props.hotels;
     if (this.props.filters !== prevProps.filters) {
+      //fetch hotels when filters change
       this.props.fetchHotels({ ...this.props.filters, page });
     }
     if (this.props.scrollInfo && prevProps.scrollInfo) {
@@ -47,6 +51,7 @@ class HotelListContainer extends Component {
         scrollHeight === prevProps.scrollInfo.scrollHeight &&
         scrollY !== prevProps.scrollInfo.scrollY
       ) {
+        //load more hotels when user scrolled to bottom
         this.loadMore();
       }
     }

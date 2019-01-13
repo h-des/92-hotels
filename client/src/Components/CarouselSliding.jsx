@@ -90,6 +90,13 @@ const Item = styled.button`
 `;
 
 const TIMEOUT = 300;
+
+//  Animation process:
+//  -> 'STILL' - show 2 items
+//  -> 'MOVE_RIGHT/LEFT_START' - add 3rd item outside viewport
+//  -> 'MOVE_RIGHT/LEFT' - slide all items
+//  -> 'STILL' - show 2 items
+
 export default class CarouselSliding extends React.Component {
   state = {
     active: 0,
@@ -98,6 +105,7 @@ export default class CarouselSliding extends React.Component {
 
   moveRight = () => {
     this.setState(
+      //start animation
       prevstate => ({
         active:
           (prevstate.active - 1 + this.props.items.length) %
@@ -108,6 +116,7 @@ export default class CarouselSliding extends React.Component {
         setTimeout(() => {
           this.setState({ status: 'MOVE_RIGHT' }, () => {
             setTimeout(() => {
+              //end animation
               this.setState({ status: 'STILL' });
             }, TIMEOUT);
           });
@@ -118,6 +127,7 @@ export default class CarouselSliding extends React.Component {
 
   moveLeft = () => {
     this.setState(
+      //start animation
       prevstate => ({
         active: (prevstate.active + 1) % this.props.items.length,
         status: 'MOVE_LEFT_START'
@@ -126,6 +136,7 @@ export default class CarouselSliding extends React.Component {
         setTimeout(() => {
           this.setState({ status: 'MOVE_LEFT' }, () => {
             setTimeout(() => {
+              //end animation
               this.setState({ status: 'STILL' });
             }, TIMEOUT);
           });
@@ -135,6 +146,7 @@ export default class CarouselSliding extends React.Component {
   };
 
   getList = (arr, status) => {
+    //return list of items to render
     return arr.map((id, index) => {
       const item = this.props.items[id];
       return (
@@ -159,13 +171,16 @@ export default class CarouselSliding extends React.Component {
     switch (status) {
       case 'MOVE_RIGHT_START':
       case 'MOVE_RIGHT':
+        //show 3 items
         toShow = [active, (active + 1) % len, (active + 2) % len];
         break;
       case 'MOVE_LEFT_START':
       case 'MOVE_LEFT':
+        //show 3 items
         toShow = [(active - 1 + len) % len, active, (active + 1) % len];
         break;
       default:
+        //show 2 items
         toShow = [active, (active + 1) % len];
         break;
     }
@@ -186,7 +201,7 @@ export default class CarouselSliding extends React.Component {
   };
 
   render() {
-    if (this.props.items.length) this.preloadImages();
+    if (this.props.items.length > 0) this.preloadImages();
     return (
       <StyledCarousel>
         <List>

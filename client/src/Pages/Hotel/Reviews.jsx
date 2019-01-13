@@ -32,7 +32,7 @@ const Badge = ({ fillColor }) => (
   </SVG>
 );
 
-const StyledComment = styled.div`
+const StyledReview = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
@@ -49,33 +49,33 @@ const ContainerRight = styled.div`
   flex-direction: column;
 `;
 
-const CommentHeadContainer = styled.div`
+const ReviewHeadContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
 
-const CommentAvatar = styled.img`
+const ReviewAvatar = styled.img`
   height: 4.5rem;
   justify-self: center;
   width: 4.5rem;
   border-radius: 50%;
 `;
 
-const CommentAuthor = styled.h4`
+const ReviewAuthor = styled.h4`
   font-size: 2.4rem;
   color: ${props => props.theme.colors.black};
   font-weight: 700;
 `;
 
-const CommentDate = styled.p`
+const ReviewDate = styled.p`
   font-size: 2.4rem;
   color: ${props => props.theme.colors.grey};
   font-weight: 600;
 `;
 
-const CommentBody = styled.p`
+const ReviewBody = styled.p`
   font-size: 1.8rem;
   text-align: justify;
   font-style: italic;
@@ -83,7 +83,7 @@ const CommentBody = styled.p`
   color: ${props => props.theme.colors.black};
 `;
 
-const CommentsContainer = styled.div`
+const ReviewsContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -98,14 +98,16 @@ const Rating = styled.div`
   font-size: 1.4rem;
 `;
 
-class Comments extends React.Component {
+class Reviews extends React.Component {
   state = { reviews: [] };
   async componentDidMount() {
     const { id } = this.props;
+    //get all reviews
     const res = await axios.get(`/api/review/?hotel=${id}`);
     let reviews = res.data;
     let arr = await Promise.all(
       reviews.map(async elem => {
+        //get review's author info
         const res = await axios.get(`/api/profile/${elem.user}`);
         const user = res.data;
         return {
@@ -123,11 +125,12 @@ class Comments extends React.Component {
 
   render() {
     return (
-      <CommentsContainer>
+      <ReviewsContainer>
+        {/* show all reviews, sort by date, newest first */}
         {this.state.reviews
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map(e => (
-            <Comment
+            <Review
               key={e.username}
               author={e.username}
               date={moment(e.createdAt).format('YYYY-MM-DD')}
@@ -136,35 +139,35 @@ class Comments extends React.Component {
               rating={e.rate}
             />
           ))}
-      </CommentsContainer>
+      </ReviewsContainer>
     );
   }
 }
 
-const Comment = ({ author, date, body, avatar, rating }) => (
-  <StyledComment>
+const Review = ({ author, date, body, avatar, rating }) => (
+  <StyledReview>
     <ContainerLeft>
-      <CommentAvatar src={avatar} />
+      <ReviewAvatar src={avatar} />
       <Rating>
         <Badge fillColor="blue" />
         <p>{rating}/5</p>
       </Rating>
     </ContainerLeft>
     <ContainerRight>
-      <CommentHeadContainer>
-        <CommentAuthor>{author}</CommentAuthor>
-        <CommentDate>{date}</CommentDate>
-      </CommentHeadContainer>
-      <CommentBody>{body}</CommentBody>
+      <ReviewHeadContainer>
+        <ReviewAuthor>{author}</ReviewAuthor>
+        <ReviewDate>{date}</ReviewDate>
+      </ReviewHeadContainer>
+      <ReviewBody>{body}</ReviewBody>
     </ContainerRight>
-  </StyledComment>
+  </StyledReview>
 );
 
-Comments.propTypes = {
+Reviews.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-Comment.propTypes = {
+Review.propTypes = {
   author: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
@@ -172,4 +175,4 @@ Comment.propTypes = {
   rating: PropTypes.number.isRequired
 };
 
-export default Comments;
+export default Reviews;

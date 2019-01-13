@@ -161,8 +161,8 @@ class Availability extends Component {
 
 function getSelectOptions(arr) {
   return arr.map(e => {
-    if (e > 1) return { label: `${e} people`, value: e };
-    return { label: `${e} person`, value: e };
+    if (e > 1) return { label: `${e} guest`, value: e };
+    return { label: `${e} guests`, value: e };
   });
 }
 

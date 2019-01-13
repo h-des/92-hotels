@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const StyledTabsPanel = styled.ul`
   display: flex;
@@ -55,6 +56,7 @@ export class Tabs extends Component {
   render() {
     const { children } = this.props;
     const { activeTab } = this.state;
+    //pass data to children
     const childrenToRender = React.Children.map(children, child => {
       return React.cloneElement(child, {
         activeTab,
@@ -69,6 +71,7 @@ export class Tabs extends Component {
 export class TabsPanel extends Component {
   render() {
     const { activeTab, children, changeTab } = this.props;
+    //pass data to children
     const childrenToRender = React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
         click: changeTab,
@@ -93,6 +96,7 @@ export const TabTitle = ({ click, isActive, index, children }) => {
 export class TabsContainer extends Component {
   render() {
     const { activeTab, children, changeTab } = this.props;
+    //pass data to children
     const childrenToRender = React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
         click: changeTab,
@@ -105,5 +109,18 @@ export class TabsContainer extends Component {
 }
 
 export const Tab = ({ isActive, children }) => {
+  //render only active tab
   return !isActive ? null : <StyledTab>{children}</StyledTab>;
+};
+
+TabTitle.propTypes = {
+  click: PropTypes.func,
+  isActive: PropTypes.bool,
+  index: PropTypes.number,
+  children: PropTypes.node
+};
+
+Tab.propTypes = {
+  isActive: PropTypes.bool,
+  children: PropTypes.node
 };

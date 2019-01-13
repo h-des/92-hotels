@@ -143,12 +143,15 @@ class Filters extends Component {
     e.preventDefault();
     const { city, roomType, checkIn, checkOut } = this.state;
     if (!city || !roomType || !checkIn || !checkOut) {
+      //check for empty fields
       this.setState({
         error: 'Fields cannot be empty!'
       });
     } else if (new Date(checkOut) <= new Date(checkIn)) {
+      //check invalid dates
       return this.setState({ error: 'Invalid date!' });
     } else {
+      //apply filters
       this.props.addFilters({
         city: city.value,
         roomType: roomType.value,
@@ -221,10 +224,10 @@ class Filters extends Component {
                 value={this.state.roomType}
                 onChange={e => this.handleChange(e, 'roomType')}
                 options={[
-                  { label: '1 person', value: 1 },
-                  { label: '2 people', value: 2 },
-                  { label: '3 people', value: 3 },
-                  { label: '4 people', value: 4 }
+                  { label: '1 guest', value: 1 },
+                  { label: '2 guests', value: 2 },
+                  { label: '3 guests', value: 3 },
+                  { label: '4 guests', value: 4 }
                 ]}
               />
             </Item>

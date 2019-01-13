@@ -157,6 +157,7 @@ export class CarouselPanel extends Component {
 
 export class CarouselImagesContainer extends Component {
   componentDidMount() {
+    //pass info about the number of children to parent
     const len = this.props.children.length;
     this.props.setSize(len);
   }

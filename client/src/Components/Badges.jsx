@@ -67,6 +67,8 @@ const Badges = ({ count, marginBottom, type }) => {
     fill = '#F7B32B';
   }
 
+  //fill an array with 5 shapes - Star or Badge
+  //(5 - count) shapes are filled with gray color
   for (let i = 0; i < 5; i++) {
     if (i < count) {
       res.push(
@@ -95,7 +97,7 @@ const Badges = ({ count, marginBottom, type }) => {
 
 Badges.propTypes = {
   count: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   marginBottom: PropTypes.string
 };
 

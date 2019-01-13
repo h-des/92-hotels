@@ -151,38 +151,28 @@ const LoveButton = styled.button`
   }
 `;
 
-export default class HotelCard extends Component {
-  likeRoom = id => {
-    //
-    console.log(`You liked room ${id}`);
-  };
-
-  render() {
-    const { _id, name, city, stars, rating, image } = this.props.data;
-    return (
-      <Card>
-        <CardImage image={image} />
-        <CardBody>
-          <LoveButton onClick={() => this.likeRoom(_id)}>
-            <Icon src={heartIcon} />
-          </LoveButton>
-          <FlexColumn>
-            <CardTitle to={`/hotels/${_id}`}>{name}</CardTitle>
-            <CardDesc>{city}</CardDesc>
-          </FlexColumn>
-          <CardDetails>
-            <Detail>
-              <Badges type="stars" count={stars} />
-              {stars} {stars > 1 ? 'stars' : 'star'}
-            </Detail>
-            <Separator />
-            <Detail>
-              <Badges count={Math.floor(rating)} />
-              {rating}/5
-            </Detail>
-          </CardDetails>
-        </CardBody>
-      </Card>
-    );
-  }
-}
+export default ({ data: { _id, name, city, stars, rating, image } }) => (
+  <Card>
+    <CardImage image={image} />
+    <CardBody>
+      <LoveButton onClick={() => console.log(_id)}>
+        <Icon src={heartIcon} />
+      </LoveButton>
+      <FlexColumn>
+        <CardTitle to={`/hotels/${_id}`}>{name}</CardTitle>
+        <CardDesc>{city}</CardDesc>
+      </FlexColumn>
+      <CardDetails>
+        <Detail>
+          <Badges type="stars" count={stars} />
+          {stars} {stars > 1 ? 'stars' : 'star'}
+        </Detail>
+        <Separator />
+        <Detail>
+          <Badges count={Math.floor(rating)} />
+          {rating}/5
+        </Detail>
+      </CardDetails>
+    </CardBody>
+  </Card>
+);

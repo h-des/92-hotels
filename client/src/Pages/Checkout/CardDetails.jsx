@@ -157,7 +157,7 @@ const details = [
 ];
 
 class CardDetails extends Component {
-  pay = e => {
+  pay = () => {
     const { hash } = this.props.checkout;
     this.props.pay(hash);
   };
@@ -168,6 +168,7 @@ class CardDetails extends Component {
 
   render() {
     if (!this.props.checkout.hash) {
+      //no transaction data? -> redirect to homepage
       return <Redirect to="/hotels" />;
     }
     if (this.props.checkout.paymentStatus === 'SUCCESS')
@@ -186,6 +187,7 @@ class CardDetails extends Component {
           </Contaier>
         </Modal>
       );
+
     return (
       <Modal close={this.close}>
         <Contaier>

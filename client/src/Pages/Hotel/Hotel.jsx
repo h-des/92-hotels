@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Spinner } from '../../Components/Spinner';
-import Comments from './Comments';
 import {
   Carousel,
   CarouselImage,
@@ -10,10 +9,9 @@ import {
   CarouselSubTitle
 } from '../../Components/Carousel';
 import styled from 'styled-components';
-import FeatureIcon from './FeatureIcon';
-
 import Availability from './Availability';
 import constants from '../../utils/constants';
+import Reviews from './Reviews';
 
 const Container = styled.div`
   display: grid;
@@ -49,16 +47,6 @@ const Paragraph = styled.p`
   }
 `;
 
-const FeaturesContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-  @media only screen and (max-width: 600px) {
-    justify-content: space-between;
-  }
-`;
-
 const ContentContainer = styled.div`
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(auto, 80%) minmax(0, auto);
@@ -74,16 +62,6 @@ class Hotel extends Component {
       <CarouselImage img={image} key={image} />
     ));
   };
-
-  // renderFeatures = () => {
-  //   return this.props.roomData.features.map(feature => (
-  //     <FeatureIcon
-  //       description={feature.description}
-  //       key={feature.description}
-  //       bigText={feature.bigText}
-  //     />
-  //   ));
-  // };
 
   render() {
     const { status, data } = this.props;
@@ -123,7 +101,7 @@ class Hotel extends Component {
                   />
                   <HeadingBig>Reviews</HeadingBig>
                   <StyledHr />
-                  <Comments id={data._id} />
+                  <Reviews id={data._id} />
                 </Content>
               </ContentContainer>
             </MainContent>

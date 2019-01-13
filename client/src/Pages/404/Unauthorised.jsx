@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Modal from '../../Components/Modal';
 import AuthContainer from '../Auth/AuthContainer';
 import { Button } from '../../Components/Buttons';
