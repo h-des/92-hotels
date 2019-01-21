@@ -6,6 +6,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const logger = require('./utils/logger');
+const compression = require('compression');
 require('./models/User');
 require('./models/Hotel');
 require('./models/Bookings');
@@ -16,7 +17,7 @@ require('./services/passport');
 
 const app = express();
 const port = process.env.PORT || 3030;
-
+app.use(compression());
 app.use(flash());
 app.use(bodyParser.json());
 app.use(

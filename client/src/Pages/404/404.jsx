@@ -48,7 +48,7 @@ export default class NotFound extends Component {
             <Heading>Ooops, something went wrong but...</Heading>
             <Text>
               You can{' '}
-              <StyledLink to="/rooms">
+              <StyledLink to="/hotels">
                 find yourself a nice room here
               </StyledLink>
             </Text>

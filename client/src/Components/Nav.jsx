@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import hamburgerIcon from './../images/hamburger.svg';
@@ -6,7 +6,7 @@ import Modal from './Modal';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import AuthContainer from '../Pages/Auth/AuthContainer';
+const AuthContainer = lazy(() => import('../Pages/Auth/AuthContainer'));
 
 const breakPoint = '425px';
 
@@ -20,7 +20,7 @@ const StyledNav = styled.header`
   box-shadow: ${props =>
     props.landing ? 'none' : '0 2px 4px 0 rgba(0, 0, 0, 0.1)'};
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: ${breakPoint}) {
     background-color: white;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   }
@@ -32,7 +32,7 @@ const NavContainer = styled.nav`
   flex: 1;
   justify-content: space-between;
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: ${breakPoint}) {
     flex-direction: column;
     width: 100%;
   }

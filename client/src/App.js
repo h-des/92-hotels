@@ -10,10 +10,10 @@ import Nav from './Components/Nav';
 import Footer from './Components/Footer';
 
 import Landing from './Pages/Landing/Landing';
-import CardDetails from './Pages/Checkout/CardDetails';
 const HotelListContainer = lazy(() =>
   import('./Pages/HotelList/HotelListContainer')
 );
+const CardDetails = lazy(() => import('./Pages/Checkout/CardDetails'));
 const HotelContainer = lazy(() => import('./Pages/Hotel/HotelContainer'));
 const About = lazy(() => import('./Pages/About/About'));
 const Profile = lazy(() => import('./Pages/Settings/Profile'));
@@ -42,8 +42,8 @@ class App extends Component {
         <ThemeProvider theme={theme}>
           <StyledApp>
             <ScrollToTop>
-              <Route path="/" component={Nav} />
               <Suspense fallback={<div>Loading...</div>}>
+                <Route path="/" component={Nav} />
                 <Switch>
                   <Route path="/" exact component={Landing} />
                   <Route
