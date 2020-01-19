@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
-const ObjectId = Schema.Types.ObjectId;
+const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 
 const userSchema = new Schema({
   email: {
@@ -33,14 +33,14 @@ const userSchema = new Schema({
     medium: String,
     large: String
   }
-});
+})
 
 userSchema.methods.generateHash = password => {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
 
 userSchema.methods.validatePassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
-};
+  return bcrypt.compareSync(password, this.password)
+}
 
-mongoose.model('users', userSchema);
+mongoose.model('users', userSchema)

@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = Schema.Types.ObjectId;
+const mongoose = require('mongoose')
+
+const Schema = mongoose.Schema
+const ObjectId = Schema.Types.ObjectId
 
 const bookingSchema = new Schema({
   from: Date,
@@ -17,6 +18,6 @@ const bookingSchema = new Schema({
     type: ObjectId,
     ref: 'hotels'
   }
-});
+})
 
-mongoose.model('bookings', bookingSchema);
+mongoose.model('bookings', bookingSchema)

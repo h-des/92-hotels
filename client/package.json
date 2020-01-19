@@ -26,26 +26,12 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.4.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "deploy": "npm run build && ns build",
     "lint": "eslint --fix"
-  },
-  "devDependencies": {
-    "eslint": "^6.7.2",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-config-react-app": "^5.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "prettier": "^1.19.1"
   },
   "browserslist": [
     ">0.2%",
