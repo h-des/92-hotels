@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { injectGlobal } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import App from './App'
 import { unregister } from './registerServiceWorker'
 import axios from 'axios'
@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.axios = axios
 }
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
@@ -53,7 +53,10 @@ injectGlobal`
 
 ReactDOM.render(
   <Root>
-    <App />
+    <>
+      <GlobalStyle />
+      <App />
+    </>
   </Root>,
   document.getElementById('root')
 )

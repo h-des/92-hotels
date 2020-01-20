@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import styled from 'styled-components';
-import closeIcon from '../images/close.svg';
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import styled from 'styled-components'
+import closeIcon from '../images/close.svg'
 
-const modalContainer = document.getElementById('modal-container');
+const modalContainer = document.getElementById('modal-container')
 
 const StyledModal = styled.div`
   position: fixed;
@@ -16,7 +16,7 @@ const StyledModal = styled.div`
   background-color: white;
   display: flex;
   text-align: center;
-`;
+`
 
 const StyledCloseButton = styled.button`
   background-color: transparent;
@@ -30,24 +30,24 @@ const StyledCloseButton = styled.button`
     background-color: #f6f6f6;
     border-radius: 50%;
   }
-`;
+`
 
 const CloseIcon = styled.img`
   height: 50px;
   width: 50px;
-`;
+`
 
 export default class Modal extends Component {
-  closeButton = React.createRef();
-  element = document.createElement('div');
+  closeButton = React.createRef()
+  element = document.createElement('div')
 
   componentDidMount() {
-    modalContainer.appendChild(this.element);
+    modalContainer.appendChild(this.element)
     //focus on modal
-    this.closeButton.focus();
+    //    this.closeButton.focus()
   }
   componentWillUnmount() {
-    modalContainer.removeChild(this.element);
+    modalContainer.removeChild(this.element)
   }
 
   render() {
@@ -55,7 +55,7 @@ export default class Modal extends Component {
       <StyledModal>
         <StyledCloseButton
           innerRef={close => {
-            this.closeButton = close;
+            this.closeButton = close
           }}
           onClick={this.props.close}
         >
@@ -64,6 +64,6 @@ export default class Modal extends Component {
         {this.props.children}
       </StyledModal>,
       this.element
-    );
+    )
   }
 }
