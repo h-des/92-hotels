@@ -5,8 +5,13 @@ const cookieSession = require('cookie-session')
 const passport = require('passport')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
-const logger = require('./utils/logger')
 const compression = require('compression')
+const AdminBro = require('admin-bro')
+const AdminBroExpress = require('admin-bro-expressjs')
+const AdminBroMongoose = require('admin-bro-mongoose')
+
+AdminBro.registerAdapter(AdminBroMongoose)
+
 require('./models/User')
 require('./models/Hotel')
 require('./models/Bookings')
@@ -17,6 +22,7 @@ require('./services/passport')
 
 const app = express()
 const port = process.env.PORT || 3030
+
 app.use(compression())
 app.use(flash())
 app.use(bodyParser.json())
@@ -30,11 +36,25 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true }, err => {
-  if (err) {
-    logger.error('Cannot connect to database')
+const run = async () => {
+  const connection = await mongoose.connect(keys.mongoURI, {
+    useNewUrlParser: true
+  })
+
+  const AdminBroOptions = {
+    databases: [connection],
+    rootPath: '/admin',
+    branding: {
+      companyName: '92-hotels'
+    }
   }
-})
+
+  const adminBro = new AdminBro(AdminBroOptions)
+  const router = AdminBroExpress.buildRouter(adminBro)
+  app.use(adminBro.options.rootPath, router)
+}
+
+run()
 
 require('./routes/authRoutes')(app)
 require('./routes/userRoutes')(app)
@@ -46,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
 
   const path = require('path')
-  app.get('*', (req, res) => {
+  app.get('*', (_, res) => {
     res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
