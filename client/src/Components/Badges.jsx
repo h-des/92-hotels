@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const SVG = styled.svg`
   height: 1.4rem;
-`;
+`
 
 const Star = ({ fillColor }) => (
   <SVG
@@ -28,7 +28,7 @@ const Star = ({ fillColor }) => (
       strokeLinecap="round"
     />
   </SVG>
-);
+)
 
 const Badge = ({ fillColor }) => (
   <SVG
@@ -52,19 +52,19 @@ const Badge = ({ fillColor }) => (
       fill={fillColor}
     />
   </SVG>
-);
+)
 
 const StyledUL = styled.ul`
   display: flex;
   list-style: none;
   margin-bottom: ${props => (props.marginBottom ? props.marginBottom : '0')};
-`;
+`
 
 const Badges = ({ count, marginBottom, type }) => {
-  let res = [];
-  let fill = 'blue';
+  let res = []
+  let fill = 'blue'
   if (type === 'stars') {
-    fill = '#F7B32B';
+    fill = '#F7B32B'
   }
 
   //fill an array with 5 shapes - Star or Badge
@@ -79,7 +79,7 @@ const Badges = ({ count, marginBottom, type }) => {
             <Badge fillColor={fill} />
           )}
         </li>
-      );
+      )
     } else {
       res.push(
         <li key={i}>
@@ -89,16 +89,16 @@ const Badges = ({ count, marginBottom, type }) => {
             <Badge fillColor="#ccc" />
           )}
         </li>
-      );
+      )
     }
   }
-  return <StyledUL marginBottom={marginBottom}>{res}</StyledUL>;
-};
+  return <StyledUL marginBottom={marginBottom}>{res}</StyledUL>
+}
 
 Badges.propTypes = {
   count: PropTypes.number.isRequired,
   type: PropTypes.string,
   marginBottom: PropTypes.string
-};
+}
 
-export default Badges;
+export default Badges

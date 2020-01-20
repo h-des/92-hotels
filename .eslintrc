@@ -1,0 +1,40 @@
+{
+  "extends": ["react-app", "prettier", "prettier/react"],
+  "plugins": ["react-hooks", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      1,
+      {
+        "singleQuote": true,
+        "semi": false
+      }
+    ],
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "semi": [2, "never"],
+    "comma-dangle": [2, "never"],
+    "no-unused-vars": [
+      1,
+      {
+        "args": "none",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "max-len": [
+      1,
+      {
+        "code": 100,
+        "tabWidth": 4,
+        "ignorePattern": "^import | ^export ",
+        "ignoreStrings": true
+      }
+    ],
+    "react/jsx-no-bind": "error",
+    "react/jsx-filename-extension": 0,
+    "react/prefer-stateless-function": [1],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/prefer-default-export": 0,
+    "no-restricted-globals": [1, "warning"]
+  }
+}

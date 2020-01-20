@@ -1,12 +1,12 @@
-import constants from '../utils/constants';
+import constants from '../utils/constants'
 
 export default (state = {}, { type, payload }) => {
   switch (type) {
     case constants.ADD_FILTERS:
-      return { ...payload };
+      return { ...payload }
     case constants.REMOVE_FILTERS:
-      return {};
+      return {}
     default:
-      return state;
+      return state
   }
-};
+}

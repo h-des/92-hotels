@@ -1,7 +1,7 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
-import { SpinnerRectangles } from './Spinner';
+import React from 'react'
+import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
+import { SpinnerRectangles } from './Spinner'
 
 const buttonStyles = css`
   background-color: ${props =>
@@ -33,30 +33,30 @@ const buttonStyles = css`
     box-shadow: ${props =>
       props.disabled ? undefined : ` 0 8px 15px 0px rgba(0,0,0,0.31)`};
   }
-`;
+`
 
 const StyledButton = styled.button`
   ${buttonStyles}
-`;
+`
 
 const StyledLinkButton = styled(Link)`
   ${buttonStyles}
   text-decoration: none;
-`;
+`
 
 const Button = props => {
   if (!props.loading) {
-    return <StyledButton {...props}>{props.children}</StyledButton>;
+    return <StyledButton {...props}>{props.children}</StyledButton>
   }
   return (
     <StyledButton {...props}>
       <SpinnerRectangles color="white" />
     </StyledButton>
-  );
-};
+  )
+}
 
 const LinkButton = props => (
   <StyledLinkButton {...props}>{props.children}</StyledLinkButton>
-);
+)
 
-export { Button, LinkButton };
+export { Button, LinkButton }

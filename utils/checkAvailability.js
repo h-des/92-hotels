@@ -1,17 +1,17 @@
-const mongoose = require('mongoose');
-const Booking = mongoose.model('bookings');
-const Room = mongoose.model('rooms');
+const mongoose = require('mongoose')
+const Booking = mongoose.model('bookings')
+const Room = mongoose.model('rooms')
 
 const checkAvailability = async (hotel, from, to, roomType) => {
-  const roomIDsList = hotel.roomList;
-  const fromDate = new Date(from);
-  const toDate = new Date(to);
-  if (toDate <= fromDate) return false;
+  const roomIDsList = hotel.roomList
+  const fromDate = new Date(from)
+  const toDate = new Date(to)
+  if (toDate <= fromDate) return false
 
   let roomList = await Room.find({
     _id: { $in: roomIDsList },
     type: parseInt(roomType)
-  }).lean();
+  }).lean()
 
   for (let room of roomList) {
     //find all bookings colliding with dates from query
@@ -21,17 +21,17 @@ const checkAvailability = async (hotel, from, to, roomType) => {
         { from: { $gte: fromDate, $lt: toDate } },
         { to: { $lte: toDate, $gt: fromDate } }
       ]
-    }).lean();
+    }).lean()
 
     //if no colliding bookings are found, room is availible
     if (!collidingBooking) {
-      return room;
+      return room
     }
 
     //otherwise check next room
   }
 
-  return false;
-};
+  return false
+}
 
-module.exports = checkAvailability;
+module.exports = checkAvailability

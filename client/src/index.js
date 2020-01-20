@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { injectGlobal } from 'styled-components';
-import App from './App';
-import { unregister } from './registerServiceWorker';
-import axios from 'axios';
-import Root from './Root';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { injectGlobal } from 'styled-components'
+import App from './App'
+import { unregister } from './registerServiceWorker'
+import axios from 'axios'
+import Root from './Root'
 
 if (process.env.NODE_ENV !== 'production') {
-  window.axios = axios;
+  window.axios = axios
 }
 
 injectGlobal`
@@ -49,12 +49,12 @@ injectGlobal`
     background-color: #f9f9f9;
   }
 
-`;
+`
 
 ReactDOM.render(
   <Root>
     <App />
   </Root>,
   document.getElementById('root')
-);
-unregister();
+)
+unregister()

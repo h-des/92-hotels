@@ -5,7 +5,7 @@ const colors = {
   black: '#313131',
   grey: '#7D7D7D',
   green: '#13c413'
-};
+}
 
 const colorsHover = {
   primary: '#626BEF',
@@ -13,9 +13,9 @@ const colorsHover = {
   disabled: '#bababa',
   black: '#7D7D7D',
   green: '#16e016'
-};
+}
 
 export default {
   colors,
   colorsHover
-};
+}
