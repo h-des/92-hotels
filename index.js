@@ -4,6 +4,7 @@ const keys = require('./config/keys')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 const flash = require('connect-flash')
 const compression = require('compression')
 const AdminBro = require('admin-bro')
@@ -20,12 +21,43 @@ require('./models/Promoted')
 require('./models/Review')
 require('./services/passport')
 
+const User = mongoose.model('users')
 const app = express()
 const port = process.env.PORT || 3030
 
 app.use(compression())
 app.use(flash())
-app.use(bodyParser.json())
+app.use(bodyParser.json())(async function() {
+  const connection = await mongoose.connect(keys.mongoURI, {
+    useNewUrlParser: true
+  })
+
+  const AdminBroOptions = {
+    databases: [connection],
+    rootPath: '/admin',
+    logoutPath: '/admin/logout',
+    branding: {
+      companyName: '92-hotels'
+    }
+  }
+
+  const adminBro = new AdminBro(AdminBroOptions)
+  const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
+    authenticate: async (email, password) => {
+      const user = await User.findOne({ email })
+      if (user) {
+        if (user.validatePassword(password)) {
+          return user
+        }
+      }
+      return false
+    },
+    cookiePassword: keys.cookieKey
+  })
+
+  app.use(adminBro.options.rootPath, router)
+})()
+
 app.use(
   cookieSession({
     //cookie life length - 30 days
@@ -36,25 +68,6 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
-const run = async () => {
-  const connection = await mongoose.connect(keys.mongoURI, {
-    useNewUrlParser: true
-  })
-
-  const AdminBroOptions = {
-    databases: [connection],
-    rootPath: '/admin',
-    branding: {
-      companyName: '92-hotels'
-    }
-  }
-
-  const adminBro = new AdminBro(AdminBroOptions)
-  const router = AdminBroExpress.buildRouter(adminBro)
-  app.use(adminBro.options.rootPath, router)
-}
-
-run()
 
 require('./routes/authRoutes')(app)
 require('./routes/userRoutes')(app)
