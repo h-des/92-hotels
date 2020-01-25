@@ -12,6 +12,7 @@ module.exports = {
         large: 'https://randomuser.me/api/portraits/women/43.jpg'
       },
       firstName: 'Patricia',
+      role: 'Admin',
       lastName: 'Reyes',
       city: 'Midleton',
       address: '4375 denny street',

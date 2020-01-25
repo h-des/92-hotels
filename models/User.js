@@ -9,6 +9,7 @@ const userSchema = new Schema({
     trim: true
   },
   password: String,
+  role: { type: String, enum: ['Admin', 'User'] },
   createdAt: Date,
   phone: String,
   city: String,

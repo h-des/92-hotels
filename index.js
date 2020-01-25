@@ -53,7 +53,7 @@ const run = async () => {
     authenticate: async (email, password) => {
       const user = await User.findOne({ email })
       if (user) {
-        if (user.validatePassword(password)) {
+        if (user.validatePassword(password) && user.role === 'Admin') {
           return user
         }
       }
