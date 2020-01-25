@@ -40,15 +40,20 @@ You can [access this version here](https://github.com/h-des/92-hotels/tree/clien
 
 ### `master` branch
 
+- install mongodb
+- create folder `/data/db`
+- run `mongod`
 ```
-  npm install
+  yarn
   cd client
-  npm install
+  yarn
   cd ..
-  npm run dev
+  yarn seed 
+  yarn dev
 ```
+ - client app available at - `localhost:3000`
+ - admin panel available at - `localhost:3030` email: `admin@example.com` | password: `password`
 
-> Notice: You will not have access to the database so the server will not work properly.
 
 ### `client-mockup` branch
 
@@ -69,3 +74,4 @@ Or:
 ```
 
 > Notice: You’ll need to have [serve](https://www.npmjs.com/package/serve) on your machine to use the second option.
+

@@ -4,7 +4,6 @@ const keys = require('./config/keys')
 const cookieSession = require('cookie-session')
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcrypt')
 const flash = require('connect-flash')
 const compression = require('compression')
 const AdminBro = require('admin-bro')
@@ -25,23 +24,31 @@ const User = mongoose.model('users')
 const app = express()
 const port = process.env.PORT || 3030
 
+app.use(
+  cookieSession({
+    //cookie life length - 30 days
+    maxAge: [30 * 24 * 60 * 60 * 100],
+    keys: [keys.cookieKey]
+  })
+)
+
 app.use(compression())
 app.use(flash())
-app.use(bodyParser.json())(async function() {
+app.use(bodyParser.json())
+
+const run = async () => {
   const connection = await mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true
   })
 
-  const AdminBroOptions = {
+  const adminBro = new AdminBro({
     databases: [connection],
     rootPath: '/admin',
-    logoutPath: '/admin/logout',
     branding: {
       companyName: '92-hotels'
     }
-  }
+  })
 
-  const adminBro = new AdminBro(AdminBroOptions)
   const router = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
     authenticate: async (email, password) => {
       const user = await User.findOne({ email })
@@ -56,15 +63,9 @@ app.use(bodyParser.json())(async function() {
   })
 
   app.use(adminBro.options.rootPath, router)
-})()
+}
 
-app.use(
-  cookieSession({
-    //cookie life length - 30 days
-    maxAge: [30 * 24 * 60 * 60 * 100],
-    keys: [keys.cookieKey]
-  })
-)
+run()
 
 app.use(passport.initialize())
 app.use(passport.session())
