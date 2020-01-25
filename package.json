@@ -7,8 +7,8 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon index.js",
-    "migrate-up": "yarn migrate-mongo up",
-    "migrate-down": "yarn migrate-mongo down",
+    "seed": "yarn migrate-mongo up",
+    "un-seed": "yarn migrate-mongo down",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
