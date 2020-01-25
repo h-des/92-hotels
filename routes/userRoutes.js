@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
+const User = mongoose.model('users')
 const omit = require('object.omit')
 const requireLogin = require('../middlewares/requireLogin')
-const User = mongoose.model('users')
 const Booking = mongoose.model('bookings')
 const logger = require('../utils/logger')
 
